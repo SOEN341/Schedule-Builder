@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mapping Example</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.min.js"></script>
+  </head>
+  <body>
+	<div id="pageContent"></div>
+    <script type="text/jsx">
+      var RBS = ReactBootstrap;
+	  
+	  var Main = React.createClass({
+		getInitialState: function() {
+			return {
+				numbers: []
+			}
+		},
+		
+		/*So far we have only been able to display a static page. We have only been displaying a set amount of each component. However, it is valuable to be able to display a changing list of components.
+			To do this within React, we use the map method. I had trouble wrapping my head around this at first. If you have questions, feel free to ask me
+		
+		*/
+		render: function() {
+			return(
+				<div style={{textAlign: 'center'}}>
+					{
+						/*To bind, we need an array. Then we can do array.map and have it return something for each element in that array.
+						*/
+						this.state.numbers.map(function(number)/*In this case, number is the name of each individual element of the array*/ {
+						{/*IMPORTANT: Each component you create in a bind method MUST have a UNIQUE key. If you don't do that, React will not be able to identify components that look identical (ie components with the same props) and it will break everything*/}
+							return (
+								<Numbers key={number} removeThis={this.remove.bind(this, number)}>{/*Here we bound some values to a method. This ensures that the first arguments it receives will be what you set here (the this is necessary to make it work. Idk why). In this case we bind the key so that we know which element to remove from the array*/}
+								  {number}
+								</Numbers>
+							)
+						}, this)
+					}
+					<RBS.Button onClick={this.addNumber}>Add</RBS.Button>
+				</div>
+			)
+		},
+		
+		addNumber: function() {
+			//You should never directly manipulate any of the state variables. Instead, copy them, manipulate the copy, and then set it as the new state variable
+			//The React.addons.update method can do much more than copy. Check https://facebook.github.io/react/docs/update.html to see more about it
+			var numbersCopy = React.addons.update(this.state.numbers, {});
+			if(numbersCopy.length>0)
+				numbersCopy.push(numbersCopy[numbersCopy.length-1]+1);
+			else
+				numbersCopy.push(0);
+			this.setState({numbers: numbersCopy});
+		},
+		
+		remove: function(number) {
+			var index = -1;
+			var numbersCopy = React.addons.update(this.state.numbers, {});
+			
+			for(var i=0; i<numbersCopy.length; i++)
+			{
+				if(number==numbersCopy[i])
+				{
+					index=i;
+					break;
+				}
+			}
+			
+			if(index!=-1)
+			{
+				numbersCopy.splice(index, 1);
+			}
+			this.setState({numbers: numbersCopy});
+		}
+	  });
+	  
+	  var Numbers = React.createClass({
+		render: function() {
+			return(
+				<div>
+					{this.props.children}<RBS.Button onClick={this.props.removeThis} bsStyle="danger">Remove</RBS.Button>
+				</div>
+			)
+		}
+	  });
+	  
+	  React.render(
+		<Main/>, document.getElementById('pageContent')
+	  );
+    </script>
+  </body>
+</html>

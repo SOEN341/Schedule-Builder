@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Props Example</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.min.js"></script>
+  </head>
+  <body>
+	<div id="pageContent"></div>
+    <script type="text/jsx">
+      var RBS = ReactBootstrap;
+	  
+	  var Main = React.createClass({
+		render: function() {
+			return(
+				{/*You can pass down variables to other components. They will be able to access them by doing this.props.variablename. You can also pass down methods as props, but I didn't do that in this example. Look at the mapping example to see some of that */}
+				<ButtonWithText textBefore="Label" buttonText="This is the button" bsStyle="danger"/>
+			)
+		}
+	  });
+	  
+	  var ButtonWithText = React.createClass({
+		render: function() {
+			return(
+				<div>
+					<Red>{this.props.textBefore}</Red><RBS.Button bsStyle={this.props.bsStyle}>{this.props.buttonText}</RBS.Button>
+				</div>
+			)
+		}
+	  });
+	  
+	  var Red = React.createClass({
+		render: function() {
+			return (
+			{/*this.props.children is the inner text of the tag. So in this case, it's the text "Label"*/}
+				<div style={{color: 'red'}}>{this.props.children}</div>
+			)
+		}
+	  });
+	  
+	  React.render(
+		<Main/>, document.getElementById('pageContent')
+	  );
+    </script>
+  </body>
+</html>
