@@ -1,7 +1,7 @@
 var Main = React.createClass({
 	getInitialState: function() {
 		return {
-			currentPage: 1
+			currentPage: 0
 		}
 	},
 	render: function() {
