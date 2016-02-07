@@ -60,6 +60,12 @@ var LoginPage = React.createClass({
 	
 	logIn: function() {
 		console.log('log in code goes here');
+		if(true) {
+			this.props.changePage(1);
+		}
+		else {
+			alert('Bad username and/or password');
+		}
 	}
 });
 
@@ -93,7 +99,7 @@ var Logo = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<h1 style={{textAlign:'center'}}>SOEN Schedule Builder</h1>
+				<h1>SOEN Schedule Builder</h1>
 			</div>
 		)
 	}

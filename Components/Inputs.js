@@ -3,7 +3,7 @@ var InputElement = React.createClass({
 		return {
 			type: 'text',
 			label: '',
-			label_md: 3,
+			label_md: 2,
 			input_md: 8
 		}
 	},
