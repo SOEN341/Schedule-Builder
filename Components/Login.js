@@ -42,8 +42,20 @@ var LoginPage = React.createClass({
 	
 	register: function(username, password, email) {
 		console.log('registration code goes here');
+		console.log("Pass: " + password);
+		xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		   if (xhttp.readyState == 4 && xhttp.status == 200) {
+		    // document.getElementById("txtHint").innerHTML = xhttp.responseText;
+		    //console.log(xhttp.responseText);
+		    }
+		  };
+		  xhttp.open("POST", "registrationscript.php", true);
+		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		  xhttp.send("user=username&pass=password");
+		  //alert(xhttp.responseText);
 		this.closeRegistrationDialog();
-		this.props.changePage(1); //Log them in and redirect to preferences page
+		this.props.changePage(0); //Log them in and redirect to preferences page
 	},
 	
 	onUsernameChange: function(value) {
@@ -58,10 +70,24 @@ var LoginPage = React.createClass({
 		})
 	},
 	
-	logIn: function() {
-		console.log('log in code goes here');
-		if(true) {
-			this.props.changePage(1);
+	logIn: function() {	
+		var username="user0";
+		var password="pass";
+		xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		   if (xhttp.readyState == 4 && xhttp.status == 200) {
+		    // document.getElementById("txtHint").innerHTML = xhttp.responseText;
+		    console.log(xhttp.responseText);
+		    }
+		  };
+		  xhttp.open("POST", "logscript.php", true);
+		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		  xhttp.send("username=username&password=password");
+		this.closeRegistrationDialog();
+		this.props.changePage(0);
+
+		if(xhttp.responseText.localeCompare('good') == 0) {
+			this.props.changePage(0);
 		}
 		else {
 			alert('Bad username and/or password');

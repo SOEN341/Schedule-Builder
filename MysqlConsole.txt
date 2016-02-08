@@ -5,34 +5,29 @@ CREATE DATABASE database1;
  USE database1;
 
 //Command to recreate the student table
-CREATE TABLE student(fname VARCHAR(15) NOT NULL,lName VARCHAR(15) NOT NULL,cDone VARCHAR(4000) NOT NULL,remCourse VARCHAR(4000) NOT NULL,
- labs VARCHAR(2000) NOT NULL, tutorials VARCHAR(2000) NOT NULL,
-studentId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);
+CREATE TABLE student(fname VARCHAR(15) NOT NULL,lName VARCHAR(15) NOT NULL,username VARCHAR(15) not null,password VARCHAR(15) not null,cDone VARCHAR(4000) NOT NULL,remCourse VARCHAR(4000) NOT NULL, labs VARCHAR(2000) NOT NULL, tutorials VARCHAR(2000) NOT NULL,studentId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
 //keep in single line
 
 //these should work in a mysql console
 //Command to populate the student table
 
-INSERT INTO student('fname', 'lName', 'cDone', 'remCourse', 'labs', 'tutorials', 'studentId') VALUES
- (Jon,Snow ,11111111,serialize($done),serialize($todo),serialize($labs),serialize($tutorials); // these should be the real values
+INSERT INTO student('fname', 'lName','password' 'cDone', 'remCourse', 'labs', 'tutorials', 'studentId') VALUES
+ (Jon,Snow,pass,11111111,serialize($done),serialize($todo),serialize($labs),serialize($tutorials); // these should be the real values
 
 // these will suffice for testing puproses.
 
-INSERT INTO student(`fname`, `lName`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES
- ('Jon','Snow','a','aa','as','a',11111111); 
+INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','pass','a','aa','as','a',''); 
 
-INSERT INTO student(`fname`, `lName`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES
- ('Megan','Fox','a','aa','as','a',11111111);
+INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','pass','a','aa','as','a','');
 
-INSERT INTO student(`fname`, `lName`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES
- ('Banana','Split','a','aa','as','a',11111111);
+INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Megan','Fox','pass','a','aa','as','a','');
 
-INSERT INTO student(`fname`, `lName`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES
- ('Kylo','Ren','a','aa','as','a',11111111);
+INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Banana','Split','pass','a','aa','as','a','');
 
-INSERT INTO student(`fname`, `lName`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES
- ('Big','Mama','a','aa','as','a',11111111);
+INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Kylo','Ren','pass','a','aa','as','a','');
+
+INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Big','Mama','pass','a','aa','as','a','');
 
 
 
