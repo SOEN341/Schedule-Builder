@@ -17,17 +17,45 @@ INSERT INTO student('fname', 'lName','password' 'cDone', 'remCourse', 'labs', 't
 
 // these will suffice for testing puproses.
 
-INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','pass','a','aa','as','a',''); 
+INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9])
 
-INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','pass','a','aa','as','a','');
+INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','user0','pass','a','aa','as','a','');
+ 
+INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','user1','pass','a','aa','as','a','');
 
-INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Megan','Fox','pass','a','aa','as','a','');
+INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Megan','Fox','user2','pass','a','aa','as','a','');
 
-INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Banana','Split','pass','a','aa','as','a','');
+INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Banana','Split','user3','pass','a','aa','as','a','');
 
-INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Kylo','Ren','pass','a','aa','as','a','');
+INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Kylo','Ren','user4','pass','a','aa','as','a','');
 
-INSERT INTO `student`(`fname`, `lName`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Big','Mama','pass','a','aa','as','a','');
+INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Big','Mama','user5','pass','a','aa','as','a','');
+
+
+
+		// $.post("registrationscpript.php", { username: username, password: password })
+	 //    .done(function(data) {
+	 //        alert("Data Loaded: " + data);
+	 //    });
+
+
+$.ajax({
+		  type: "POST",
+		  url: "logscript.php",
+		  data: {username: this.state.username, password: this.state.password},
+		  dataType: "json",
+		  async: false
+		}).done(function(data) {
+        getResult(data.result);
+    	});
+
+    	 if(result.localeCompare('good') == 0) {
+		 	this.props.changePage(1);
+		 }
+		 else {
+			alert('Bad username and/or password');
+			this.props.changePage(0);
+		}
 
 
 

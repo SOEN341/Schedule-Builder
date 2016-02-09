@@ -2,24 +2,30 @@
 <?php 								
    require_once('mysqli_connect.php'); #connection
    
-   $userN=$_POST['username'];
-   $passW=$_POST['password']; 
+   $username=$_POST['username'];
+   $password=$_POST['password']; 
    
    
                        
-  $query ="SELECT username FROM students WHERE username='$userN' "; 
+  $query ="SELECT username FROM students WHERE username='$username' "; 
   // Check if the username exist already                          
   
   $response= mysqli_query($dbc,$query);  
   
-  if(mysqli_num_rows($response) <= 0){
-    			
+  if(mysqli_num_rows($response) <= 0){ 
+                       
+                             // registering
+   echo "You are now registered as a(an) " . $type . "  " . "<br/>";
+   echo "First name: " .$firstName . "  "  . "<br/>";
+   							
    
    // creating the  user  in the table
-   $query= "INSERT INTO  student (`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','$userN','$passW','a','aa','as','a','');";
+      $query= "INSERT INTO  student (`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Stannis','Baratheon','$username','$password','a','aa','as','a','');";
    
    if (mysqli_query($dbc, $query)) {
-       echo "You have been registered successfully." . '<br/>'	;
+       //echo "You have been registered successfully." . '<br/>'	;
+      echo json_encode(array("result"=>"registered","username"=>"$username","password"=>"$password"));             
+
    } else {
        echo "Error: " . $query . "<br/>" . mysqli_error($dbc);
    }

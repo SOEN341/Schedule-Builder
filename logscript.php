@@ -16,10 +16,11 @@ $query ="SELECT username,password FROM student WHERE username='$username' AND pa
 
 $response= mysqli_query($dbc,$query); 
 
+
 if(mysqli_num_rows($response) <= 0){ //number of response is 0, so no user with these credentials
-  echo 'bad';             
+  echo json_encode(array("result"=>"bad","username"=>"$username","password"=>"$password"));             
 } else {
-  echo 'good';
+  echo json_encode(array("result"=>"good","username"=>"$username","password"=>"$password"));  
 }
 
 $demand=mysqli_fetch_array($response);  // array containing the values in the query
