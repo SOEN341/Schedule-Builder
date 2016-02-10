@@ -10,7 +10,7 @@ var LoginPage = React.createClass({
 	render: function() {
 		return (
 			<div>
-				{this.state.registerDialogOpen? <RegistrationDialog close={this.closeRegistrationDialog} register={this.register}/>: null}
+				{this.state.registerDialogOpen? <RegistrationDialog close={this.closeRegistrationDialog} register={this.register} passwordChange={this.onPasswordChange} usernameChange={this.onUsernameChange}/>: null}
 				<Logo/>
 				<br/>
 				<RBS.Grid  fluid={true} style={{width:'30%'}}>
@@ -82,7 +82,7 @@ var LoginPage = React.createClass({
 			alert('Bad username and/or password');
 			self.props.changePage(0);
 		}
-		}, "json");		   
+		}, "json");
 	}
 });
 
@@ -96,10 +96,10 @@ var RegistrationDialog = React.createClass({
 				<RBS.Modal.Body>
 					<RBS.Grid fluid={true}>
 						<RBS.Row>
-							<InputElement label='Username' onChange={this.onUsernameChange}/>
+							<InputElement label='Username' onChange={this.props.usernameChange}/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='Password' type='password' onChange={this.onPasswordChange}/>
+							<InputElement label='Password' type='password' onChange={this.props.passwordChange}/>
 						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>
