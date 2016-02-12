@@ -2,3 +2,15 @@ h1, h3
 {
 	text-align: center
 }
+
+/* CSS for file "AccountPage" only */
+#title
+{
+	margin-left: 40px;
+}
+
+/* CSS for file "AccountPage" only */
+#line-space
+{
+	line-height: 300%;
+}

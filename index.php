@@ -15,6 +15,7 @@
 	<script src="Components/Inputs.js" type="text/jsx"></script>
 	<script src="Components/Login.js" type="text/jsx"></script>
 	<script src="Components/Preferences.js" type="text/jsx"></script>		
+	<script src="Components/AccountPage.js" type="text/jsx"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   </head>
   <body>
