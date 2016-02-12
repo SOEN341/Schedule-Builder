@@ -17,7 +17,7 @@ var InputElement = React.createClass({
 		}
 		
 		return(
-			<div>{input}</div>
+			<div>{input}</div> 
 		)
 	},
 	
