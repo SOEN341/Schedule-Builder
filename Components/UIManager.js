@@ -1,7 +1,7 @@
 var Main = React.createClass({
 	getInitialState: function() {
 		return {
-			currentPage: 0
+			currentPage: this.props.currentPage
 		}
 	}, 
 	render: function() {
@@ -16,21 +16,23 @@ var Main = React.createClass({
 	},
 	
 	changePage: function(newPage) {
-		this.setState({
-			currentPage: newPage
-		})
+		if(newPage==0) {
+			window.location = 'http://localhost/index.php';
+		}
+		else if(newPage==1) {
+			window.location = 'http://localhost/preferences.php';
+		}
+		else if(newPage==2) {
+			window.location = 'http://localhost/account.php';
+		}
 	},
 	
 	openLoginPage: function() {
-		this.setState({
-			currentPage: 0
-		})
+		this.changePage(0);
 	},
 	
 	openPreferencesPage: function() {
-		this.setState({
-			currentPage: 1
-		})
+		this.changePage(1);
 	}
 	
 

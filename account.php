@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Schedule Builder</title>
+    <title>Account</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="CSS/Custom CSS.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
@@ -23,7 +23,7 @@
     <script type="text/jsx">
 		var RBS = ReactBootstrap;
 		ReactDOM.render(
-			<Main currentPage={0}/>, document.getElementById('pageContent')
+			<Main currentPage={2}/>, document.getElementById('pageContent')
 		);
     </script>
   </body>

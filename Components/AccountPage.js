@@ -1,26 +1,29 @@
 var AccountPage = React.createClass({
 	getInitialState : function(){
 		return{
-			booleanUsernameDialog: false	
+			usernameDialogOpen: false,
+			emailDialogOpen: false,
+			passwordDialogOpen: false
 		}
-		
 	},
 	
 	render: function() {
 		return(
 		 <div id="title">
-		 {this.state.booleanUsernameDialog? <ChangeUsernameDialog close={this.closeUsernameDialog}/>: null}
+		 {this.state.usernameDialogOpen? <ChangeUsernameDialog close={this.closeUsernameDialog}/>: null}
+		 {this.state.emailDialogOpen? <ChangeEmailDialog close={this.closeEmailDialog}/>: null}
+		 {this.state.passwordDialogOpen? <ChangePasswordDialog close={this.closePasswordDialog}/>: null}
 			<Title /> 
 			 <div id="line-space">
-			  <RBS.Grid>
+			  <RBS.Grid fluid={true} style={{textAlign: 'center'}}>
 				<RBS.Row>
-			    Username: <strong>*The data of the user*</strong> <a onClick={this.openUsernameDialog}><RBS.Button bsSize="xsmall">Change</RBS.Button></a>
+					Username: <strong>*The data of the user*</strong><RBS.Button bsSize="xsmall" onClick={this.openUsernameDialog}>Change</RBS.Button>
 				</RBS.Row>
 			    <RBS.Row>
-				E-mail: <strong>*The data of the user*</strong> <RBS.Button bsSize="xsmall">Change</RBS.Button>
+					E-mail: <strong>*The data of the user*</strong> <RBS.Button bsSize="xsmall" onClick={this.openEmailDialog}>Change</RBS.Button>
 				</RBS.Row>
 				<RBS.Row>
-				<RBS.Button bsSize="">Change Password</RBS.Button>
+					<RBS.Button onClick={this.openPasswordDialog}>Change Password</RBS.Button>
 				</RBS.Row>
 			  </RBS.Grid>	
 			 </div>  
@@ -30,17 +33,39 @@ var AccountPage = React.createClass({
 	
 	closeUsernameDialog: function(){
 		this.setState ({
-			booleanUsernameDialog: false
+			usernameDialogOpen: false
 		})
 	},
 	
 	openUsernameDialog: function(){
 		this.setState ({
-			booleanUsernameDialog: true
+			usernameDialogOpen: true
 		})
 	},
 	
-
+	closeEmailDialog: function(){
+		this.setState ({
+			emailDialogOpen: false
+		})
+	},
+	
+	openEmailDialog: function(){
+		this.setState ({
+			emailDialogOpen: true
+		})
+	},
+	
+	closePasswordDialog: function(){
+		this.setState ({
+			passwordDialogOpen: false
+		})
+	},
+	
+	openPasswordDialog: function(){
+		this.setState ({
+			passwordDialogOpen: true
+		})
+	}
 });
 
 
@@ -56,13 +81,67 @@ var ChangeUsernameDialog = React.createClass({
 				<RBS.Modal.Body>
 				  <RBS.Grid fluid={true}>
 				    <RBS.Row>
-					   <InputElement label='Username' />
+					   <InputElement label='New Username' />
 					</RBS.Row>
 				  </RBS.Grid>
 				</RBS.Modal.Body>
 					
 				<RBS.Modal.Footer>
-				 <RBS.Button bsStyle="primary">Save Changes</RBS.Button>
+				 <RBS.Button bsStyle="primary" onClick={this.props.close}>Save Changes</RBS.Button>
+				</RBS.Modal.Footer>
+			</RBS.Modal>
+		)
+	}
+});
+
+var ChangeEmailDialog = React.createClass({
+	render: function(){
+		return(
+			<RBS.Modal show={true} onHide={this.props.close}>
+				<RBS.Modal.Header closeButton>
+				   <RBS.Modal.Title>Change E-mail</RBS.Modal.Title>
+				</RBS.Modal.Header>	
+				
+				<RBS.Modal.Body>
+				  <RBS.Grid fluid={true}>
+				    <RBS.Row>
+					   <InputElement label='New E-mail'/>
+					</RBS.Row>
+				  </RBS.Grid>
+				</RBS.Modal.Body>
+					
+				<RBS.Modal.Footer>
+				 <RBS.Button bsStyle="primary" onClick={this.props.close}>Save Changes</RBS.Button>
+				</RBS.Modal.Footer>
+			</RBS.Modal>
+		)
+	}
+});
+
+var ChangePasswordDialog = React.createClass({
+	render: function(){
+		return(
+			<RBS.Modal show={true} onHide={this.props.close}>
+				<RBS.Modal.Header closeButton>
+				   <RBS.Modal.Title>Change Password</RBS.Modal.Title>
+				</RBS.Modal.Header>	
+				
+				<RBS.Modal.Body>
+				  <RBS.Grid fluid={true}>
+					<RBS.Row>
+					   <InputElement label='Current Password'/>
+					</RBS.Row>
+					<RBS.Row>
+					   <InputElement label='New Password'/>
+					</RBS.Row>
+				    <RBS.Row>
+					   <InputElement label='Re-type New Password'/>
+					</RBS.Row>
+				  </RBS.Grid>
+				</RBS.Modal.Body>
+					
+				<RBS.Modal.Footer>
+				 <RBS.Button bsStyle="primary" onClick={this.props.close}>Save Changes</RBS.Button>
 				</RBS.Modal.Footer>
 			</RBS.Modal>
 		)
@@ -73,7 +152,7 @@ var ChangeUsernameDialog = React.createClass({
 var Title = React.createClass({
 	render: function(){
 		return(
-			<h2> Account Information </h2>
+			<h1> Account Information </h1>
 		)
 	}
 	

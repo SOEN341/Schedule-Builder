@@ -12,24 +12,64 @@ var PreferencesPage = React.createClass({
 	
 	generateSchedule: function() {
 		//Uncomment this when the schedule page actually exists
-		//this.props.changePage(2);
+		//this.props.changePage(3);
 	}
 });
 
 var Preferences = React.createClass({
+	getInitialState: function() {
+		return {
+			classes: 5,
+			day: 'None',
+			time: 'Any'
+		}
+	},
+	
 	render: function() {
 		return (
 			<div>
 				<h3>Preferences</h3>
 				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5'}}>
-					<RBS.Row>some preferences here</RBS.Row>
+					<RBS.Row>
+						<InputElement label='Classes per semester' value={this.state.classes} onChange={this.onClassesChange}/>
+					</RBS.Row>
+					<RBS.Row>
+						<SelectElement label='Desired day off' value={this.state.day} placeholder='None' data={['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']} onChange={this.onDayChange}/>
+					</RBS.Row>
+					<RBS.Row>
+						<SelectElement label='Preferred time of day' value={this.state.time} placeholder='Any' data={['Any', 'Mornings', 'Afternoons', 'Evenings']} onChange={this.onTimeChange}/>
+					</RBS.Row>
 				</RBS.Grid>
 			</div>
 		)
+	},
+	
+	onClassesChange: function(value) {
+		this.setState({
+			classes: value
+		})
+	},
+	
+	onTimeChange: function(value) {
+		this.setState({
+			time: value
+		})
+	},
+	
+	onDayChange: function(value) {
+		this.setState({
+			day: value
+		})
 	}
 });
 
 var Classes = React.createClass({
+	getInitialState: function() {
+		return {
+			semesters: ''
+		}
+	},
+	
 	render: function() {
 		return (
 			<div>
@@ -37,7 +77,7 @@ var Classes = React.createClass({
 				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5', paddingTop:'10px'}}>
 					<RBS.Row>
 						<RBS.Col md={2}/>
-						<InputElement label='Semesters Taken' input_md={4}/>
+						<InputElement label='Semesters Taken' value={this.state.semesters} onChange={this.onSemestersChange} label_md={2} input_md={4}/>
 						<RBS.Col md={2}><RBS.Button>Generate class list</RBS.Button></RBS.Col>
 					</RBS.Row>
 				</RBS.Grid>
@@ -45,6 +85,12 @@ var Classes = React.createClass({
 				<NeededClasses/>
 			</div>
 		)
+	},
+	
+	onSemestersChange: function(value) {
+		this.setState({
+			semesters: value
+		})
 	}
 });
 
