@@ -5,7 +5,13 @@ CREATE DATABASE database1;
  USE database1;
 
 //Command to recreate the student table
-CREATE TABLE student(fname VARCHAR(15) NOT NULL,lName VARCHAR(15) NOT NULL,username VARCHAR(15) not null,password VARCHAR(15) not null,cDone VARCHAR(4000) NOT NULL,remCourse VARCHAR(4000) NOT NULL, labs VARCHAR(2000) NOT NULL, tutorials VARCHAR(2000) NOT NULL,studentId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);
+CREATE TABLE users(fname VARCHAR(15) NOT NULL,lName VARCHAR(15) NOT NULL,email VARCHAR(15) NOT NULL,password VARCHAR(15) not null,cDone VARCHAR(4000) NOT NULL,remCourse VARCHAR(4000) NOT NULL, labs VARCHAR(2000) NOT NULL, tutorials VARCHAR(2000) NOT NULL,userType BOOLEAN NOT NULL,userName VARCHAR(15) NOT NULL PRIMARY KEY);
+
+
+//Command to create the course table
+CREATE TABLE courses(semester VARCHAR(15) NOT NULL,code VARCHAR(15) NOT NULL,name VARCHAR(15) not null,credits VARCHAR(15) not null,description VARCHAR(4000) NOT NULL, courseID INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);
+
+
 
 //keep in single line
 
@@ -17,45 +23,26 @@ INSERT INTO student('fname', 'lName','password' 'cDone', 'remCourse', 'labs', 't
 
 // these will suffice for testing puproses.
 
-INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9])
+//INSERT INTO `student`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9])
 
-INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','user0','pass','a','aa','as','a','');
+INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Jon','Snow','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user0');
  
-INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Jon','Snow','user1','pass','a','aa','as','a','');
+INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Kanye','West','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user1');
 
-INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Megan','Fox','user2','pass','a','aa','as','a','');
+INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Megan','Fox','email@email.com','pass','cdone','remcourse','labs','tutorials','1','user2');
 
-INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Banana','Split','user3','pass','a','aa','as','a','');
+INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Banana','Split','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user3');
 
-INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Kylo','Ren','user4','pass','a','aa','as','a','');
+INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Kylo','Ren','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user4');
 
-INSERT INTO `student`(`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Big','Mama','user5','pass','a','aa','as','a','');
-
-
-
-		// $.post("registrationscpript.php", { username: username, password: password })
-	 //    .done(function(data) {
-	 //        alert("Data Loaded: " + data);
-	 //    });
+INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Big','Mama','email@email.com','pass','cdone','remcourse','labs','tutorials','1','user5');
 
 
-$.ajax({
-		  type: "POST",
-		  url: "logscript.php",
-		  data: {username: this.state.username, password: this.state.password},
-		  dataType: "json",
-		  async: false
-		}).done(function(data) {
-        getResult(data.result);
-    	});
+//Populating the course table
 
-    	 if(result.localeCompare('good') == 0) {
-		 	this.props.changePage(1);
-		 }
-		 else {
-			alert('Bad username and/or password');
-			this.props.changePage(0);
-		}
+INSERT INTO `courses`(`semester`, `code`, `name`, `credits`, `description`, `courseId`) VALUES ('/2','COMP 248','OBJ-ORIENTED PROGRAMMING I',3,'Q','');
 
+INSERT INTO `courses`(`semester`, `code`, `name`, `credits`, `description`, `courseId`) VALUES ('/4','COMP 248','OBJ-ORIENTED PROGRAMMING I',3,'U','');
 
+INSERT INTO `courses`(`semester`, `code`, `name`, `credits`, `description`, `courseId`) VALUES ('/1','COMP 249','OBJ-ORIENTED PROGRAMMING II',3,'CC','');
 
