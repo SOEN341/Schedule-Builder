@@ -1,0 +1,57 @@
+POSSIBLE SUBSYSTEMS
+
+Student:
+Manage taken/needed courses (pretty much the same procedure for both, I think we can combine them)
+Manage account info
+Manage preferences
+
+Admin:
+Manage course database
+Manage section databse
+Manage account info (the difference btwn admin and student is that admin CANNOT change the username)
+
+Section 2:
+>Introduction - Adil
+
+
+Section 3:Updated/Detailed version of architecuture design presented in deliverable 1 section 1.6, meaning 4+1 diagram
+>Introduction:Le Vinh
+	
+Section 3.1: 4+1 Architecture Design
+>LOGICAL VIEW : Class diagram + description of what is the purpose of this type of diagrams + description of OUR diagram: Dias, Gabriele, Adriel
+>DEVELOPMENT VIEW: Component diagram + description of what is the purpose of this type of diagrams + description of OUR diagram: Nick, Ying-Chen
+	> "Bacon" example is very good for our project
+>PHYSICAL VIEW: Deployment diagram + description of what is the purpose of this type of diagrams + description of OUR diagram:Le Vinh
+>PROCESS VIEW: Actvity diagram + description of what is the purpose of this type of diagrams + description of OUR diagram:Emili, Alex
+>SCENARIOS: Updated use case diagram + description of what is the purpose of this type of diagrams + description of OUR diagram:?Emili?
+
+Section 3.2: Subsystems interface specification
+>Component diagram + class diagram: Ying-Chen, Nick 
+	> Follow bacon example!
+
+
+Section 4:Detailed design --> Class diagram deep description
+	>"Nexus" is a good example for the entire section 4!!
+Section 4.1: Subsystems class diagram representation (from original class diagram) + description of each subsystem
+	>By: Adriel, Gabriele, Dias
+
+Section 4.2: Unit description (basically description of EACH class within our class diagram)
+	>By: Adriel, Gabriele, Dias
+
+Section 5:Dynamic Design Scenarios(Fun part)
+	>By: Salma, Emili, Alex, Le Vinh
+SSD: Drop Course (STUDENT), Add Course (STUDENT), Generate Schedule(STUDENT), ... ADD course to database (admin)
+SD for each operation per SSD + contract table per operation
+	
+
+Section 6:Estimation for each modules(I believe this is subsystems also)
+> Adil
+
+
+Section 7:Rapid Prototyping
+>By Bruce and Sean
+Rapid Prototyping Report: List and comment prototypes of modules, drivers or stubs implemented.  Give the effect of this work on the design decisions made in the above.  Give the effect on the risks identified in the first report, the effect on the estimate, and on any scope changes.
+List all work related to prototyping involving:
+Classes or modules
+Testing code including drivers and stubs implemented
+Technologies used including but not limited to any versioning system, groupware, frameworks if used and databases."
