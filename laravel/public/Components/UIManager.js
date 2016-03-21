@@ -34,6 +34,6 @@ var Main = React.createClass({
 	openPreferencesPage: function() {
 		this.changePage(1);
 	}
-	
+
 
 });

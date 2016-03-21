@@ -35,6 +35,9 @@
 	<div id="pageContent"></div>
     <script type="text/jsx">
 		var RBS = ReactBootstrap;
+		ReactDOM.render(
+				<Main currentPage={0}/>, document.getElementById('pageContent')
+		);
 		{{--ReactDOM.render(--}}
 			{{--<Main currentPage={0}/>, document.getElementById('pageContent')--}}
 		{{--);--}}
