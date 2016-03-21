@@ -19,6 +19,8 @@ Route::get('/preferences', 'PreferencesController@index');
 
 Route::get('/account', 'AccountController@index');
 
+$url = url('foo');
+
 Route::get('users', function(){return User::all(); });
 
 
