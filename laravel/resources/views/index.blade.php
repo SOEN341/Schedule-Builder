@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.js"></script>
+	  <script src="https://npmcdn.com/react-router/umd/ReactRouter.min.js"></script>
 	  <!--
 	<script src="https://github.com/SOEN341/Schedule-Builder/blob/master/Components/UIManager.js" type="text/jsx"></script>
 	<script src="https://github.com/SOEN341/Schedule-Builder/blob/master/Components/Inputs.js" type="text/jsx"></script>
@@ -25,6 +26,7 @@
 	  <script src="http://localhost:8000/Components/Preferences.js" type="text/jsx"></script>
 	  <script src="http://localhost:8000/Components/AccountPage.js" type="text/jsx"></script>
 	  -->
+	  <script src="Components/typeahead.bundle.js" type="text/jsx"></script>
 	  <script src="Components/UIManager.js" type="text/jsx"></script>
 	  <script src="Components/Inputs.js" type="text/jsx"></script>
 	  <script src="Components/Login.js" type="text/jsx"></script>
