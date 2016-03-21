@@ -15,10 +15,10 @@ var LoginPage = React.createClass({
 				<br/>
 				<RBS.Grid  fluid={true} style={{width:'30%'}}>
 					<RBS.Row>
-						<InputElement label='Username' onChange={this.onUsernameChange}/>
+						<InputElement label='Username' onChange={this.onUsernameChange} value={this.state.username}/>
 					</RBS.Row>
 					<RBS.Row>
-						<InputElement label='Password' type='password' onChange={this.onPasswordChange}/>
+						<InputElement label='Password' type='password' onChange={this.onPasswordChange}  value={this.state.password}/>
 					</RBS.Row>
 					<a onClick={this.openRegisterDialog}>Create Account</a>
 					<span style={{float:'right'}}><RBS.Button bsStyle='primary' onClick={this.logIn}>Log In</RBS.Button></span>
