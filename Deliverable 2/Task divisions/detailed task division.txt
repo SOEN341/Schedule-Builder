@@ -1,14 +1,13 @@
 POSSIBLE SUBSYSTEMS
 
-Student:
-Manage taken/needed courses (pretty much the same procedure for both, I think we can combine them)
-Manage account info
-Manage preferences
+STUDENT Generate Schedule
+STUDENT Manage Courses (both types (taken/needed) are essentially the same procedures, just used differently while generating a schedule)
+STUDENT Manage Preferences
 
-Admin:
-Manage course database
-Manage section databse
-Manage account info (the difference btwn admin and student is that admin CANNOT change the username)
+ADMIND Manage Course DB (includes both section and courses)
+ADMIN & STUDENT: Login/Sign up/User Authentification 
+
+ADMIN & STUDENT Manage account information (admin and student are the same, except admin cannot change the username)
 
 Section 2:
 >Introduction - Adil
