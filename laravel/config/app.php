@@ -93,6 +93,8 @@ return [
 
     'key' => env('APP_KEY'),
 
+
+
     'cipher' => 'AES-256-CBC',
 
     /*
@@ -155,6 +157,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        'React\ReactServiceProvider',
 
     ],
 

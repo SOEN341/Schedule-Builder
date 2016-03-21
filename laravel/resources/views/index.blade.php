@@ -18,27 +18,25 @@
 	<script src="https://github.com/SOEN341/Schedule-Builder/blob/master/Components/Preferences.js" type="text/jsx"></script>
 	<script src="https://github.com/SOEN341/Schedule-Builder/blob/master/Components/AccountPage.js" type="text/jsx"></script>
 	-->
-	  <!--
-	  <script src="http://localhost:8000/Components/UIManager.js" type="text/jsx"></script>
-	  <script src="http://localhost:8000/Components/Inputs.js" type="text/jsx"></script>
-	  <script src="http://localhost:8000/Components/Login.js" type="text/jsx"></script>
-	  <script src="http://localhost:8000/Components/Preferences.js" type="text/jsx"></script>
-	  <script src="http://localhost:8000/Components/AccountPage.js" type="text/jsx"></script>
-	  -->
+
+	  <script src="{{ asset('vendor/react-laravel/react.js') }}"></script>
+	  <script src="{{ asset('vendor/react-laravel/react-dom.js') }}"></script>
 	  <script src="Components/UIManager.js" type="text/jsx"></script>
 	  <script src="Components/Inputs.js" type="text/jsx"></script>
 	  <script src="Components/Login.js" type="text/jsx"></script>
 	  <script src="Components/Preferences.js" type="text/jsx"></script>
 	  <script src="Components/AccountPage.js" type="text/jsx"></script>
+	  <script src="{{ asset('vendor/react-laravel/react_ujs.js') }}"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   </head>
   <body>
 	<div id="pageContent"></div>
     <script type="text/jsx">
 		var RBS = ReactBootstrap;
-		ReactDOM.render(
-			<Main currentPage={0}/>, document.getElementById('pageContent')
-		);
+		{{--ReactDOM.render(--}}
+			{{--<Main currentPage={0}/>, document.getElementById('pageContent')--}}
+		{{--);--}}
+		 @react_component('Message', [ 'title' => 'Hello, World' ], [ 'prerender' => true ])
 		console.log("Page generated");
     </script>
   </body>
