@@ -13,6 +13,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.js"></script>
 	<script src="jquery-1.12.0.min.js"></script>
+	<script src="Components/typeahead.bundle.js" type="text/jsx"></script>
 	<script src="Components/UIManager.js" type="text/jsx"></script>
 	<script src="Components/Inputs.js" type="text/jsx"></script>
 	<script src="Components/Login.js" type="text/jsx"></script>
