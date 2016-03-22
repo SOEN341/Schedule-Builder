@@ -1,9 +1,16 @@
 var PreferencesPage = React.createClass({
+	getInitialState: function() {
+		return {
+			classDialogOpen: false
+		}
+	},
+
 	render: function() {
 		return (
 			<div>
+				{this.state.classDialogOpen? <ClassDialog close={this.closeClassDialog}/>: null}
 				<Preferences/>
-				<Classes/>
+				<Classes openDialog={this.openClassDialog}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
 			</div>
@@ -13,6 +20,45 @@ var PreferencesPage = React.createClass({
 	generateSchedule: function() {
 		//Uncomment this when the schedule page actually exists
 		//this.props.changePage(3);
+		console.log('schedule');
+		alert('dasfds');
+	},
+
+	openClassDialog: function() {
+		console.log('here');
+		this.setState({
+			classDialogOpen: true
+		})
+	},
+
+	closeClassDialog: function() {
+		this.setState({
+			classDialogOpen: false
+		})
+	},
+});
+
+var ClassDialog = React.createClass({
+	render:function() {
+		return (
+			<RBS.Modal show={true} onHide={this.props.close}>
+				<RBS.Modal.Header closeButton>
+					<RBS.Modal.Title>Add Class</RBS.Modal.Title>
+				</RBS.Modal.Header>
+				<RBS.Modal.Body>
+					<RBS.Grid fluid={true}>
+						<RBS.Row>
+							<TypeaheadInput label='Course Number' onChange={this.props.usernameChange} data={["COMP 248", "COMP 249", "COMP 352"]}/>
+						</RBS.Row>
+						<RBS.Row>
+						</RBS.Row>
+					</RBS.Grid>
+				</RBS.Modal.Body>
+				<RBS.Modal.Footer>
+					<RBS.Button onClick={this.props.close} bsStyle='primary'>Add Class</RBS.Button>
+				</RBS.Modal.Footer>
+			</RBS.Modal>
+		)
 	}
 });
 
@@ -81,8 +127,8 @@ var Classes = React.createClass({
 						<RBS.Col md={2}><RBS.Button>Generate class list</RBS.Button></RBS.Col>
 					</RBS.Row>
 				</RBS.Grid>
-				<TakenClasses/>
-				<NeededClasses/>
+				<TakenClasses openDialog={this.props.openDialog}/>
+				<NeededClasses openDialog={this.props.openDialog}/>
 			</div>
 		)
 	},
@@ -112,7 +158,7 @@ var TakenClasses = React.createClass({
 						</tr>
 					</tbody>
 				</RBS.Table>
-				<div style={{textAlign:'center'}}><RBS.Button>Add Class</RBS.Button></div>
+				<div style={{textAlign:'center'}}><RBS.Button onClick={this.props.openDialog}>Add Class</RBS.Button></div>
 				<br/>
 			</div>
 		)
@@ -137,7 +183,7 @@ var NeededClasses = React.createClass({
 						</tr>
 					</tbody>
 				</RBS.Table>
-				<div style={{textAlign:'center'}}><RBS.Button>Add Class</RBS.Button></div>
+				<div style={{textAlign:'center'}}><RBS.Button onClick={this.props.openDialog}>Add Class</RBS.Button></div>
 			</div>
 		)
 	}
