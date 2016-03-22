@@ -17,13 +17,13 @@ var Main = React.createClass({
 	
 	changePage: function(newPage) {
 		if(newPage==0) {
-			window.location = 'resources/views/index.php';
+			window.location = 'http://localhost:8000/index';
 		}
 		else if(newPage==1) {
-			window.location = $.get( "preferences.php" );
+			window.location = 'http://localhost:8000/preferences';
 		}
 		else if(newPage==2) {
-			window.location = $.get( "account.php" );
+			window.location = 'http://localhost:8000/account';
 		}
 	},
 	
@@ -34,6 +34,6 @@ var Main = React.createClass({
 	openPreferencesPage: function() {
 		this.changePage(1);
 	}
-
+	
 
 });

@@ -4,9 +4,8 @@
 namespace App\Http\Controllers;
 
 
-class PreferencesController extends Controller
+class AccountController extends Controller
 {
-
     public function index(){
         return view('account');
     }

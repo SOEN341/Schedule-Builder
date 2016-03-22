@@ -13,15 +13,18 @@
 use  App\User;
 
 
+Route::get('/', 'IndexController@index');
+
 Route::get('/index', 'IndexController@index');
 
-Route::get('/preferences', 'PreferencesController@index');
+Route::get('/preferences','HomeController@preference');
 
 Route::get('/account', 'AccountController@index');
 
-$url = url('foo');
+Route::resource('/register', 'HomeController@register');
 
-Route::get('users', function(){return User::all(); });
+Route::resource('/login', 'HomeController@login');
+
 
 
 

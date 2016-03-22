@@ -15,10 +15,10 @@ var LoginPage = React.createClass({
 				<br/>
 				<RBS.Grid  fluid={true} style={{width:'30%'}}>
 					<RBS.Row>
-						<InputElement label='Username' onChange={this.onUsernameChange} value={this.state.username}/>
+						<InputElement label='Username' onChange={this.onUsernameChange}/>
 					</RBS.Row>
 					<RBS.Row>
-						<InputElement label='Password' type='password' onChange={this.onPasswordChange}  value={this.state.password}/>
+						<InputElement label='Password' type='password' onChange={this.onPasswordChange}/>
 					</RBS.Row>
 					<a onClick={this.openRegisterDialog}>Create Account</a>
 					<span style={{float:'right'}}><RBS.Button bsStyle='primary' onClick={this.logIn}>Log In</RBS.Button></span>
@@ -44,17 +44,30 @@ var LoginPage = React.createClass({
 	register: function() {
 		var self1=this;
 		console.log(this.state.username);
-		$.post( "registrationscript.php", { username: this.state.username, password: this.state.password }, function( data ) {
-		console.log(data);
-		// if(data.result.localeCompare('registered') == 0) {
-		// 	alert('Registered properly.');
-		// }
-		// else {
-		// 	alert('This username is taken already.');
-		// }
-		}, "json");	
+			$.ajax({
+			type:    "POST",
+			url:     "http://localhost:8000/register",
+			dataType: "json",
+			data:    {"username":this.state.username, "password":this.state.password },
+			success: function(data) {
+				console.log(data);
+				 if(data.result.localeCompare('registered') == 0) {
+				 	alert('Registered properly.');
+					 self.props.changePage(1);
+				 }
+				 else {
+				 	alert('This username is taken already. Try again');
+					 self.props.changePage(0);
+				 }
+			},
+			error:   function(jqXHR, textStatus, errorThrown) {
+				alert("Error, status = " + textStatus + ", " +
+					"error thrown: " + errorThrown
+				);
+			}
+		});
 		self1.closeRegistrationDialog();
-		self1.props.changePage(1); //Log them in and redirect to preferences page
+		 //Log them in and redirect to preferences page
 	},
 	
 	onUsernameChange: function(value) {
@@ -72,17 +85,26 @@ var LoginPage = React.createClass({
 		
 	logIn: function() {	
 		var self= this;
-		$.post( "logscript.php", { username: this.state.username, password: this.state.password }, function( data ) {
-		//console.log( data.result );		   
-		//console.log( data.username );	
-		if(data.result.localeCompare('good') == 0) {
-			self.props.changePage(1);
-		}
-		else {
-			alert('Bad username and/or password');
-			self.props.changePage(0);
-		}
-		}, "json");
+			$.ajax({
+				type:    "POST",
+				url:     "http://localhost:8000/login",
+				dataType: "json",
+				data:    {"username":this.state.username, "password":this.state.password },
+				success: function(data) {
+					if(data.result.localeCompare('good') == 0) {
+						self.props.changePage(1);
+					}
+					else {
+						alert('Bad username and/or password');
+						self.props.changePage(0);
+					}
+				},
+				error:   function(jqXHR, textStatus, errorThrown) {
+					alert("Error, status = " + textStatus + ", " +
+						"error thrown: " + errorThrown
+					);
+				}
+			});
 	}
 });
 

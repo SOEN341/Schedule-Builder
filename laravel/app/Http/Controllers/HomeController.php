@@ -10,4 +10,15 @@ class HomeController extends Controller {
         return view('home');
     }
 
+    public function register(){
+        return view('register');
+    }
+
+    public function preference(){
+        return view('preferences');
+    }
+
+    public function login(){
+        return view('login');
+    }
 }
