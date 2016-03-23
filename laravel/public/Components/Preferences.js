@@ -1,16 +1,19 @@
 var PreferencesPage = React.createClass({
 	getInitialState: function() {
 		return {
-			classDialogOpen: false
+			classDialogOpen: false,
+			dialogMode: 1,
+			neededCourses: serverBridge.getNeededCourses(),
+			takenCourses: serverBridge.getTakenCourses()
 		}
 	},
 
 	render: function() {
 		return (
 			<div>
-				{this.state.classDialogOpen? <ClassDialog close={this.closeClassDialog}/>: null}
+				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse}/>: null}
 				<Preferences/>
-				<Classes openDialog={this.openClassDialog}/>
+				<Classes openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
 			</div>
@@ -20,14 +23,12 @@ var PreferencesPage = React.createClass({
 	generateSchedule: function() {
 		//Uncomment this when the schedule page actually exists
 		//this.props.changePage(3);
-		console.log('schedule');
-		alert('dasfds');
 	},
 
-	openClassDialog: function() {
-		console.log('here');
+	openClassDialog: function(mode) {
 		this.setState({
-			classDialogOpen: true
+			classDialogOpen: true,
+			dialogMode: mode
 		})
 	},
 
@@ -36,29 +37,81 @@ var PreferencesPage = React.createClass({
 			classDialogOpen: false
 		})
 	},
+	
+	addNeededCourse: function(course) {
+		var courses = React.addons.update(this.state.neededCourses, {});
+		courses.push(course);
+		this.setState({
+			neededCourses: courses
+		})
+	},
+	
+	addTakenCourse: function(course) {
+		var courses = React.addons.update(this.state.takenCourses, {});
+		courses.push(course);
+		this.setState({
+			takenCourses: courses
+		})
+	}
 });
 
 var ClassDialog = React.createClass({
+	getInitialState: function() {
+		return {
+			name: '',
+			number: ''
+		}
+	},
+	
 	render:function() {
+		var type='Needed';
+		if(this.props.mode==1) {
+			type='Taken';
+		}
 		return (
 			<RBS.Modal show={true} onHide={this.props.close}>
 				<RBS.Modal.Header closeButton>
-					<RBS.Modal.Title>Add Class</RBS.Modal.Title>
+					<RBS.Modal.Title>Add {type} Course</RBS.Modal.Title>
 				</RBS.Modal.Header>
 				<RBS.Modal.Body>
 					<RBS.Grid fluid={true}>
 						<RBS.Row>
-							<TypeaheadInput label='Course Number' onChange={this.props.usernameChange} data={["COMP 248", "COMP 249", "COMP 352"]}/>
+							<TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={["COMP 248", "COMP 249", "COMP 352"]} key={1}/>
 						</RBS.Row>
 						<RBS.Row>
+							<InputElement label='Course Name' onChange={this.nameChange} value={this.state.name} key={2}/>
 						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>
 				<RBS.Modal.Footer>
-					<RBS.Button onClick={this.props.close} bsStyle='primary'>Add Class</RBS.Button>
+					<RBS.Button onClick={this.addCourse} bsStyle='primary'>Add Class</RBS.Button>
 				</RBS.Modal.Footer>
 			</RBS.Modal>
 		)
+	},
+	
+	numberChange: function(value) {
+		this.setState({
+			number: value
+		});
+	},
+	
+	nameChange: function(value) {
+		this.setState({
+			name: value
+		});
+	},
+	
+	addCourse: function() {
+		var course = {
+			name: this.state.name,
+			number: this.state.number
+		};
+		if(this.props.mode==1)
+			this.props.addTakenCourse(course);
+		else
+			this.props.addNeededCourse(course);
+		this.props.close();
 	}
 });
 
@@ -127,8 +180,8 @@ var Classes = React.createClass({
 						<RBS.Col md={2}><RBS.Button>Generate class list</RBS.Button></RBS.Col>
 					</RBS.Row>
 				</RBS.Grid>
-				<TakenClasses openDialog={this.props.openDialog}/>
-				<NeededClasses openDialog={this.props.openDialog}/>
+				<TakenClasses openDialog={this.props.openDialog} courses={this.props.takenCourses}/>
+				<NeededClasses openDialog={this.props.openDialog} courses={this.props.neededCourses}/>
 			</div>
 		)
 	},
@@ -150,18 +203,16 @@ var TakenClasses = React.createClass({
 							<th colSpan={3}>Classes Taken</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>Class Name</td>
-							<td>Course Number</td>
-							<td>Buttons</td>
-						</tr>
-					</tbody>
+					<CourseList courses={this.props.courses}/>
 				</RBS.Table>
-				<div style={{textAlign:'center'}}><RBS.Button onClick={this.props.openDialog}>Add Class</RBS.Button></div>
+				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 				<br/>
 			</div>
 		)
+	},
+	
+	openDialog: function() {
+		this.props.openDialog(1);
 	}
 });
 
@@ -175,16 +226,45 @@ var NeededClasses = React.createClass({
 							<th colSpan={3}>Classes Needed</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>Class Name</td>
-							<td>Course Number</td>
-							<td>Buttons</td>
-						</tr>
-					</tbody>
+					<CourseList courses={this.props.courses}/>
 				</RBS.Table>
-				<div style={{textAlign:'center'}}><RBS.Button onClick={this.props.openDialog}>Add Class</RBS.Button></div>
+				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 			</div>
+		)
+	},
+	
+	openDialog: function() {
+		this.props.openDialog(2);
+	}
+});
+
+var CourseList = React.createClass({
+	componentWillMount: function() {
+		this.keys=0;
+	},
+	
+	render: function() {
+		return (
+			<tbody>
+				<tr>
+					<td>Class Name</td>
+					<td>Course Number</td>
+					<td>Buttons</td>
+				</tr>
+				{this.props.courses.map(function(course) {
+					return (
+						<Course key={this.keys++} name={course.name} number={course.number}/>
+					)
+				}, this)}
+			</tbody>
+		)
+	}
+});
+
+var Course = React.createClass({
+	render: function() {
+		return (
+			<tr><td>{this.props.name}</td><td>{this.props.number}</td><td></td></tr>
 		)
 	}
 });

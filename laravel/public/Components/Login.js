@@ -28,7 +28,6 @@ var LoginPage = React.createClass({
 	},
 	
 	openRegisterDialog: function() {
-		console.log('here');
 		this.setState({
 			registerDialogOpen: true
 		})
