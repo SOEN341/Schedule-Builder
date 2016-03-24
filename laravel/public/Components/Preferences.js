@@ -4,14 +4,15 @@ var PreferencesPage = React.createClass({
 			classDialogOpen: false,
 			dialogMode: 1,
 			neededCourses: serverBridge.getNeededCourses(),
-			takenCourses: serverBridge.getTakenCourses()
+			takenCourses: serverBridge.getTakenCourses(),
+			courses: serverBridge.getCourses()
 		}
 	},
 
 	render: function() {
 		return (
 			<div>
-				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse}/>: null}
+				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse} courses={this.state.courses}/>: null}
 				<Preferences/>
 				<Classes openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse}/>
 				<br/>
@@ -112,10 +113,10 @@ var ClassDialog = React.createClass({
 				<RBS.Modal.Body>
 					<RBS.Grid fluid={true}>
 						<RBS.Row>
-							<TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={["COMP 248", "COMP 249", "COMP 352"]} key={1}/>
+							<TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={this.props.courses} type='number' key={1}/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='Course Name' onChange={this.nameChange} value={this.state.name} key={2}/>
+							<InputElement label='Course Name' onChange={this.nameChange} value={this.state.name} data={this.props.courses} key={2}/>
 						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>
@@ -127,6 +128,14 @@ var ClassDialog = React.createClass({
 	},
 	
 	numberChange: function(value) {
+		if(value.length==8) {
+			for(var i=0; i<this.props.courses.length; i++) {
+				if(this.props.courses[i].number==value) {
+					this.nameChange(this.props.courses[i].name);
+					break;
+				}
+			}
+		}
 		this.setState({
 			number: value
 		});

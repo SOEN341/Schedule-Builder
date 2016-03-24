@@ -77,7 +77,8 @@ var TypeaheadInput = React.createClass({
 			placeholder: '',
 			data: [],
 			value: '',
-			key: 1
+			key: 1,
+			type: ''
 		}
 	},
 
@@ -86,36 +87,44 @@ var TypeaheadInput = React.createClass({
 	},
 
 	componentDidMount: function() {
+		var local=this.props.data;
+		if(this.props.type=='name') {
+			local = [];
+			for(var i=0; i<this.props.data.length; i++) {
+				local.push(this.props.data[i].name);
+			}
+		}
+		else if(this.props.type=='number') {
+			local = [];
+			for(var i=0; i<this.props.data.length; i++) {
+				local.push(this.props.data[i].number);
+			}
+		}
+		
 		// constructs the suggestion engine
 		var bloodhound = new Bloodhound({
 			datumTokenizer: Bloodhound.tokenizers.whitespace,
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
 			// `states` is an array of state names defined in "The Basics"
-			local: this.props.data
+			local: local
 		});
 
 
 
 		$('#bloodhound .typeahead').typeahead({
-				hint: true,
-				highlight: true,
-				minLength: 1
-			},
-			{
-				name: 'data',
-				source: bloodhound
-			});
-
-		ReactDOM.findDOMNode(this.refs.myTextInput).focus();
-		$ (ReactDOM.findDOMNode(this.refs.myTextInput)).typeahead({
-				hint: true,
-				highlight: true,
-				minLength: 1
-			},
-			{
-				name: 'data',
-				source: bloodhound
-			});
+			hint: true,
+			highlight: true,
+			minLength: 1
+		},
+		{
+			name: 'data',
+			source: bloodhound,
+			updater: function (item) {
+				console.log('ayyy');
+				this.handleChange(item);
+				return item;
+			}
+		});
 	},
 
 	render: function() {
@@ -125,9 +134,10 @@ var TypeaheadInput = React.createClass({
 		else {
 			var input = <div><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} /></div>
 		}*/
+		console.log('render');
 		return (
 				<div id="bloodhound" key={this.props.key}>
-					<div><RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} key={this.props.key}/></RBS.Col></div>
+					<RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} key={this.props.key}/></RBS.Col>
 				</div>
 		);
 	}

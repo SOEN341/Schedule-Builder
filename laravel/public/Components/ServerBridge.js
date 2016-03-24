@@ -3,11 +3,11 @@ var mockServerBridge = {
 		return [
 			{
 				name: 'Object Oriented Programming 1',
-				code: 'COMP 248'
+				number: 'COMP 248'
 			},
 			{
 				name: 'Object Oriented Programming 2',
-				code: 'COMP 249'
+				number: 'COMP 249'
 			}
 		]
 	},
