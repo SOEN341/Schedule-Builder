@@ -13,7 +13,7 @@ var PreferencesPage = React.createClass({
 			<div>
 				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse}/>: null}
 				<Preferences/>
-				<Classes openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses}/>
+				<Classes openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
 			</div>
@@ -52,6 +52,42 @@ var PreferencesPage = React.createClass({
 		this.setState({
 			takenCourses: courses
 		})
+	},
+	
+	removeNeededCourse: function(number) {
+		var courses = React.addons.update(this.state.neededCourses, {});
+		var index=-1;
+		for(var i=0; i<courses.length; i++) {
+			if(courses[i].number==number)
+			{
+				index=i;
+				break;
+			}
+		}
+		if(index!=-1) {
+			courses.splice(i, 1);
+			this.setState({
+				neededCourses: courses
+			})
+		}
+	},
+	
+	removeTakenCourse: function(number) {
+		var courses = React.addons.update(this.state.takenCourses, {});
+		var index=-1;
+		for(var i=0; i<courses.length; i++) {
+			if(courses[i].number==number)
+			{
+				index=i;
+				break;
+			}
+		}
+		if(index!=-1) {
+			courses.splice(i, 1);
+			this.setState({
+				takenCourses: courses
+			})
+		}
 	}
 });
 
@@ -180,8 +216,8 @@ var Classes = React.createClass({
 						<RBS.Col md={2}><RBS.Button>Generate class list</RBS.Button></RBS.Col>
 					</RBS.Row>
 				</RBS.Grid>
-				<TakenClasses openDialog={this.props.openDialog} courses={this.props.takenCourses}/>
-				<NeededClasses openDialog={this.props.openDialog} courses={this.props.neededCourses}/>
+				<TakenClasses openDialog={this.props.openDialog} courses={this.props.takenCourses} remove={this.props.removeTakenCourse}/>
+				<NeededClasses openDialog={this.props.openDialog} courses={this.props.neededCourses} remove={this.props.removeNeededCourse}/>
 			</div>
 		)
 	},
@@ -203,7 +239,7 @@ var TakenClasses = React.createClass({
 							<th colSpan={3}>Classes Taken</th>
 						</tr>
 					</thead>
-					<CourseList courses={this.props.courses}/>
+					<CourseList courses={this.props.courses} remove={this.props.remove}/>
 				</RBS.Table>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 				<br/>
@@ -226,7 +262,7 @@ var NeededClasses = React.createClass({
 							<th colSpan={3}>Classes Needed</th>
 						</tr>
 					</thead>
-					<CourseList courses={this.props.courses}/>
+					<CourseList courses={this.props.courses} remove={this.props.remove}/>
 				</RBS.Table>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 			</div>
@@ -253,7 +289,7 @@ var CourseList = React.createClass({
 				</tr>
 				{this.props.courses.map(function(course) {
 					return (
-						<Course key={this.keys++} name={course.name} number={course.number}/>
+						<Course key={this.keys++} name={course.name} number={course.number} remove={this.props.remove.bind(this, course.number)}/>
 					)
 				}, this)}
 			</tbody>
@@ -264,7 +300,7 @@ var CourseList = React.createClass({
 var Course = React.createClass({
 	render: function() {
 		return (
-			<tr><td>{this.props.name}</td><td>{this.props.number}</td><td></td></tr>
+			<tr><td>{this.props.name}</td><td>{this.props.number}</td><td><img onClick={this.props.remove} src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
 		)
 	}
 });
