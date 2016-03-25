@@ -12,8 +12,20 @@ var mockServerBridge = {
 		]
 	},
 	
-	getSections: function(course) {
+	getSections: function() {
 		
+	},
+	
+	getSectionsFromCourse: function(course) {
+		//What format are sections? What info do we store on a section?
+	},
+	
+	getUserPrefs: function() {
+		return {
+			classes: 5,
+			day: 'Monday',
+			time: 'Any'
+		}
 	},
 	
 	getNeededCourses: function() {
@@ -22,7 +34,9 @@ var mockServerBridge = {
 	
 	getTakenCourses: function() {
 		return [{name: 'Object Oriented 1', number: 'COMP 248'}, {name: 'Object Oriented 2', number: 'COMP 249'}];
-	}
+	},
+	
+	
 };
 
 var realServerBridge = {

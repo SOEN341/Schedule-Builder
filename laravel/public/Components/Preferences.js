@@ -5,7 +5,10 @@ var PreferencesPage = React.createClass({
 			dialogMode: 1,
 			neededCourses: serverBridge.getNeededCourses(),
 			takenCourses: serverBridge.getTakenCourses(),
-			courses: serverBridge.getCourses()
+			courses: serverBridge.getCourses(),
+			courseLoad: 5,
+			day: 'None',
+			time: 'Any'
 		}
 	},
 
@@ -13,7 +16,7 @@ var PreferencesPage = React.createClass({
 		return (
 			<div>
 				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse} courses={this.state.courses}/>: null}
-				<Preferences/>
+				<Preferences courseLoad={this.state.courseLoad} day={this.state.day} time={this.state.time}/>
 				<Classes openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
@@ -89,6 +92,24 @@ var PreferencesPage = React.createClass({
 				takenCourses: courses
 			})
 		}
+	},
+	
+	onClassesChange: function(value) {
+		this.setState({
+			classes: value
+		})
+	},
+	
+	onTimeChange: function(value) {
+		this.setState({
+			time: value
+		})
+	},
+	
+	onDayChange: function(value) {
+		this.setState({
+			day: value
+		})
 	}
 });
 
@@ -161,27 +182,19 @@ var ClassDialog = React.createClass({
 });
 
 var Preferences = React.createClass({
-	getInitialState: function() {
-		return {
-			classes: 5,
-			day: 'None',
-			time: 'Any'
-		}
-	},
-	
 	render: function() {
 		return (
 			<div>
 				<h3>Preferences</h3>
 				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5'}}>
 					<RBS.Row>
-						<InputElement label='Classes per semester' value={this.state.classes} onChange={this.onClassesChange}/>
+						<InputElement label='Classes per semester' value={this.props.courseLoad} onChange={this.props.onClassesChange}/>
 					</RBS.Row>
 					<RBS.Row>
-						<SelectElement label='Desired day off' value={this.state.day} placeholder='None' data={['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']} onChange={this.onDayChange}/>
+						<SelectElement label='Desired day off' value={this.props.day} placeholder='None' data={['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']} onChange={this.props.onDayChange}/>
 					</RBS.Row>
 					<RBS.Row>
-						<SelectElement label='Preferred time of day' value={this.state.time} placeholder='Any' data={['Any', 'Mornings', 'Afternoons', 'Evenings']} onChange={this.onTimeChange}/>
+						<SelectElement label='Preferred time of day' value={this.props.time} placeholder='Any' data={['Any', 'Mornings', 'Afternoons', 'Evenings']} onChange={this.props.onTimeChange}/>
 					</RBS.Row>
 				</RBS.Grid>
 			</div>
