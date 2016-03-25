@@ -105,7 +105,6 @@ var TypeaheadInput = React.createClass({
 		var bloodhound = new Bloodhound({
 			datumTokenizer: Bloodhound.tokenizers.whitespace,
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
-			// `states` is an array of state names defined in "The Basics"
 			local: local
 		});
 
@@ -118,12 +117,7 @@ var TypeaheadInput = React.createClass({
 		},
 		{
 			name: 'data',
-			source: bloodhound,
-			updater: function (item) {
-				console.log('ayyy');
-				this.handleChange(item);
-				return item;
-			}
+			source: bloodhound
 		});
 	},
 

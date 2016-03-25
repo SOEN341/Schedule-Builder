@@ -1,4 +1,11 @@
 var mockServerBridge = {
+	register: function(username, email, password) {
+		if(username=='taken')
+			return false;
+		else
+			return true;
+	},
+	
 	getCourses: function() {
 		return [
 			{
@@ -40,5 +47,26 @@ var mockServerBridge = {
 };
 
 var realServerBridge = {
-	
+	register: function(username, email, password) {
+		$.ajax({
+			type:    "POST",
+			url:     "http://localhost:8000/register",
+			dataType: "json",
+			data:    {"username":username, "email":email, "password":password },
+			success: function(data) {
+				 //return data
+				 if(data.result.localeCompare('registered') == 0) {
+					return true;
+				 }
+				 else {
+				 	return false;
+				 }
+			},
+			error:   function(jqXHR, textStatus, errorThrown) {
+				alert("Error, status = " + textStatus + ", " +
+					"error thrown: " + errorThrown
+				);
+			}
+		});
+	}
 };

@@ -3,14 +3,17 @@ var LoginPage = React.createClass({
 		return {
 			username: '',
 			password: '',
-			registerDialogOpen: false
+			registerDialogOpen: false,
+			rUsername: '',
+			rPassword: '',
+			email: ''
 		}
 	},
 	
 	render: function() {
 		return (
 			<div>
-				{this.state.registerDialogOpen? <RegistrationDialog close={this.closeRegistrationDialog} register={this.register} passwordChange={this.onPasswordChange} usernameChange={this.onUsernameChange}/>: null}
+				{this.state.registerDialogOpen? <RegistrationDialog close={this.closeRegistrationDialog} register={this.register} username={this.state.rUsername} password={this.state.rPassword} email={this.state.email} passwordChange={this.onRegPasswordChange} usernameChange={this.onRegUsernameChange} emailChange={this.onEmailChange}/>: null}
 				<Logo/>
 				<br/>
 				<RBS.Grid  fluid={true} style={{width:'30%'}}>
@@ -41,32 +44,18 @@ var LoginPage = React.createClass({
 	},
 	
 	register: function() {
-		var self1=this;
-		console.log(this.state.username);
-			$.ajax({
-			type:    "POST",
-			url:     "http://localhost:8000/register",
-			dataType: "json",
-			data:    {"username":this.state.username, "password":this.state.password },
-			success: function(data) {
-				console.log(data);
-				 if(data.result.localeCompare('registered') == 0) {
-				 	alert('Registered properly.');
-					 self.props.changePage(1);
-				 }
-				 else {
-				 	alert('This username is taken already. Try again');
-					 self.props.changePage(0);
-				 }
-			},
-			error:   function(jqXHR, textStatus, errorThrown) {
-				alert("Error, status = " + textStatus + ", " +
-					"error thrown: " + errorThrown
-				);
+		if(this.state.rUsername==''||this.state.email==''||this.state.rPassword=='') {
+			alert('All inputs are mandatory');
+		}
+		else {
+			var success = serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword);
+			if(success) {
+				this.props.changePage(1);
 			}
-		});
-		self1.closeRegistrationDialog();
-		 //Log them in and redirect to preferences page
+			else {
+				alert('Username already exists');
+			}
+		}
 	},
 	
 	onUsernameChange: function(value) {
@@ -81,7 +70,24 @@ var LoginPage = React.createClass({
 		})
 	},
 
-		
+	onRegUsernameChange: function(value) {
+		this.setState({
+			rUsername: value
+		})
+	},
+	
+	onRegPasswordChange: function(value) {
+		this.setState({
+			rPassword: value
+		})
+	},
+	
+	onEmailChange: function(value) {
+		this.setState({
+			email: value
+		})
+	},
+	
 	logIn: function() {	
 		var self= this;
 			$.ajax({
@@ -117,10 +123,13 @@ var RegistrationDialog = React.createClass({
 				<RBS.Modal.Body>
 					<RBS.Grid fluid={true}>
 						<RBS.Row>
-							<InputElement label='Username' onChange={this.props.usernameChange}/>
+							<InputElement label='Username' onChange={this.props.usernameChange} value={this.props.username}/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='Password' type='password' onChange={this.props.passwordChange}/>
+							<InputElement label='E-mail' onChange={this.props.emailChange} value={this.props.email}/>
+						</RBS.Row>
+						<RBS.Row>
+							<InputElement label='Password' type='password' onChange={this.props.passwordChange} value={this.props.password}/>
 						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>
