@@ -58,6 +58,16 @@ var LoginPage = React.createClass({
 		}
 	},
 	
+	logIn: function() {	
+		var success = serverBridge.login(this.state.username, this.state.password);
+		if(success) {
+			this.props.changePage(1);
+		}
+		else {
+			alert('Invalid username and/or password');
+		}
+	},
+	
 	onUsernameChange: function(value) {
 		this.setState({
 			username: value
@@ -86,30 +96,6 @@ var LoginPage = React.createClass({
 		this.setState({
 			email: value
 		})
-	},
-	
-	logIn: function() {	
-		var self= this;
-			$.ajax({
-				type:    "POST",
-				url:     "http://localhost:8000/login",
-				dataType: "json",
-				data:    {"username":this.state.username, "password":this.state.password },
-				success: function(data) {
-					if(data.result.localeCompare('good') == 0) {
-						self.props.changePage(1);
-					}
-					else {
-						alert('Bad username and/or password');
-						self.props.changePage(0);
-					}
-				},
-				error:   function(jqXHR, textStatus, errorThrown) {
-					alert("Error, status = " + textStatus + ", " +
-						"error thrown: " + errorThrown
-					);
-				}
-			});
 	}
 });
 
