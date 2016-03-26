@@ -1,14 +1,15 @@
 var PreferencesPage = React.createClass({
 	getInitialState: function() {
+		var cookies=this.loadCookies();
 		return {
 			classDialogOpen: false,
 			dialogMode: 1,
-			neededCourses: serverBridge.getNeededCourses(),
-			takenCourses: serverBridge.getTakenCourses(),
+			neededCourses: cookies.needed,
+			takenCourses: cookies.taken,
 			courses: serverBridge.getCourses(),
-			courseLoad: 5,
-			day: 'None',
-			time: 'Any'
+			courseLoad: cookies.prefs.classes,
+			day: cookies.prefs.day,
+			time: cookies.prefs.time
 		}
 	},
 
@@ -22,6 +23,37 @@ var PreferencesPage = React.createClass({
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
 			</div>
 		)
+	},
+	
+	loadCookies function() {
+		var takenCourses=cookieManager.getCookie('taken');
+		if(takenCourses=='') {
+			takenCourses = serverBridge.getTakenCourses();
+			cookieManager.addCookie('taken', JSON.stringify(takenCourses), 7);
+		}
+		else {
+			takenCourses = JSON.parse(takenCourses);
+		}
+		
+		var neededCourses=cookieManager.getCookie('needed');
+		if(neededCourses=='') {
+			neededCourses = serverBridge.getNeededCourses();
+			cookieManager.addCookie('needed', JSON.stringify(neededCourses), 7);
+		}
+		else {
+			neededCourses = JSON.parse(neededCourses);
+		}
+		
+		var prefs = cookieManager.getCookie('prefs');
+		if(prefs=='') {
+			prefs = serverBridge.getUserPrefs();
+			cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
+		}
+		else {
+			prefs = JSON.parse(prefs);
+		}
+		
+		return {needed: neededCourses, taken: takenCourses preferences: prefs};
 	},
 	
 	generateSchedule: function() {
@@ -47,7 +79,9 @@ var PreferencesPage = React.createClass({
 		courses.push(course);
 		this.setState({
 			neededCourses: courses
-		})
+		});
+		cookieManager.addCookie('needed', courses, 7);
+		serverBridge.editNeededCourses(courses);
 	},
 	
 	addTakenCourse: function(course) {
@@ -55,7 +89,9 @@ var PreferencesPage = React.createClass({
 		courses.push(course);
 		this.setState({
 			takenCourses: courses
-		})
+		});
+		cookieManager.addCookie('taken', courses, 7);
+		serverBridge.editTakenCourses(courses);
 	},
 	
 	removeNeededCourse: function(number) {
@@ -73,6 +109,8 @@ var PreferencesPage = React.createClass({
 			this.setState({
 				neededCourses: courses
 			})
+			cookieManager.addCookie('needed', courses, 7);
+			serverBridge.editNeededCourses(courses);
 		}
 	},
 	
@@ -91,6 +129,8 @@ var PreferencesPage = React.createClass({
 			this.setState({
 				takenCourses: courses
 			})
+			cookieManager.addCookie('taken', courses, 7);
+			serverBridge.editTakenCourses(courses);
 		}
 	},
 	

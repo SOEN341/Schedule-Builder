@@ -15,6 +15,7 @@
 	<script src="jquery-1.12.0.min.js"></script>
 	<script src="Components/typeahead.bundle.js" type="text/jsx"></script>
 	<script src="Components/ServerBridge.js" type="text/jsx"></script>
+	<script src="Components/CookieManager.js" type="text/jsx"></script>
 	<script src="Components/UIManager.js" type="text/jsx"></script>
 	<script src="Components/Inputs.js" type="text/jsx"></script>
 	<script src="Components/Login.js" type="text/jsx"></script>

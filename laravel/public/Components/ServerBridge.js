@@ -83,30 +83,30 @@ var mockServerBridge = {
 		
 	},
 	
-	editPreferences: function(oldPrefs, newPrefs) {
+	editPreferences: function(newPrefs) {
 		
 	},
 	
-	editNeededCourses: function(oldList, newList) {
+	editNeededCourses: function(newList) {
 		
 	},
 	
-	editTakenCourses: function(oldList, newList) {
+	editTakenCourses: function(newList) {
 		
 	},
 	
-	editUsername: function(oldUsername, newUsername) {
+	editUsername: function(newUsername) {
 		if(newUsername=='taken')
 			return false;
 		else
 			return true;
 	},
 	
-	editEmail: function(oldEmail, newEmail) {
+	editEmail: function(newEmail) {
 		
 	},
 	
-	editPassword: function(oldEmail, newEmail) {
+	editPassword: function(newPassword) {
 		
 	}
 };

@@ -1,15 +1,14 @@
-var cookieHandler = {
-	addCookie: function(name, value) {
+var cookieManager = {
+	addCookie: function(name, value, daysToExp) {
 		var d = new Date();
-		d.setTime(d.getTime() + (7*24*60*60*1000)); //One week until the cookie expires
-		if(document.cookie.search(name)>-1) {
-			removeCookie(name);
-		}
+		d.setTime(d.getTime() + (daysToExp*24*60*60*1000));
+		
 		var expires = "; expires="+d.toUTCString();
-		document.cookie = name + "=" + value + expires);
+		document.cookie = name + "=" + value + expires;
+		console.log('cookie!' + document.cookie);
 	},
 	
-	removeCookie: function(name) {
+	/*removeCookie: function(name) {
 		var cookies=document.cookie.split(';');
 		for(var i=0; i<cookies.length-1; i++) {
 			if(cookies[i].search(name)>-1)
@@ -17,10 +16,10 @@ var cookieHandler = {
 				document.cookies=cookies[i]+';';
 			}
 		}
-	},
+	},*/
 	
 	getCookies: function() {
-		
+		//Use this if we ever need a function to get all the cookies as a JSON object
 	},
 	
 	getCookie: function(name) {
