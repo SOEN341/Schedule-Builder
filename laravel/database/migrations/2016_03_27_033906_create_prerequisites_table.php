@@ -12,13 +12,14 @@ class CreatePrerequisitesTable extends Migration
      */
     public function up()
     {
+
         Schema::create('prerequisites', function(Blueprint $table){
 
             $table->increments('prerequisiteId');
             $table->integer('courseId')->unsigned();
             $table->foreign('courseId')->references('courseId')->on('courses');
             $table->string('prerequisiteCourseName');
-            $table->string('TypeOfPrerequisite');
+            $table->string('typeOfPrerequisite');
 
         });
     }
