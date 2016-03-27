@@ -12,7 +12,6 @@ class CreatePrerequisitesTable extends Migration
      */
     public function up()
     {
-
         Schema::create('prerequisites', function(Blueprint $table){
 
             $table->increments('prerequisiteId');

@@ -19,7 +19,7 @@ class CreateSectionsTable extends Migration
            $table->string('classroom');
            $table->string('semester');
            $table->string('type');
-           $table->string('dayOffered');
+           $table->integer('dayOffered');
            $table->time('beginTime');
            $table->time('endTime');
            $table->integer('courseId')->unsigned();

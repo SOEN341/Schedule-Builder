@@ -1,5 +1,3 @@
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -21,14 +19,13 @@ DROP TABLE IF EXISTS `courses`;
 CREATE TABLE `courses` (
   `courseId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `courseCode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `semester` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `credits` double NOT NULL,
   PRIMARY KEY (`courseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
 
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
@@ -47,7 +44,6 @@ CREATE TABLE `migrations` (
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 
 LOCK TABLES `migrations` WRITE;
@@ -75,7 +71,6 @@ CREATE TABLE `prerequisites` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
-
 LOCK TABLES `prerequisites` WRITE;
 /*!40000 ALTER TABLE `prerequisites` DISABLE KEYS */;
 /*!40000 ALTER TABLE `prerequisites` ENABLE KEYS */;
@@ -94,7 +89,7 @@ CREATE TABLE `sections` (
   `classroom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `semester` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `dayOffered` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `dayOffered` int(11) NOT NULL,
   `beginTime` time NOT NULL,
   `endTime` time NOT NULL,
   `courseId` int(10) unsigned NOT NULL,
@@ -123,13 +118,10 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `userType` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `coursesCompleted` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `remainingCourses` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   UNIQUE KEY `users_username_unique` (`username`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 
 LOCK TABLES `users` WRITE;
@@ -145,5 +137,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
-

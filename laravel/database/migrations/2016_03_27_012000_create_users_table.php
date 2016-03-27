@@ -20,8 +20,6 @@ class CreateUsersTable extends Migration
             $table->unique('email');
             $table->string('userType');
             $table->string('password');
-            $table->string('coursesCompleted');
-            $table->string('remainingCourses');
 
         });
     }
