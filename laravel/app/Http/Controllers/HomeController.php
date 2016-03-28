@@ -34,4 +34,12 @@ class HomeController extends Controller {
         return view('editUSername');
     }
 
+    public function bigbrother(){ //for test purposes
+        return view('bigbrother');
+    }
+
+    public function getEmail(){
+        return view('email');
+    }
+
 }

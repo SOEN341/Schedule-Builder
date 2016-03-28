@@ -1,9 +1,9 @@
 
 <?php
-// $old=$_POST['old'];
-// $new=$_POST['new'];
-$old='JasonBx';
-$new='pass1';
+$old=$_POST['old'];
+$new=$_POST['new'];
+// $old='JasonBx';
+// $new='pass1';
 
 //{'old':username, 'new':newUsername},
 

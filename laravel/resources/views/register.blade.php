@@ -2,7 +2,11 @@
 require_once('../mysqli_connect.php');
 $username=$_POST['username'];
 $password=$_POST['password'];
+$email=$_POST['email'];
 
+// $username='SprinkKing';
+// $password='pass1';
+// $email='email@email.com';
 
 
 $query ="SELECT username FROM users WHERE username='$username' ";
@@ -11,16 +15,13 @@ $query ="SELECT username FROM users WHERE username='$username' ";
 $response= mysqli_query($dbc,$query);
 
 if(mysqli_num_rows($response) <= 0){
-    // creating the  user  in the table
-    // $query= "INSERT INTO  users (`fname`, `lName`, `username`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ('Stannis','Baratheon',,,'a','aa','as','a','');";
-    $query= "INSERT INTO users(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Jon','Snow','email@email.com','$password','cdone','remcourse','labs','tutorials','0','$username')";
-    if (mysqli_query($dbc, $query)) {
-
-        echo json_encode(array("result"=>"registered","username"=>"$username","password"=>"$password"));
-    }
+$sql = "INSERT INTO `341`.`users` (`username`, `email`, `userType`, `password`, `CoursesDones`, `CoursesRem`, `CLoad`, `dayOff`, `pTime`) VALUES ('$username', '$email', '0', '$password', 'cdone', 'crem', '4', 'Monday', 'Afternoons');";    
+if (mysqli_query($dbc, $sql)) {
+echo json_encode(array("success"=>"true","username"=>"$username","password"=>"$password"));
+}
 
 } else {
-    echo json_encode(array("result"=>"Username taken","username"=>"$username","password"=>"$password"));
+    echo json_encode(array("success"=>"false","username"=>"$username","error"=>"usernametakenalready"));
 }
 
 mysqli_close($dbc);

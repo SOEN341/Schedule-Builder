@@ -1,11 +1,10 @@
 
 <?php
-// $old=$_POST['old'];//username
-// $new=$_POST['new'];//new email
-// $old=$_POST['old'];
-// $new=$_POST['new'];
-$old='JasonB';
-$new='newEnail@email.com';
+$old=$_POST['old'];//username
+$new=$_POST['new'];//new email
+
+// $old='JasonB';
+// $new='newEnail@email.com';
 
 //{'username':username, 'new':newEmail}, from server bridge
 
