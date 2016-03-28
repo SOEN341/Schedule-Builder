@@ -15,15 +15,13 @@ $query ="SELECT username FROM users WHERE username='$new' "; // search for the u
 $response= mysqli_query($dbc,$query); 
 
 
-if(mysqli_num_rows($response) <= 0){ //number of response is 0, so no user with these credentials
+if(mysqli_num_rows($response) <= 0){
   $sql = "UPDATE `users` SET `username`= '$new' WHERE username='$old'";
  $response= mysqli_query($dbc,$sql); 
-  echo json_encode(array("result"=>"good","username"=>"$new"));             
+  echo json_encode(array("result"=>"true","username"=>"$new"));             
 } else {
-  echo json_encode(array("result"=>"false","username"=>"$new"));  
+  echo json_encode(array("result"=>"false","error"=>"usernameexistsalready"));  
 }
-
-//$demand=mysqli_fetch_array($response);  // array containing the values in the query
 
 mysqli_close($dbc);
    

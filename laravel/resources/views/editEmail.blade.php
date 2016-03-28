@@ -16,14 +16,13 @@ $query ="SELECT username FROM users WHERE email='$new' "; // search for the user
 $response= mysqli_query($dbc,$query); 
 
 
-if(mysqli_num_rows($response) <= 0){ //number of response is 0, so no user with these credentials
+if(mysqli_num_rows($response) <= 0){ 
  $sql = "UPDATE `users` SET `email`='$new' WHERE username='$old'";
  $response= mysqli_query($dbc,$sql); 
- echo json_encode(array("result"=>"good","username"=>"$old","email"=>"$new"));             
+ echo json_encode(array("success"=>"true","username"=>"$old","email"=>"$new"));             
 } else {
-  echo json_encode(array("result"=>"false","username"=>"$old","email"=>"$new"));  
+  echo json_encode(array("success"=>"false","username"=>"$old","email"=>"$new"));  
 }
-
 mysqli_close($dbc);
    
 

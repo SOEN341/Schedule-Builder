@@ -25,9 +25,6 @@ if(mysqli_num_rows($response) <= 0){ //number of response is 0, so no user with 
   echo json_encode(array("success"=>"true","username"=>"$username","isAdmin"=>"$type"));
 
 }
-
-$demand=mysqli_fetch_array($response);  // array containing the values in the query
-
 mysqli_close($dbc);
    
 

@@ -31,7 +31,7 @@ Route::get('/editemail', 'HomeController@email');
 
 Route::get('/editpreferences', 'HomeController@setPreferences');  //edit the preferences
 
-Route::get('/getPreferences', 'HomeController@getPreferences'); // get the user preferences
+Route::get('/userprefs', 'HomeController@getPreferences'); // get the user preferences
 
 Route::get('/email', 'HomeController@getEmail'); ///get the email of the user
 
