@@ -108,6 +108,10 @@ var mockServerBridge = {
 	
 	editPassword: function(newPassword) {
 		
+	},
+	
+	getEmail: function() {
+		return 'imaguy@email.ca';
 	}
 };
 
@@ -465,11 +469,29 @@ var realServerBridge = {
 		var username = cookieHandler.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editneededcourses",
+			url:     "http://localhost:8000/editpassword",
 			dataType: "json",
 			data: {'username':username, 'new':newPassword},
 			success: function(data) {
 				console.log('Password edited');
+			},
+			error:   function(jqXHR, textStatus, errorThrown) {
+				alert("Error, status = " + textStatus + ", " +
+					"error thrown: " + errorThrown
+				);
+			}
+		});
+	},
+	
+	getEmail: function() {
+		var username = cookieHandler.getCookie('username');
+		$.ajax({
+			type:    "POST",
+			url:     "http://localhost:8000/email",
+			dataType: "json",
+			data: {'username':username},
+			success: function(data) {
+				return data;
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
