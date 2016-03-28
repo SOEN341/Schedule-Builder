@@ -98,16 +98,18 @@ var mockServerBridge = {
 	editUsername: function(newUsername) {
 		if(newUsername=='taken')
 			return false;
-		else
+		else {
+			console.log('username edited to ' + newUsername);
 			return true;
+		}
 	},
 	
 	editEmail: function(newEmail) {
-		
+		console.log('email edited to ' + newEmail);
 	},
 	
 	editPassword: function(newPassword) {
-		
+		console.log('password edited to ' + newPassword);
 	},
 	
 	getEmail: function() {
