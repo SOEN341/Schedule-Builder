@@ -18,6 +18,12 @@ var cookieManager = {
 		}
 	},*/
 	
+	removeCookie: function(name) {
+		var expires = "; expires=Thu, 18 Dec 2013 12:00:00 UTC";
+		document.cookie = name + "= 1" + expires;
+		console.log('cookie ' + name + ' removed');
+	},
+	
 	getCookies: function() {
 		//Use this if we ever need a function to get all the cookies as a JSON object
 	},

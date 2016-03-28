@@ -7,9 +7,9 @@ var PreferencesPage = React.createClass({
 			neededCourses: cookies.needed,
 			takenCourses: cookies.taken,
 			courses: serverBridge.getCourses(),
-			courseLoad: cookies.prefs.classes,
-			day: cookies.prefs.day,
-			time: cookies.prefs.time
+			courseLoad: cookies.preferences.classes,
+			day: cookies.preferences.day,
+			time: cookies.preferences.time
 		}
 	},
 
@@ -18,16 +18,17 @@ var PreferencesPage = React.createClass({
 			<div>
 				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse} courses={this.state.courses}/>: null}
 				<Preferences courseLoad={this.state.courseLoad} day={this.state.day} time={this.state.time}/>
-				<Classes openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse}/>
+				<Classes binder={this} openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
 			</div>
 		)
 	},
 	
-	loadCookies function() {
+	loadCookies: function() {
 		var takenCourses=cookieManager.getCookie('taken');
 		if(takenCourses=='') {
+			console.log('taken cookies not found');
 			takenCourses = serverBridge.getTakenCourses();
 			cookieManager.addCookie('taken', JSON.stringify(takenCourses), 7);
 		}
@@ -37,6 +38,7 @@ var PreferencesPage = React.createClass({
 		
 		var neededCourses=cookieManager.getCookie('needed');
 		if(neededCourses=='') {
+			console.log('needed cookies not found');
 			neededCourses = serverBridge.getNeededCourses();
 			cookieManager.addCookie('needed', JSON.stringify(neededCourses), 7);
 		}
@@ -53,7 +55,7 @@ var PreferencesPage = React.createClass({
 			prefs = JSON.parse(prefs);
 		}
 		
-		return {needed: neededCourses, taken: takenCourses preferences: prefs};
+		return {needed: neededCourses, taken: takenCourses, preferences: prefs};
 	},
 	
 	generateSchedule: function() {
@@ -80,7 +82,7 @@ var PreferencesPage = React.createClass({
 		this.setState({
 			neededCourses: courses
 		});
-		cookieManager.addCookie('needed', courses, 7);
+		cookieManager.addCookie('needed', JSON.stringify(courses), 7);
 		serverBridge.editNeededCourses(courses);
 	},
 	
@@ -90,7 +92,7 @@ var PreferencesPage = React.createClass({
 		this.setState({
 			takenCourses: courses
 		});
-		cookieManager.addCookie('taken', courses, 7);
+		cookieManager.addCookie('taken', JSON.stringify(courses), 7);
 		serverBridge.editTakenCourses(courses);
 	},
 	
@@ -109,8 +111,13 @@ var PreferencesPage = React.createClass({
 			this.setState({
 				neededCourses: courses
 			})
-			cookieManager.addCookie('needed', courses, 7);
 			serverBridge.editNeededCourses(courses);
+			if(courses.length>0) {
+				cookieManager.addCookie('needed', JSON.stringify(courses), 7);
+			}
+			else {
+				cookieManager.removeCookie('needed');
+			}
 		}
 	},
 	
@@ -129,8 +136,13 @@ var PreferencesPage = React.createClass({
 			this.setState({
 				takenCourses: courses
 			})
-			cookieManager.addCookie('taken', courses, 7);
 			serverBridge.editTakenCourses(courses);
+			if(courses.length>0) {
+				cookieManager.addCookie('taken', JSON.stringify(courses), 7);
+			}
+			else {
+				cookieManager.removeCookie('taken');
+			}
 		}
 	},
 	
@@ -278,8 +290,8 @@ var Classes = React.createClass({
 						<RBS.Col md={2}><RBS.Button>Generate class list</RBS.Button></RBS.Col>
 					</RBS.Row>
 				</RBS.Grid>
-				<TakenClasses openDialog={this.props.openDialog} courses={this.props.takenCourses} remove={this.props.removeTakenCourse}/>
-				<NeededClasses openDialog={this.props.openDialog} courses={this.props.neededCourses} remove={this.props.removeNeededCourse}/>
+				<TakenClasses openDialog={this.props.openDialog} courses={this.props.takenCourses} remove={this.props.removeTakenCourse} binder={this.props.binder}/>
+				<NeededClasses openDialog={this.props.openDialog} courses={this.props.neededCourses} remove={this.props.removeNeededCourse} binder={this.props.binder}/>
 			</div>
 		)
 	},
@@ -301,7 +313,7 @@ var TakenClasses = React.createClass({
 							<th colSpan={3}>Classes Taken</th>
 						</tr>
 					</thead>
-					<CourseList courses={this.props.courses} remove={this.props.remove}/>
+					<CourseList courses={this.props.courses} remove={this.props.remove} binder={this.props.binder}/>
 				</RBS.Table>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 				<br/>
@@ -324,7 +336,7 @@ var NeededClasses = React.createClass({
 							<th colSpan={3}>Classes Needed</th>
 						</tr>
 					</thead>
-					<CourseList courses={this.props.courses} remove={this.props.remove}/>
+					<CourseList courses={this.props.courses} remove={this.props.remove} binder={this.props.binder}/>
 				</RBS.Table>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 			</div>
@@ -351,7 +363,7 @@ var CourseList = React.createClass({
 				</tr>
 				{this.props.courses.map(function(course) {
 					return (
-						<Course key={this.keys++} name={course.name} number={course.number} remove={this.props.remove.bind(this, course.number)}/>
+						<Course key={this.keys++} name={course.name} number={course.number} remove={this.props.remove.bind(this.props.binder, course.number)}/>
 					)
 				}, this)}
 			</tbody>
