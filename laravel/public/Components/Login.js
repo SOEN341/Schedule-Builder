@@ -1,5 +1,6 @@
 var LoginPage = React.createClass({
 	getInitialState: function() {
+		this.checkLoggedIn();
 		return {
 			username: '',
 			password: '',
@@ -28,6 +29,13 @@ var LoginPage = React.createClass({
 				</RBS.Grid>
 			</div>
 		)
+	},
+	
+	checkLoggedIn: function() {
+		var username = cookieManager.getCookie('username');
+		if(username!='') {
+			this.props.changePage(1);
+		}
 	},
 	
 	openRegisterDialog: function() {
