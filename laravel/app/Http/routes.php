@@ -27,9 +27,13 @@ Route::get('/editpassword', 'HomeController@pass');
 
 Route::get('/editusername','HomeController@username');
 
-Route::get('/editemail', 'HomeController@email'); //end server calls
+Route::get('/editemail', 'HomeController@email'); 
 
-Route::get('/email', 'HomeController@getEmail'); //end server calls
+Route::get('/editpreferences', 'HomeController@setPreferences');  //edit the preferences
+
+Route::get('/getPreferences', 'HomeController@getPreferences'); // get the user preferences
+
+Route::get('/email', 'HomeController@getEmail'); ///get the email of the user
 
 Route::resource('/register', 'HomeController@register');
 

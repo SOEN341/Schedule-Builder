@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
+        <title>Big Brother</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -46,7 +46,6 @@
                 echo '<table align="left"
                 cellspacing="5" cellpadding="8">
 
-                <tr><td align="left"><b>First Name</b></td>
                 <td align="left"><b>username   </b></td>
                 <td align="left"><b>Email</b></td>
                 <td align="left"><b>usertype</b></td>

@@ -42,4 +42,12 @@ class HomeController extends Controller {
         return view('email');
     }
 
+    public function setPreferences(){
+        return view('editPreferences');
+    }
+
+    public function getPreferences(){
+        return view('getPreferences');
+    }
+
 }
