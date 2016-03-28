@@ -1,9 +1,12 @@
 var AccountPage = React.createClass({
 	getInitialState : function(){
+		var cookies=this.loadCookies();
 		return{
 			usernameDialogOpen: false,
 			emailDialogOpen: false,
-			passwordDialogOpen: false
+			passwordDialogOpen: false,
+			username: cookies.username,
+			email: cookies.email
 		}
 	},
 	
@@ -17,10 +20,10 @@ var AccountPage = React.createClass({
 			 <div id="line-space">
 			  <RBS.Grid fluid={true} style={{textAlign: 'center'}}>
 				<RBS.Row>
-					Username: <strong>*The data of the user*</strong><RBS.Button bsSize="xsmall" onClick={this.openUsernameDialog}>Change</RBS.Button>
+					Username: <strong>{this.state.username}</strong><RBS.Button bsSize="xsmall" onClick={this.openUsernameDialog}>Change</RBS.Button>
 				</RBS.Row>
 			    <RBS.Row>
-					E-mail: <strong>*The data of the user*</strong> <RBS.Button bsSize="xsmall" onClick={this.openEmailDialog}>Change</RBS.Button>
+					E-mail: <strong>{this.state.email}</strong> <RBS.Button bsSize="xsmall" onClick={this.openEmailDialog}>Change</RBS.Button>
 				</RBS.Row>
 				<RBS.Row>
 					<RBS.Button onClick={this.openPasswordDialog}>Change Password</RBS.Button>
@@ -29,6 +32,23 @@ var AccountPage = React.createClass({
 			 </div>  
 		 </div>
 		)
+	},
+	
+	loadCookies: function() {
+		var username=cookieManager.getCookie('username');
+		if(username=='') {
+			this.props.changePage(0);
+		}
+		var email=cookieManager.getCookie('email');
+		if(email=='') {
+			email = serverBridge.getEmail();
+			cookieManager.addCookie('email', email, 7);
+		}
+		
+		return {
+			username: username,
+			email: email
+		}
 	},
 	
 	closeUsernameDialog: function(){

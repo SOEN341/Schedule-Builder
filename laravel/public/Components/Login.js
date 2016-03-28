@@ -51,6 +51,7 @@ var LoginPage = React.createClass({
 			var success = serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword);
 			if(success) {
 				cookieManager.addCookie('username', this.state.rUsername, 7);
+				cookieManager.addCookie('email', this.state.email, 7);
 				this.props.changePage(1);
 			}
 			else {
