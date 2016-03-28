@@ -39,9 +39,12 @@ var PreferencesPage = React.createClass({
 	},
 	
 	loadCookies: function() {
+		var username=cookieManager.getCookie('username');
+		if(username=='') {
+			this.props.changePage(0);
+		}
 		var takenCourses=cookieManager.getCookie('taken');
 		if(takenCourses=='') {
-			console.log('taken cookies not found');
 			takenCourses = serverBridge.getTakenCourses();
 			cookieManager.addCookie('taken', JSON.stringify(takenCourses), 7);
 		}
@@ -51,7 +54,6 @@ var PreferencesPage = React.createClass({
 		
 		var neededCourses=cookieManager.getCookie('needed');
 		if(neededCourses=='') {
-			console.log('needed cookies not found');
 			neededCourses = serverBridge.getNeededCourses();
 			cookieManager.addCookie('needed', JSON.stringify(neededCourses), 7);
 		}
