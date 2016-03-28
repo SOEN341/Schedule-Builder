@@ -25,7 +25,7 @@ var PreferencesPage = React.createClass({
 		)
 	},
 	
-	loadCookies function() {
+	loadCookies: function() {
 		var takenCourses=cookieManager.getCookie('taken');
 		if(takenCourses=='') {
 			takenCourses = serverBridge.getTakenCourses();

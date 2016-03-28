@@ -21,6 +21,12 @@ Route::get('/preferences','HomeController@preference');
 
 Route::get('/account', 'AccountController@index');
 
+Route::get('/editpassword', 'HomeController@pass');
+
+Route::get('/editusername','HomeController@username');
+
+Route::get('/editemail', 'HomeController@email'); //end server calls
+
 Route::resource('/register', 'HomeController@register');
 
 Route::resource('/login', 'HomeController@login');

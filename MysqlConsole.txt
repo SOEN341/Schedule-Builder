@@ -18,25 +18,7 @@ CREATE TABLE courses(semester VARCHAR(15) NOT NULL,code VARCHAR(15) NOT NULL,nam
 //these should work in a mysql console
 //Command to populate the student table
 
-INSERT INTO student('fname', 'lName','password' 'cDone', 'remCourse', 'labs', 'tutorials', 'studentId') VALUES
- (Jon,Snow,pass,11111111,serialize($done),serialize($todo),serialize($labs),serialize($tutorials); // these should be the real values
-
-// these will suffice for testing puproses.
-
-//INSERT INTO `student`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`, `studentId`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9])
-
-INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Jon','Snow','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user0');
- 
-INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Kanye','West','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user1');
-
-INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Megan','Fox','email@email.com','pass','cdone','remcourse','labs','tutorials','1','user2');
-
-INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Banana','Split','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user3');
-
-INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Kylo','Ren','email@email.com','pass','cdone','remcourse','labs','tutorials','0','user4');
-
-INSERT INTO `users`(`fname`, `lName`, `email`, `password`, `cDone`, `remCourse`, `labs`, `tutorials`,`userType`, `username`) VALUES ('Big','Mama','email@email.com','pass','cdone','remcourse','labs','tutorials','1','user5');
-
+$sql = "INSERT INTO `341`.`users` (`username`, `email`, `userType`, `password`, `CoursesDones`, `CoursesRem`, `CLoad`, `dayOff`, `pTime`) VALUES (\'Jason\', \'jasonbourne@email.com\', \'1\', \'pass\', \'cdone\', \'crem\', \'4\', \'Monday\', \'Afternoons\');";
 
 //Populating the course table
 

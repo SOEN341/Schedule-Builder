@@ -14,13 +14,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function(Blueprint $table){
 
-            $table->string('username');
+            $table->string('username')->PRIMARY();
             $table->unique('username');
-            $table->string('email');
-            $table->unique('email');
-            $table->string('userType');
+            $table->string('email')->unique();
+            $table->boolean('userType');
             $table->string('password');
-
+            $table->string('CoursesDones', 1000);
+            $table->string('CoursesRem', 1000);
+            $table->smallInteger('CLoad');
+            $table->enum('dayOff', ['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']);
+            $table->enum('pTime', ['Any', 'Mornings', 'Afternoons', 'Evenings']);
         });
     }
 

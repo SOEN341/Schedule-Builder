@@ -21,3 +21,4 @@ $demand=mysqli_fetch_array($response);  // array containing the values in the qu
 
 mysqli_close($dbc);
    
+
