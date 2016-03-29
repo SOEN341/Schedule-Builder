@@ -54,4 +54,8 @@ class HomeController extends Controller {
         return view('editcneeded');
     }
 
+     public function getNeeded(){
+        return view('getNeededCourses');
+    }
+
 }

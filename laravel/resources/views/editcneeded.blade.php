@@ -32,15 +32,6 @@ echo json_encode(array("success"=>"true","username"=>"$old","Cnumber"=>"$number"
 
 
 
-// $sql= "SELECT * FROM users where username='$old'";
-// $response= mysqli_query($dbc,$sql);
-
-
-
-// foreach (unserialize(mysqli_fetch_array($response)['CoursesDones']) as $arr) {
-//     	echo nl2br( $arr->name . ",  " .  $arr->number );
-//     }
-
 mysqli_close($dbc);
    
 

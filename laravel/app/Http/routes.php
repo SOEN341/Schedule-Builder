@@ -37,6 +37,8 @@ Route::get('/email', 'HomeController@getEmail'); ///get the email of the user
 
 Route::get('/editneededcourses', 'HomeController@setneeded'); ///set the needed courses
 
+Route::get('/needed', 'HomeController@getneeded'); ///set the needed courses
+
 Route::resource('/register', 'HomeController@register');
 
 Route::resource('/login', 'HomeController@login');
