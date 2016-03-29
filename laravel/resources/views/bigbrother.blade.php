@@ -40,6 +40,7 @@
                 // Full texts   username    email   userType    password    CoursesDones    CoursesRem  CLoad   dayOff  pTime 
 
                 require_once('../mysqli_connect.php'); // defini
+                require_once('../needed_taken.php');
                
                 $sql = "SELECT * FROM `users`";
                 $response=mysqli_query($dbc,$sql);
@@ -63,8 +64,9 @@
                 $row['username'] . '</td><td align="left">' .
                 $row['email'] . '</td><td align="left">' .
                 $row['userType'] . '</td><td align="left">' .
-                $row['password'] . '</td><td align="left">' .
-                $row['CoursesDones'] . '</td><td align="left">' .
+                $row['password'] . '</td><td align="left">' ;
+                foreach (unserialize($row['CoursesDones']) as $arr) { echo nl2br( $arr->name . ",  " .  $arr->number . " ||||  " ); } 
+                echo '</td><td align="left">' .
                 $row['CoursesRem'] . '</td><td align="left">' .
                 $row['CLoad'] . '</td><td align="left">' .
                 $row['dayOff'] . '</td><td align="left">' .
