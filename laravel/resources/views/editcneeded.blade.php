@@ -1,12 +1,12 @@
 
 <?php
-// $old=$_POST['old'];//username
-// $name=$_POST['name'];//username
-// $number=$_POST['number'];//username
+$old=$_POST['old'];//username
+$name=$_POST['name'];//username
+$number=$_POST['number'];//username
 
-$old='jason';//username
-$name='OBJ-ORIENTED PROGRAMMING II';//username
-$number='250';//username
+// $old='jason';//username
+// $name='OBJ-ORIENTED PROGRAMMING II';//username
+// $number='250';//username
 
 
 

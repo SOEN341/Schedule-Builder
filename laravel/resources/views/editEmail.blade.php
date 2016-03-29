@@ -1,8 +1,7 @@
 
 <?php
 $old=$_POST['old'];//username
-$new=$_POST['new'];//new email
-
+$new=$_POST['new'];//new emails
 // $old='JasonB';
 // $new='newEnail@email.com';
 

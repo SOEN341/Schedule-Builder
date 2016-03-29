@@ -2,10 +2,9 @@
 <?php
 $old=$_POST['old'];
 $new=$_POST['new'];
-// $old='JasonBx';
+// $old='jason';
 // $new='pass1';
 
-//{'old':username, 'new':newUsername},
 
 require_once('../mysqli_connect.php'); // defining and connecting to the database as root
 

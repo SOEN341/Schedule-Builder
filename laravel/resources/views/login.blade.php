@@ -1,9 +1,9 @@
 
 <?php
-// $username=$_POST['username'];
-// $password=$_POST['password'];
-$username='JASONB';
-$password='pass1';
+ $username=$_POST['username'];
+ $password=$_POST['password'];
+// $username='JASONB';
+// $password='pass1';
 
 require_once('../mysqli_connect.php'); // defining and connecting to the database as root
 
