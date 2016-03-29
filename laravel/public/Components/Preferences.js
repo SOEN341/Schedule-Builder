@@ -31,7 +31,7 @@ var PreferencesPage = React.createClass({
 				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse} courses={this.state.courses}/>: null}
 				{this.state.editingDialogOpen? <EditingDialog mode={this.state.dialogMode} close={this.closeEditingDialog} courses={this.state.courses} course={editingCourse} edit={this.editCourse}/>: null}
 				<Preferences courseLoad={this.state.courseLoad} day={this.state.day} time={this.state.time}/>
-				<Classes binder={this} openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse} editNeededCourse={this.startEditNeededCourse} editTakenCourse={this.startEditTakenCourse}/>
+				<Classes binder={this} openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse} editNeededCourse={this.startEditNeededCourse} editTakenCourse={this.startEditTakenCourse} generateClassList={this.generateClassList}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
 			</div>
@@ -206,7 +206,7 @@ var PreferencesPage = React.createClass({
 	},
 	
 	editCourse: function(course) {
-		if(this.state.mode==1) {
+		if(this.state.dialogMode==1) {
 			var courses = React.addons.update(this.state.takenCourses, {});
 			courses[this.state.editingIndex]=course;
 			this.setState({
@@ -244,139 +244,339 @@ var PreferencesPage = React.createClass({
 		this.setState({
 			day: value
 		})
-	}
-});
-
-var ClassDialog = React.createClass({
-	getInitialState: function() {
-		return {
-			name: '',
-			number: ''
-		}
 	},
 	
-	render:function() {
-		var type='Needed';
-		if(this.props.mode==1) {
-			type='Taken';
+	generateClassList: function(semesters) {
+		var needed=[];
+		var taken=[];
+		if(semesters==0) {
+			needed=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
 		}
-		return (
-			<RBS.Modal show={true} onHide={this.props.close}>
-				<RBS.Modal.Header closeButton>
-					<RBS.Modal.Title>Add {type} Course</RBS.Modal.Title>
-				</RBS.Modal.Header>
-				<RBS.Modal.Body>
-					<RBS.Grid fluid={true}>
-						<RBS.Row>
-							<TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={this.props.courses} type='number' key={1}/>
-						</RBS.Row>
-						<RBS.Row>
-							<InputElement label='Course Name' onChange={this.nameChange} value={this.state.name} data={this.props.courses} key={2}/>
-						</RBS.Row>
-					</RBS.Grid>
-				</RBS.Modal.Body>
-				<RBS.Modal.Footer>
-					<RBS.Button onClick={this.addCourse} bsStyle='primary'>Add Course</RBS.Button>
-				</RBS.Modal.Footer>
-			</RBS.Modal>
-		)
-	},
-	
-	numberChange: function(value) {
-		if(value.length==8) {
-			for(var i=0; i<this.props.courses.length; i++) {
-				if(this.props.courses[i].number==value) {
-					this.nameChange(this.props.courses[i].name);
-					break;
-				}
-			}
+		else if(semesters==1) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'}
+			];
+			needed=[
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
+		}
+		else if(semesters==2) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'}
+			];
+			needed=[
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
+		}
+		else if(semesters==3) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'}
+			];
+			needed=[
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
+		}
+		else if(semesters==4) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'}
+			];
+			needed=[
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
+		}
+		else if(semesters==5) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'}
+			];
+			needed=[
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
+		}
+		else if(semesters==6) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'}
+			];
+			needed=[
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
+		}
+		else if(semesters==7) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Information Systems Security', number: 'SOEN 321'}
+			];
+			needed=[
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
+		}
+		else if(semesters>=8) {
+			taken=[
+				{name: 'Mathematics for Computer Science', number: 'COMP 232'},
+				{name: 'Object-Oriented Programming I', number: 'COMP 248'},
+				{name: 'Professional Practice & Responsibility', number: 'ENGR 201'},
+				{name: 'Applied Ordinary Differential Equations', number: 'ENGR 213'},
+				{name: 'Object-Oriented Programming II', number: 'COMP 249'},
+				{name: 'Applied Advanced Calculus', number: 'ENGR 233'},
+				{name: 'System Hardware', number: 'SOEN 228'},
+				{name: 'Introduction to Web Applications', number: 'SOEN 287'},
+				{name: 'Principles of Programming Languages', number: 'COMP 348'},
+				{name: 'Data Structures and Algorithms', number: 'COMP 352'},
+				{name: 'Technical Writing and Communication', number: 'ENCS 282'},
+				{name: 'Sustainable Development and Environmental Stewardship', number: 'ENGR 202'},
+				{name: 'Operating Systems', number: 'COMP 346'},
+				{name: 'Principles of Electrical Engineering', number: 'ELEC 275'},
+				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
+				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
+				{name: 'Software Process', number: 'SOEN 341'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
+				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
+				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
+				{name: 'Numerical Methods in Engineering', number: 'ENGR 391'},
+				{name: 'Software Architecture and Design II', number: 'SOEN 344'},
+				{name: 'Software Testing, Verification and Quality Assurance', number: 'SOEN 345'},
+				{name: 'User Interface Design', number: 'SOEN 357'},
+				{name: 'Software Engineering Team Design Project', number: 'SOEN 390'},
+				{name: 'Capstone Software Engineering Design Project', number: 'SOEN 490'},
+				{name: 'Engineering Management Principles and Economics', number: 'ENGR 301'},
+				{name: 'Information Systems Security', number: 'SOEN 321'},
+				{name: 'Impact of Technology on Society', number: 'ENGR 392'}
+			];
 		}
 		this.setState({
-			number: value
+			neededCourses: needed,
+			takenCourses: taken
 		});
-	},
-	
-	nameChange: function(value) {
-		this.setState({
-			name: value
-		});
-	},
-	
-	addCourse: function() {
-		var course = {
-			name: this.state.name,
-			number: this.state.number
-		};
-		if(this.props.mode==1)
-			this.props.addTakenCourse(course);
-		else
-			this.props.addNeededCourse(course);
-		this.props.close();
-	}
-});
-
-var EditingDialog = React.createClass({
-	getInitialState: function() {
-		return {
-			name: this.props.course.name,
-			number: this.props.course.number
-		}
-	},
-	
-	render:function() {
-		var type='Needed';
-		if(this.props.mode==1) {
-			type='Taken';
-		}
-		return (
-			<RBS.Modal show={true} onHide={this.props.close}>
-				<RBS.Modal.Header closeButton>
-					<RBS.Modal.Title>Edit {type} Course</RBS.Modal.Title>
-				</RBS.Modal.Header>
-				<RBS.Modal.Body>
-					<RBS.Grid fluid={true}>
-						<RBS.Row>
-							<TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={this.props.courses} type='number' key={1}/>
-						</RBS.Row>
-						<RBS.Row>
-							<InputElement label='Course Name' onChange={this.nameChange} value={this.state.name} data={this.props.courses} key={2}/>
-						</RBS.Row>
-					</RBS.Grid>
-				</RBS.Modal.Body>
-				<RBS.Modal.Footer>
-					<RBS.Button onClick={this.editCourse} bsStyle='primary'>Edit Course</RBS.Button>
-				</RBS.Modal.Footer>
-			</RBS.Modal>
-		)
-	},
-	
-	numberChange: function(value) {
-		if(value.length==8) {
-			for(var i=0; i<this.props.courses.length; i++) {
-				if(this.props.courses[i].number==value) {
-					this.nameChange(this.props.courses[i].name);
-					break;
-				}
-			}
-		}
-		this.setState({
-			number: value
-		});
-	},
-	
-	nameChange: function(value) {
-		this.setState({
-			name: value
-		});
-	},
-	
-	editCourse: function() {
-		var course = {
-			name: this.state.name,
-			number: this.state.number
-		};
-		this.props.edit(course);
-		this.props.close();
+		cookieManager.addCookie('taken', JSON.stringify(taken), 7);
+		cookieManager.addCookie('needed', JSON.stringify(needed), 7);
+		serverBridge.editTakenCourses(taken);
+		serverBridge.editNeededCourses(needed);
 	}
 });
 
@@ -422,19 +622,21 @@ var Preferences = React.createClass({
 var Classes = React.createClass({
 	getInitialState: function() {
 		return {
-			semesters: ''
+			semesters: '',
+			confirmDialogOpen: false
 		}
 	},
 	
 	render: function() {
 		return (
 			<div>
+				{this.state.confirmDialogOpen? <ConfirmationDialog close={this.closeConfirmDialog} confirm={this.generateClassList} reject={this.closeConfirmDialog} message='Are you sure you wish to generate the course lists? This will overwrite your current lists based on your number of semesters and the recommended course sequence'/>: null}
 				<h3>Classes</h3>
 				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5', paddingTop:'10px'}}>
 					<RBS.Row>
 						<RBS.Col md={2}/>
 						<InputElement label='Semesters Taken' value={this.state.semesters} onChange={this.onSemestersChange} label_md={2} input_md={4}/>
-						<RBS.Col md={2}><RBS.Button>Generate class list</RBS.Button></RBS.Col>
+						<RBS.Col md={2}><RBS.Button onClick={this.checkGenerateClassList}>Generate course list</RBS.Button></RBS.Col>
 					</RBS.Row>
 				</RBS.Grid>
 				<TakenClasses openDialog={this.props.openDialog} courses={this.props.takenCourses} remove={this.props.removeTakenCourse} binder={this.props.binder} editCourse={this.props.editTakenCourse}/>
@@ -447,20 +649,73 @@ var Classes = React.createClass({
 		this.setState({
 			semesters: value
 		})
+	},
+	
+	closeConfirmDialog: function() {
+		this.setState({
+			confirmDialogOpen: false
+		});
+	},
+	
+	openConfirmDialog: function() {
+		this.setState({
+			confirmDialogOpen: true
+		});
+	},
+	
+	checkGenerateClassList: function() {
+		if(!isNaN(this.state.semesters)&&this.state.semesters!=''&&this.state.semesters>=0) {
+			this.openConfirmDialog();
+		}
+		else {
+			alert('Invalid number of semesters. Must be a positive number');
+		}
+	},
+	
+	generateClassList:  function() {
+		this.props.generateClassList(this.state.semesters);
+		this.closeConfirmDialog();
 	}
 });
 
 var TakenClasses = React.createClass({
+	getInitialState: function() {
+		return {
+			expanded: false
+		}
+	},
+	
 	render: function() {
+		var header = 'Courses Taken (showing 3 of ' + this.props.courses.length + ')';
+		if(this.state.expanded || this.props.courses.length<=3) {
+			header = 'Courses Taken (showing ' + this.props.courses.length + ' of ' + this.props.courses.length + ')';
+		}
+		if(this.state.expanded) {
+			var courses = this.props.courses;
+			var image = 'Images/compress.png';
+		}
+		else {
+			var image = 'Images/expand.png';
+			var courses = [];
+			if(this.props.courses.length>0) {
+				courses.push(this.props.courses[0]);
+			}
+			if(this.props.courses.length>1) {
+				courses.push(this.props.courses[1]);
+			}
+			if(this.props.courses.length>2) {
+				courses.push(this.props.courses[2]);
+			}
+		}
 		return (
 			<div style={{width:'40%', backgroundColor:'#D0C5C5', marginLeft:'30%'}}>
-				<RBS.Table striped bordered condensed hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
-					<thead>
+				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
+					<thead onClick={this.expand}>
 						<tr>
-							<th colSpan={3}>Classes Taken</th>
+							<th colSpan={3}>{header}<img src={image} style={{height: '15px', width: '15px'}}/></th>
 						</tr>
 					</thead>
-					<CourseList courses={this.props.courses} remove={this.props.remove} binder={this.props.binder} editCourse={this.props.editCourse}/>
+					<CourseList courses={courses} remove={this.props.remove} binder={this.props.binder} editCourse={this.props.editCourse}/>
 				</RBS.Table>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 				<br/>
@@ -470,20 +725,54 @@ var TakenClasses = React.createClass({
 	
 	openDialog: function() {
 		this.props.openDialog(1);
+	},
+	
+	expand: function() {
+		var expanded = (!this.state.expanded);
+		this.setState({
+			expanded: expanded
+		});
 	}
 });
 
 var NeededClasses = React.createClass({
+	getInitialState: function() {
+		return {
+			expanded: false
+		}
+	},
+	
 	render: function() {
+		var header = 'Courses Needed (showing 3 of ' + this.props.courses.length + ')';
+		if(this.state.expanded || this.props.courses.length<=3) {
+			header = 'Courses Needed (showing ' + this.props.courses.length + ' of ' + this.props.courses.length + ')';
+		}
+		if(this.state.expanded) {
+			var courses = this.props.courses;
+			var image = 'Images/compress.png';
+		}
+		else {
+			var image = 'Images/expand.png';
+			var courses = [];
+			if(this.props.courses.length>0) {
+				courses.push(this.props.courses[0]);
+			}
+			if(this.props.courses.length>1) {
+				courses.push(this.props.courses[1]);
+			}
+			if(this.props.courses.length>2) {
+				courses.push(this.props.courses[2]);
+			}
+		}
 		return (
 			<div style={{width:'40%', backgroundColor:'#D0C5C5', marginLeft:'30%', paddingBottom:'10px'}}>
-				<RBS.Table striped bordered condensed hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
-					<thead>
+				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
+					<thead onClick={this.expand}>
 						<tr>
-							<th colSpan={3}>Classes Needed</th>
+							<th colSpan={3}>{header}<img src={image} style={{height: '15px', width: '15px'}}/></th>
 						</tr>
 					</thead>
-					<CourseList courses={this.props.courses} remove={this.props.remove} binder={this.props.binder} editCourse={this.props.editCourse}/>
+					<CourseList courses={courses} remove={this.props.remove} binder={this.props.binder} editCourse={this.props.editCourse}/>
 				</RBS.Table>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openDialog}>Add Class</RBS.Button></div>
 			</div>
@@ -492,6 +781,13 @@ var NeededClasses = React.createClass({
 	
 	openDialog: function() {
 		this.props.openDialog(2);
+	},
+	
+	expand: function() {
+		var expanded = (!this.state.expanded);
+		this.setState({
+			expanded: expanded
+		});
 	}
 });
 
@@ -504,9 +800,9 @@ var CourseList = React.createClass({
 		return (
 			<tbody>
 				<tr>
-					<td>Class Name</td>
-					<td>Course Number</td>
-					<td>Buttons</td>
+					<td style={{width: '40%'}}>Class Name</td>
+					<td style={{width: '40%'}}>Course Number</td>
+					<td style={{width: '20%'}}></td>
 				</tr>
 				{this.props.courses.map(function(course) {
 					return (

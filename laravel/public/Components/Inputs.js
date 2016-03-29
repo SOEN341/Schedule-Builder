@@ -77,8 +77,8 @@ var TypeaheadInput = React.createClass({
 			placeholder: '',
 			data: [],
 			value: '',
-			key: 1,
-			type: ''
+			type: '',
+			id: 'bloodhound'
 		}
 	},
 
@@ -110,7 +110,7 @@ var TypeaheadInput = React.createClass({
 
 
 
-		$('#bloodhound .typeahead').typeahead({
+		$('#' + this.props.id + ' .typeahead').typeahead({
 			hint: true,
 			highlight: true,
 			minLength: 1
@@ -128,10 +128,12 @@ var TypeaheadInput = React.createClass({
 		else {
 			var input = <div><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} /></div>
 		}*/
-		console.log('render');
-		return (
-				<div id="bloodhound" key={this.props.key}>
+		/*<div id={this.props.id} key={this.props.key}>
 					<RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} key={this.props.key}/></RBS.Col>
+				</div>*/
+		return (
+				<div id={this.props.id} style={{width:'300px'}}>
+					<RBS.Input style={{width:'300px'}} className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange}/>
 				</div>
 		);
 	}

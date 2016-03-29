@@ -18,6 +18,7 @@
     <script src="Components/CookieManager.js" type="text/jsx"></script>
     <script src="Components/UIManager.js" type="text/jsx"></script>
     <script src="Components/Inputs.js" type="text/jsx"></script>
+    <script src="Components/Dialogs.js" type="text/jsx"></script>
     <script src="Components/Login.js" type="text/jsx"></script>
     <script src="Components/Preferences.js" type="text/jsx"></script>
     <script src="Components/AccountPage.js" type="text/jsx"></script>

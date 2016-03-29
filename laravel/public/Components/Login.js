@@ -110,34 +110,6 @@ var LoginPage = React.createClass({
 	}
 });
 
-var RegistrationDialog = React.createClass({
-	render:function() {
-		return (
-			<RBS.Modal show={true} onHide={this.props.close}>
-				<RBS.Modal.Header closeButton>
-					<RBS.Modal.Title>Register</RBS.Modal.Title>
-				</RBS.Modal.Header>
-				<RBS.Modal.Body>
-					<RBS.Grid fluid={true}>
-						<RBS.Row>
-							<InputElement label='Username' onChange={this.props.usernameChange} value={this.props.username}/>
-						</RBS.Row>
-						<RBS.Row>
-							<InputElement label='E-mail' onChange={this.props.emailChange} value={this.props.email}/>
-						</RBS.Row>
-						<RBS.Row>
-							<InputElement label='Password' type='password' onChange={this.props.passwordChange} value={this.props.password}/>
-						</RBS.Row>
-					</RBS.Grid>
-				</RBS.Modal.Body>
-				<RBS.Modal.Footer>
-					<RBS.Button onClick={this.props.register} bsStyle='primary'>Register</RBS.Button>
-				</RBS.Modal.Footer>
-			</RBS.Modal>
-		)
-	}
-});
-
 var Logo = React.createClass({
 	//Change this to an actual logo later
 	render: function() {
