@@ -69,17 +69,17 @@
         allowCalEventOverlap: false,
         overlapEventsSeparate: false,
         totalEventsWidthPercentInOneColumn: 100,
-        readonly: false,
+        readonly: true,
         allowEventCreation: true,
         hourLine: false,
         deletable: function(calEvent, element) {
-          return true;
+          return false;
         },
         draggable: function(calEvent, element) {
-          return true;
+          return false;
         },
         resizable: function(calEvent, element) {
-          return true;
+          return false;
         },
         eventClick: function(calEvent, element, dayFreeBusyManager, 
                                                       calendar, clickEvent) {
