@@ -1,0 +1,49 @@
+<php
+class course {
+	private $code='';
+	private $name='';
+	private $description='';
+	private $semester='';
+	private $section='';
+	private $credits=0;
+
+	
+	function __construct($semester,$code,$name,$credits,$section,$description){
+		$this->code=$code;
+		$this->name=$name;
+		$this->description=$description;
+		$this->semester=$semester;
+		$this->section=$section;
+		$this->credits=$credits;
+		
+	}
+
+	public function getCode(){
+		return $this->code;
+	}
+
+	public function getName(){
+		return $this->name;
+	}
+
+	public function getDescription(){
+		return $this->description;
+	}
+
+	public function getSemester(){
+		return $this->semester;
+	}
+
+	public function getSection(){
+		return $this->section;
+	}
+
+	public function getCredits(){
+		return $this->credits;
+	}
+
+
+
+}
+
+?>

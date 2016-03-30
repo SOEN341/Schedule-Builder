@@ -21,4 +21,41 @@ class HomeController extends Controller {
     public function login(){
         return view('login');
     }
+
+    public function pass(){
+        return view('editPassword');
+    }
+
+    public function email(){
+        return view('editEmail');
+    }
+
+    public function username(){
+        return view('editUSername');
+    }
+
+    public function bigbrother(){ //for test purposes
+        return view('bigbrother');
+    }
+
+    public function getEmail(){
+        return view('email');
+    }
+
+    public function setPreferences(){
+        return view('editPreferences');
+    }
+
+    public function getPreferences(){
+        return view('getPreferences');
+    }
+
+    public function setNeeded(){
+        return view('editcneeded');
+    }
+
+     public function getNeeded(){
+        return view('getNeededCourses');
+    }
+
 }
