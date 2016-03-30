@@ -145,18 +145,20 @@ var realServerBridge = {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/login",
-			dataType: "json",
-			data:    {"username":username, "password":password},
+			dataType: "text",
+			data:    {username:username, password:password},
 			success: function(data) {
-				if(data.result.localeCompare('good') == 0) {
+				console.log(data);
+				if(data.success) {
 					return true;
 				}
 				else {
-					alert('Bad username and/or password');
+					console.log('Bad username and/or password');
 					return false;
 				}
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
+				console.log(data);
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
 				);

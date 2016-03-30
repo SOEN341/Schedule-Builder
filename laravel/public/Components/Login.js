@@ -75,7 +75,7 @@ var LoginPage = React.createClass({
 			this.props.changePage(1);
 		}
 		else {
-			alert('Invalid username and/or password');
+			console.log('Invalid username and/or password');
 		}
 	},
 	
