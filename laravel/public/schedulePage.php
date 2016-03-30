@@ -23,16 +23,43 @@
 	<script src="Components/Preferences.js" type="text/jsx"></script>
 	<script src="Components/AccountPage.js" type="text/jsx"></script>
 	<script src="Components/SchedulePage.js" type="text/jsx"></script>
-	
-	<script src = "Components/dhtmlxscheduler.js" type = "text/javascript"></script>
-	<link rel= "stylesheet" href= "CSS/dhtmlxscheduler.css" type = "text/css">
-	<style type="text/css" media="screen">
-			html,body{
-				margin: 0px;
-				padding: 0px;
-				height: 100%;
-				overflow: hidden;
-			}
+
+	<script type='text/javascript' src='Components/jquery-week-calendar-master/libs/jquery-1.4.4.min.js'></script>
+	<script type='text/javascript' src='Components/jquery-week-calendar-master/libs/jquery-ui-1.8.11.custom.min.js'></script>
+	<script src="Components/jquery-week-calendar-master/jquery.weekcalendar.js" type="text/javascript"></script>
+	<script type="text/javascript" src="Components/jquery-week-calendar-master/libs/date.js"></script>
+	<link rel='stylesheet' type='text/css' href='Components/jquery-week-calendar-master/libs/css/smoothness/jquery-ui-1.8.11.custom.css' />
+	<link rel='stylesheet' type='text/css' href='Components/jquery-week-calendar-master/jquery.weekcalendar.css' />
+	<style type='text/css'>
+		body {
+			font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+			margin: 0;
+		}
+
+		h1 {
+			margin: 0 0 1em;
+			padding: 0.5em;
+		}
+
+		p.description {
+			font-size: 0.8em;
+			padding: 1em;
+			position: absolute;
+			top: 3.2em;
+			margin-right: 400px;
+		}
+
+		#message {
+			font-size: 0.7em;
+			position: absolute;
+			top: 1em;
+			right: 1em;
+			width: 350px;
+			display: none;
+			padding: 1em;
+			background: #ffc;
+			border: 1px solid #dda;
+		}
 	</style>
 </head>
 <body>
