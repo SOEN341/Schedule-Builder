@@ -22,13 +22,24 @@
 	<script src="Components/Login.js" type="text/jsx"></script>
 	<script src="Components/Preferences.js" type="text/jsx"></script>
 	<script src="Components/AccountPage.js" type="text/jsx"></script>
+	
+	<script src = "dhtmlxscheduler.js" type = "text/javascript"></script>
+	<link rel= "stylesheet" href= "dhtmlxscheduler.css" type = "text/css">
+	<style type="text/css" media="screen">
+			html,body{
+				margin: 0px;
+				padding: 0px;
+				height: 100%;
+				overflow: hidden;
+			}
+		</style>
 </head>
 <body>
 <div id="pageContent"></div>
 <script type="text/jsx">
 	var RBS = ReactBootstrap;
 	ReactDOM.render(
-			<Main currentPage={0}/>, document.getElementById('pageContent')
+			<Main currentPage={3}/>, document.getElementById('pageContent')
 	);
 </script>
 </body>
