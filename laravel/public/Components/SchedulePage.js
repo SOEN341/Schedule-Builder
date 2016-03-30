@@ -63,18 +63,20 @@ var Schedule = React.createClass({
 
 		  var eventData = {
 			events : [
-			  {'id':1, 'start': new Date(year, month, day, 12), 'end': new Date(year, month, day, 13, 35),'title':'Lunch with Mike'},
-			  {'id':2, 'start': new Date(year, month, day, 14), 'end': new Date(year, month, day, 14, 45),'title':'Dev Meeting'},
-			  {'id':3, 'start': new Date(year, month, day + 1, 18), 'end': new Date(year, month, day + 1, 18, 45),'title':'Hair cut'},
-			  {'id':4, 'start': new Date(year, month, day - 1, 8), 'end': new Date(year, month, day - 1, 9, 30),'title':'Team breakfast'},
-			  {'id':5, 'start': new Date(year, month, day + 1, 14), 'end': new Date(year, month, day + 1, 15),'title':'Product showcase'}
+			  {'id':1, 'start': new Date(year, month, day, 12), 'end': new Date(year, month, day, 13, 35),'title':'Lunch with Mike', readOnly: true},
+			  {'id':2, 'start': new Date(year, month, day, 14), 'end': new Date(year, month, day, 14, 45),'title':'Dev Meeting', readOnly: true},
+			  {'id':3, 'start': new Date(year, month, day + 1, 18), 'end': new Date(year, month, day + 1, 18, 45),'title':'Hair cut', readOnly: true},
+			  {'id':4, 'start': new Date(year, month, day - 1, 8), 'end': new Date(year, month, day - 1, 9, 30),'title':'Team breakfast', readOnly: true},
+			  {'id':5, 'start': new Date(year, month, day + 1, 14), 'end': new Date(year, month, day + 1, 15),'title':'Product showcase', readOnly: true}
 			]
 		  };
 			$('#calendar').weekCalendar({
-			  timeslotsPerHour: 6,
+			  timeslotsPerHour: 4,
 			  timeslotHeigh: 30,
 			  hourLine: true,
 			  data: eventData,
+			  firstDayOfWeek: 1,
+			  daysToShow: 5,
 			  height: function($calendar) {
 				return $(window).height() - $('h1').outerHeight(true);
 			  },
@@ -84,6 +86,7 @@ var Schedule = React.createClass({
 				  $event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
 				}
 			  },
+			  /*
 			  eventNew: function(calEvent, $event) {
 				this.displayMessage('<strong>Added event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
 				alert('You\'ve added a new event. You would capture this event, add the logic for creating a new event with your own fields, data and whatever backend persistence you require.');
@@ -92,10 +95,9 @@ var Schedule = React.createClass({
 				this.displayMessage('<strong>Moved Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
 			  },
 			  eventResize: function(calEvent, $event) {
-				this.displayMessage('<strong>Resized Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-			  },
+				  
 			  eventClick: function(calEvent, $event) {
-				this.displayMessage('<strong>Clicked Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
+				  
 			  },
 			  eventMouseover: function(calEvent, $event) {
 				this.displayMessage('<strong>Mouseover Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
@@ -106,7 +108,7 @@ var Schedule = React.createClass({
 			  noEvents: function() {
 				  console.log('no events');
 				this.displayMessage('There are no events for this week');
-			  }
+			  }*/
 			}, this);
 
 			
