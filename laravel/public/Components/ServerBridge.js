@@ -147,6 +147,7 @@ var realServerBridge = {
 			url:     "http://localhost:8000/login",
 			dataType: "text",
 			data:    {username:username, password:password},
+			async: false,
 			success: function(data) {
 				console.log(data);
 				if(data.success) {
@@ -158,7 +159,6 @@ var realServerBridge = {
 				}
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
-				console.log(data);
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
 				);
