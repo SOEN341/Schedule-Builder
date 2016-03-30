@@ -22,6 +22,7 @@
 	<script src="Components/Login.js" type="text/jsx"></script>
 	<script src="Components/Preferences.js" type="text/jsx"></script>
 	<script src="Components/AccountPage.js" type="text/jsx"></script>
+	<script src="Components/SchedulePage.js" type="text/jsx"></script>
 	
 	<script src = "dhtmlxscheduler.js" type = "text/javascript"></script>
 	<link rel= "stylesheet" href= "dhtmlxscheduler.css" type = "text/css">

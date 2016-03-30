@@ -1,4 +1,4 @@
-var Main = React.createClass({
+var SchedulePage = React.createClass({
 	
 	
 	
@@ -12,7 +12,7 @@ var Main = React.createClass({
 })	
 	
 	
-var Logo = React.createClass({
+var ScheduleLogo = React.createClass({
 	render: function() {
 			return (
 				<div>
