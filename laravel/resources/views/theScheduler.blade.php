@@ -3,8 +3,8 @@
 	
 	<head>
 		<title>Scheduler</title>
-		<script src = "dhtmlxscheduler.js" type = "text/javascript"></script>
-		<link rel= "stylesheet" href= "dhtmlxscheduler.css" type = "text/css">
+		<script src = "Components/dhtmlxscheduler.js" type = "text/javascript"></script>
+		<link rel= "stylesheet" href= "CSS/dhtmlxscheduler.css" type = "text/css">
 		<style type="text/css" media="screen">
 			html,body{
 				margin: 0px;

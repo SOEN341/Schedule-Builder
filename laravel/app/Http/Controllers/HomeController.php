@@ -58,4 +58,8 @@ class HomeController extends Controller {
         return view('getNeededCourses');
     }
 
+    public function getTheScheduler(){
+        return view('theScheduler');
+    }
+
 }

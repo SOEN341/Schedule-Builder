@@ -24,8 +24,8 @@
 	<script src="Components/AccountPage.js" type="text/jsx"></script>
 	<script src="Components/SchedulePage.js" type="text/jsx"></script>
 	
-	<script src = "dhtmlxscheduler.js" type = "text/javascript"></script>
-	<link rel= "stylesheet" href= "dhtmlxscheduler.css" type = "text/css">
+	<script src = "Components/dhtmlxscheduler.js" type = "text/javascript"></script>
+	<link rel= "stylesheet" href= "CSS/dhtmlxscheduler.css" type = "text/css">
 	<style type="text/css" media="screen">
 			html,body{
 				margin: 0px;
