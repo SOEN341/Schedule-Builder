@@ -32,10 +32,10 @@
       options: {
         date: new Date(),
         timeFormat: null,
-        dateFormat: 'M d, Y',
+        dateFormat: '',
         alwaysDisplayTimeMinutes: true,
         use24Hour: false,
-        daysToShow: 7,
+        daysToShow: 5,
         minBodyHeight: 100,
         firstDayOfWeek: function(calendar) {
                   if ($(calendar).weekCalendar('option', 'daysToShow') != 5) {
@@ -70,7 +70,7 @@
         overlapEventsSeparate: false,
         totalEventsWidthPercentInOneColumn: 100,
         readonly: true,
-        allowEventCreation: true,
+        allowEventCreation: false,
         hourLine: false,
         deletable: function(calEvent, element) {
           return false;
@@ -261,7 +261,7 @@
          * @param {number} option daysToShow.
          * @return {String} the title attribute for the calendar.
          */
-        title: '%start% - %end%',
+        title: '%start%  %end%',
         /**
          * default options to pass to callback
          * you can pass a function returning an object or a litteral object
