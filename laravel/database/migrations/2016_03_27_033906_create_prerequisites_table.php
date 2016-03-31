@@ -15,6 +15,7 @@ class CreatePrerequisitesTable extends Migration
         Schema::create('prerequisites', function(Blueprint $table){
 
             $table->increments('prerequisiteId');
+            $table->integer('priority');
             $table->integer('courseId')->unsigned();
             $table->foreign('courseId')->references('courseId')->on('courses');
             $table->string('prerequisiteCourseName');

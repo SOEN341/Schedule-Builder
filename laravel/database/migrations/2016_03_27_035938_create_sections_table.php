@@ -24,6 +24,7 @@ class CreateSectionsTable extends Migration
            $table->time('endTime');
            $table->integer('courseId')->unsigned();
            $table->foreign('courseId')->references('courseId')->on('courses');
+           $table->string('courseCode');
 
         });
     }

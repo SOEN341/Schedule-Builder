@@ -150,7 +150,43 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
 (107,'COMP 478', 'Fall',  'Digital image fundamentals, image transforms (Fourier, Walsh, Haar, Hotelling, wavelet), image enhancement (histogram processing, spatial filtering, high- and low-pass filtering), image restoration.','Image Processing',4),
 (108,'ENGR 411', 'Summer','Students must submit a report on a topic related to the students'' discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project.','Special Technical Report',1),
 (109,'ENGR 411', 'Fall',  'Students must submit a report on a topic related to the students'' discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project.','Special Technical Report',1),
-(110,'ENGR 411', 'Winter','Students must submit a report on a topic related to the students'' discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project.','Special Technical Report',1);
+(110,'ENGR 411', 'Winter','Students must submit a report on a topic related to the students'' discipline and approved by the Department. The report must present a review of a current engineering problem, a proposal for a design project.','Special Technical Report',1),
+(111,'ECON 201', 'Summer','Introduction to the functioning of the market system; concepts of supply and demand, the role of prices in resource allocation.','Introduction to Microeconomics',3),
+(112,'ECON 201', 'Fall','Introduction to the functioning of the market system; concepts of supply and demand, the role of prices in resource allocation.','Introduction to Microeconomics',3),
+(113,'ECON 201', 'Winter','Introduction to the functioning of the market system; concepts of supply and demand, the role of prices in resource allocation.','Introduction to Microeconomics',3),
+(114,'ECON 203', 'Summer','An introductory analysis of aggregate economic activity. The focus is on the principles of determination of the level of employment, national income, real output, inflation.','Introduction to Macroeconomics',3),
+(115,'ECON 203', 'Fall','An introductory analysis of aggregate economic activity. The focus is on the principles of determination of the level of employment, national income, real output, inflation.','Introduction to Macroeconomics',3),
+(116,'ECON 203', 'Winter','An introductory analysis of aggregate economic activity. The focus is on the principles of determination of the level of employment, national income, real output, inflation.','Introduction to Macroeconomics',3),
+(117,'ADMI 201', 'Fall','This course is intended to develop a basic understanding of the role of administration in our society. The course includes a survey of different forms of organizations, their social and legal responsibilities.','Introduction to Administration',3),
+(117,'ADMI 201', 'Winter','This course is intended to develop a basic understanding of the role of administration in our society. The course includes a survey of different forms of organizations, their social and legal responsibilities.','Introduction to Administration',3),
+(118,'ADMI 202', 'Summer','This course is intended to develop a basic understanding of the role of administration in our society. The course includes a survey of different forms of organizations, their social and legal responsibilities.','Perspective on Canadian Business',3),
+(119,'ADMI 202', 'Fall','This course is intended to develop a basic understanding of the role of administration in our society. The course includes a survey of different forms of organizations, their social and legal responsibilities.','Perspective on Canadian Business',3),
+(120,'ADMI 202', 'Winter','This course is intended to develop a basic understanding of the role of administration in our society. The course includes a survey of different forms of organizations, their social and legal responsibilities.','Perspective on Canadian Business',3),
+(121,'ADMI 202', 'Winter','This course is intended to develop a basic understanding of the role of administration in our society. The course includes a survey of different forms of organizations, their social and legal responsibilities.','Perspective on Canadian Business',3),
+(122,'MANA 201', 'Summer','This course introduces students to the basic principles of management within a contemporary business context. The managerial process (e.g. planning, organizing, controlling, motivating) is explored.','Introduction to Business and Management',3),
+(123,'MANA 201', 'Fall','This course introduces students to the basic principles of management within a contemporary business context. The managerial process (e.g. planning, organizing, controlling, motivating) is explored.','Introduction to Business and Management',3),
+(124,'MANA 201', 'Winter','This course introduces students to the basic principles of management within a contemporary business context. The managerial process (e.g. planning, organizing, controlling, motivating) is explored.','Introduction to Business and Management',3),
+(125,'MANA 202', 'Fall','This course seeks to give students an understanding of behaviour in the workplace from an individual, group, and organizational perspective.','Human Behaviour in Organizations',3),
+(126,'MANA 202', 'Winter','This course seeks to give students an understanding of behaviour in the workplace from an individual, group, and organizational perspective.','Human Behaviour in Organizations',3),
+(127,'MANA 300', 'Fall','This final-year course offers students the opportunity to learn how to capitalize on their domain-specific knowledge and recognize opportunities for self-employment or new venture creation.','Entrepreneurship: Launching Your Business',3),
+(128,'MANA 300', 'Winter','This final-year course offers students the opportunity to learn how to capitalize on their domain-specific knowledge and recognize opportunities for self-employment or new venture creation.','Entrepreneurship: Launching Your Business',3),
+(129,'MARK 201', 'Summer','This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.','Introduction to Marketing',3),
+(130,'MARK 201', 'Fall','This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.','Introduction to Marketing',3),
+(131,'MARK 201', 'Winter','This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.','Introduction to Marketing',3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   -- --------------------------------------------------------
