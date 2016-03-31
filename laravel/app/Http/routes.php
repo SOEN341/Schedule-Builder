@@ -39,6 +39,10 @@ Route::get('/editneededcourses', 'HomeController@setneeded'); ///set the needed 
 
 Route::get('/needed', 'HomeController@getneeded'); ///set the needed courses
 
+Route::get('/edittakencourses', 'HomeController@settaken'); ///set the taken courses
+
+Route::get('/taken', 'HomeController@gettaken'); ///set the taken courses
+
 Route::resource('/register', 'HomeController@register');
 
 Route::resource('/login', 'HomeController@login');
