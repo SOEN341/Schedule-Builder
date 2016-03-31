@@ -35,19 +35,19 @@ Route::get('/userprefs', 'HomeController@getPreferences'); // get the user prefe
 
 Route::get('/email', 'HomeController@getEmail'); ///get the email of the user
 
-Route::get('/editneededcourses', 'HomeController@setneeded'); ///set the needed courses
+Route::get('/editneededcourses', 'HomeController@setNeeded'); ///set the needed courses
 
-Route::get('/needed', 'HomeController@getneeded'); ///set the needed courses
+Route::get('/needed', 'HomeController@getNeeded'); ///set the needed courses
 
-Route::get('/edittakencourses', 'HomeController@settaken'); ///set the taken courses
+Route::get('/edittakencourses', 'HomeController@setTaken'); ///set the taken courses
 
-Route::get('/taken', 'HomeController@gettaken'); ///set the taken courses
+Route::get('/taken', 'HomeController@getTaken'); ///set the taken courses
 
 Route::resource('/register', 'HomeController@register');
 
 Route::resource('/login', 'HomeController@login');
 
-Route::get('/schedule', 'HomeController@getSchedule');
+Route::get('/schedule', 'HomeController@getschedule');
 
 
 

@@ -31,7 +31,7 @@ class HomeController extends Controller {
     }
 
     public function username(){
-        return view('editUSername');
+        return view('editUsername');
     }
 
     public function bigbrother(){ //for test purposes
@@ -63,7 +63,7 @@ class HomeController extends Controller {
     }
 
     public function getTaken(){
-        return view('gettakenCourses');
+        return view('getTakenCourses');
     }
 
     public function getSchedule(){
