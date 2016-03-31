@@ -1,9 +1,9 @@
 
 <?php
-//$old=$_POST['username'];//username
-//$json=$_POST['json'];//username
-$old='Jason';
-$json='{"List":[{"name":"oop", "number":"248"},{"name":"oop2", "number":"249"}]}';
+$old=$_POST['username'];//username
+$json=$_POST['json'];//username
+// $old='Jason';
+// $json='{"List":[{"name":"oop", "number":"248"},{"name":"oop2", "number":"249"}]}';
 
 $contents = utf8_encode($json); 
 //var_dump(json_decode($contents, true)); //testing purposes
