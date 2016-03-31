@@ -1,5 +1,8 @@
 var PreferencesPage = React.createClass({
 	getInitialState: function() {
+		cookieManager.removeCookie('taken');
+		cookieManager.removeCookie('needed');
+		cookieManager.removeCookie('prefs');
 		var cookies=this.loadCookies();
 		return {
 			classDialogOpen: false,
@@ -16,21 +19,22 @@ var PreferencesPage = React.createClass({
 	},
 
 	render: function() {
-		var editingCourse={};
-		if(this.state.dialogMode==1&&this.state.takenCourses.length>0) {
-			console.log('edit taken course ' + this.state.editingIndex);
-			editingCourse=this.state.takenCourses[this.state.editingIndex];
+		if(this.state.editingDialogOpen) {
+			var editingCourse={};
+			if(this.state.dialogMode==1&&this.state.takenCourses.length>0) {
+				console.log('edit taken course ' + this.state.editingIndex);
+				editingCourse=this.state.takenCourses[this.state.editingIndex];
+			}
+			else if(this.state.neededCourses.length>0) {
+				console.log('edit needed course ' + this.state.editingIndex);
+				editingCourse=this.state.neededCourses[this.state.editingIndex];
+			}
 		}
-		else if(this.state.neededCourses.length>0) {
-			console.log('edit needed course ' + this.state.editingIndex);
-			editingCourse=this.state.neededCourses[this.state.editingIndex];
-		}
-		
 		return (
 			<div>
 				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse} courses={this.state.courses}/>: null}
 				{this.state.editingDialogOpen? <EditingDialog mode={this.state.dialogMode} close={this.closeEditingDialog} courses={this.state.courses} course={editingCourse} edit={this.editCourse}/>: null}
-				<Preferences courseLoad={this.state.courseLoad} day={this.state.day} time={this.state.time}/>
+				<Preferences courseLoad={this.state.courseLoad} day={this.state.day} time={this.state.time} courseLoad={this.state.courseLoad} onTimeChange={this.onTimeChange} onClassesChange={this.onClassesChange} onDayChange={this.onDayChange}/>
 				<Classes binder={this} openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse} editNeededCourse={this.startEditNeededCourse} editTakenCourse={this.startEditTakenCourse} generateClassList={this.generateClassList}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
@@ -229,18 +233,39 @@ var PreferencesPage = React.createClass({
 	},
 	
 	onClassesChange: function(value) {
+		var prefs = {
+			classes: value,
+			day: this.state.day,
+			time: this.state.time
+		}
+		cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
+		serverBridge.editPreferences(JSON.stringify(prefs));
 		this.setState({
-			classes: value
+			courseLoad: value
 		})
 	},
 	
 	onTimeChange: function(value) {
+		var prefs = {
+			classes: this.state.courseLoad,
+			day: this.state.day,
+			time: value
+		}
+		cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
+		serverBridge.editPreferences(JSON.stringify(prefs));
 		this.setState({
 			time: value
 		})
 	},
 	
 	onDayChange: function(value) {
+		var prefs = {
+			classes: this.state.courseLoad,
+			day: value,
+			time: this.state.time
+		}
+		cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
+		serverBridge.editPreferences(JSON.stringify(prefs));
 		this.setState({
 			day: value
 		})

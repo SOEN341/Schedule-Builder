@@ -6,12 +6,15 @@ var mockServerBridge = {
 			return true;
 	},
 	
-	login: function(username, password) {
+	login: function(username, password, response) {
 		if(username=='user'&&password=='pass') {
-			return true;
+			response({success: 'true', username: username, isAdmin: 'false'});
+		}
+		else if(username=='Jason'&&password=='pass') {
+			response({success: 'true', username: username, isAdmin: 'true'});
 		}
 		else
-			return false;
+			response({success: 'false', username: username, error: 'usernamenotfound'});
 	},
 	
 	getCourses: function() {
@@ -297,9 +300,10 @@ var realServerBridge = {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/userprefs",
-			dataType: "json",
+			dataType: "text",
 			async: false,
 			success: function(data) {
+				console.log(data);
 				return data;
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
@@ -311,15 +315,16 @@ var realServerBridge = {
 	},
 	
 	getNeededCourses: function() {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/needed",
-			dataType: "json",
+			dataType: "text",
 			async: false,
 			data: username,
 			success: function(data) {
-				return data.courses
+				console.log(data);
+				return data
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -330,15 +335,16 @@ var realServerBridge = {
 	},
 	
 	getTakenCourses: function() {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/taken",
-			dataType: "json",
+			dataType: "text",
 			async: false,
 			data: username,
 			success: function(data) {
-				return data.courses
+				console.log(data);
+				return data
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -349,7 +355,7 @@ var realServerBridge = {
 	},
 	
 	generateSchedule: function() {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/scheduler",
@@ -457,7 +463,7 @@ var realServerBridge = {
 	},
 	
 	editPreferences: function(newPrefs) {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/editpreferences",
@@ -475,7 +481,7 @@ var realServerBridge = {
 	},
 	
 	editNeededCourses: function(newList) {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/editneededcourses",
@@ -493,7 +499,7 @@ var realServerBridge = {
 	},
 	
 	editTakenCourses: function(newList) {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/edittakencourses",
@@ -511,7 +517,7 @@ var realServerBridge = {
 	},
 	
 	editUsername: function(newUsername) {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/editusername",
@@ -534,7 +540,7 @@ var realServerBridge = {
 	},
 	
 	editEmail: function(newEmail) {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/editemail",
@@ -552,7 +558,7 @@ var realServerBridge = {
 	},
 	
 	editPassword: function(newPassword) {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/editpassword",
@@ -570,7 +576,7 @@ var realServerBridge = {
 	},
 	
 	getEmail: function() {
-		var username = cookieHandler.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/email",
