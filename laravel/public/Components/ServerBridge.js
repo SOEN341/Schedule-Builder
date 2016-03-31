@@ -17,8 +17,8 @@ var mockServerBridge = {
 			response({success: false, username: username, error: 'usernamenotfound'});
 	},
 	
-	getCourses: function() {
-		return [
+	getCourses: function(response) {
+		response([
 			{
 				name: 'Object Oriented Programming 1',
 				number: 'COMP 248'
@@ -27,7 +27,7 @@ var mockServerBridge = {
 				name: 'Object Oriented Programming 2',
 				number: 'COMP 249'
 			}
-		]
+		]);
 	},
 	
 	getSections: function() {
@@ -84,12 +84,12 @@ var mockServerBridge = {
 		});
 	},
 	
-	getNeededCourses: function() {
-		return [{name: 'Data Structures and Algorithms', number: 'COMP 352'}];
+	getNeededCourses: function(response) {
+		response([{name: 'Data Structures and Algorithms', number: 'COMP 352'}]);
 	},
 	
-	getTakenCourses: function() {
-		return [{name: 'Object Oriented 1', number: 'COMP 248'}, {name: 'Object Oriented 2', number: 'COMP 249'}];
+	getTakenCourses: function(response) {
+		response([{name: 'Object Oriented 1', number: 'COMP 248'}, {name: 'Object Oriented 2', number: 'COMP 249'}]);
 	},
 	
 	generateSchedule: function() {
@@ -236,15 +236,13 @@ var realServerBridge = {
 		});
 	},
 	
-	getCourses: function() {
+	getCourses: function(response) {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/courses",
 			dataType: "json",
 			async: false,
-			success: function(data) {
-				return data.courses;
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -288,16 +286,13 @@ var realServerBridge = {
 		});
 	},
 	
-	getUserPrefs: function() {
+	getUserPrefs: function(response) {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/userprefs",
-			dataType: "text",
+			dataType: "json",
 			async: false,
-			success: function(data) {
-				console.log(data);
-				return data;
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -306,18 +301,15 @@ var realServerBridge = {
 		});
 	},
 	
-	getNeededCourses: function() {
+	getNeededCourses: function(response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/needed",
-			dataType: "text",
+			dataType: "json",
 			async: false,
 			data: username,
-			success: function(data) {
-				console.log(data);
-				return data
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -331,13 +323,10 @@ var realServerBridge = {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/taken",
-			dataType: "text",
+			dataType: "json",
 			async: false,
 			data: username,
-			success: function(data) {
-				console.log(data);
-				return data
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
