@@ -70,8 +70,5 @@ class HomeController extends Controller {
         return view('schedule');
     }
 
-    public function getTheScheduler(){
-        return view('theScheduler');
-    }
 
 }
