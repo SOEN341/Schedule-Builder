@@ -28,11 +28,49 @@ var mockServerBridge = {
 	},
 	
 	getSections: function() {
-		
+		return [
+			{
+				section: 'JJ',
+				classroom: 'H555',
+				type: 'Lab',
+				day: '1',
+				beginTime: '11:30',
+				endTime: '14:00',
+				course: 'SOEN 346'
+			},
+			{
+				section: 'HH',
+				classroom: 'H321',
+				type: 'Lecture',
+				day: '13'
+				beginTime: '11:30',
+				endTime: '14:00',
+				course: 'SOEN 341'
+			}
+		]
 	},
 	
 	getSectionsFromCourse: function(course) {
-		//What format are sections? What info do we store on a section?
+		return [
+			{
+				section: 'JJ',
+				classroom: 'H555',
+				type: 'Lecture',
+				day: '1',
+				beginTime: '11:30',
+				endTime: '14:00',
+				course: 'SOEN 346'
+			},
+			{
+				section: 'HH',
+				classroom: 'H321',
+				type: 'Lecture',
+				day: '13'
+				beginTime: '11:30',
+				endTime: '14:00',
+				course: 'SOEN 346'
+			}
+		]
 	},
 	
 	getUserPrefs: function() {
@@ -52,7 +90,52 @@ var mockServerBridge = {
 	},
 	
 	generateSchedule: function() {
-		//TODO: return format to be decided
+		return [
+			{
+				schedule: [
+					{
+						section: 'JJ',
+						classroom: 'H555',
+						type: 'Lab',
+						day: '1',
+						beginTime: '11:30',
+						endTime: '14:00',
+						course: 'SOEN 346'
+					},
+					{
+						section: 'HH',
+						classroom: 'MB S2.051',
+						type: 'Lecture',
+						day: '24',
+						beginTime: '11:30',
+						endTime: '12:45',
+						course: 'SOEN 341'
+					}
+				]
+			},
+			{
+				schedule: [
+					{
+						section: 'JJ',
+						classroom: 'H555',
+						type: 'Tutorial',
+						day: '5',
+						beginTime: '20:00',
+						endTime: '22:00',
+						course: 'COMP 249'
+					},
+					{
+						section: 'JJ',
+						classroom: 'H555',
+						type: 'Lecture',
+						day: '13',
+						beginTime: '08:00',
+						endTime: '09:45',
+						course: 'ENGR 371'
+					}
+				]
+			}
+		]
 	},
 	
 	addCourse: function(course) {
@@ -63,8 +146,8 @@ var mockServerBridge = {
 			return true;
 	},
 	
-	addSection: function() {
-		//TODO: decide on section format
+	addSection: function(section) {
+		
 	},
 	
 	removeCourse: function(courseID) {
@@ -124,6 +207,7 @@ var realServerBridge = {
 			url:     "http://localhost:8000/register",
 			dataType: "json",
 			data:    {"username":username, "email":email, "password":password },
+			async: false,
 			success: function(data) {
 				 //return data
 				 if(data.result.localeCompare('registered') == 0) {
@@ -171,6 +255,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/courses",
 			dataType: "json",
+			async: false,
 			success: function(data) {
 				return data.courses;
 			},
@@ -187,6 +272,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/sections",
 			dataType: "json",
+			async: false,
 			success: function(data) {
 				return data.sections;
 			},
@@ -203,6 +289,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/sections:"+courseID,
 			dataType: "json",
+			async: false,
 			data:    courseID,
 			success: function(data) {
 				return data.sections;
@@ -220,6 +307,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/userprefs",
 			dataType: "json",
+			async: false,
 			success: function(data) {
 				return data;
 			},
@@ -237,6 +325,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/needed",
 			dataType: "json",
+			async: false,
 			data: username,
 			success: function(data) {
 				return data.courses
@@ -255,6 +344,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/taken",
 			dataType: "json",
+			async: false,
 			data: username,
 			success: function(data) {
 				return data.courses
@@ -273,6 +363,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/scheduler",
 			dataType: "json",
+			async: false,
 			data: username,
 			success: function(data) {
 				return data
@@ -493,6 +584,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/email",
 			dataType: "json",
+			async: false,
 			data: {'username':username},
 			success: function(data) {
 				return data;
