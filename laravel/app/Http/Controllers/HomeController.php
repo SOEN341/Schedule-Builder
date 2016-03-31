@@ -54,16 +54,20 @@ class HomeController extends Controller {
         return view('editcneeded');
     }
 
-     public function getNeeded(){
+    public function getNeeded(){
         return view('getNeededCourses');
     }
 
-     public function setTaken(){
+    public function setTaken(){
         return view('editctaken');
     }
 
-     public function getTaken(){
+    public function getTaken(){
         return view('gettakenCourses');
+    }
+
+    public function getSchedule(){
+        return view('schedule');
     }
 
     public function getTheScheduler(){
