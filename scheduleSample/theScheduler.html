@@ -13,28 +13,53 @@
 				overflow: hidden;
 			}
 		</style>
+		
 	</head>
 	
-	<body>
+	<body onload="init();">
 		<div id="guide" class="dhx_cal_container" style="width:100%; height:100%">
 			<div class="dhx_cal_navline">
 				<div class="dhx_cal_prev_button"></div>
 				<div class="dhx_cal_next_button"></div>
-				<div class="dhx_cal_today_button"></div>
 				<div class="dhx_cal_date"></div>
-				<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
 				<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
-				<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
 			</div>
 
 			<div class="dhx_cal_header"></div>
 
 			<div class="dhx_cal_data"></div>
+			
 		</div>
+<<<<<<< HEAD
+			
+		<script type = "text/javascript">
+			//Use of objects to display the classes in the schedule
+			
+			//function init(){
+		//	var schedule = serverBridge.generateSchedule(cookieManager.getCookie('username'));
+		//	var events = [];
+		//	for(var i=0; i<schedule.length; i++) {
+	//			events.push({
+	//				text: schedule[i].schedule.course
+		//		});
+			//}
+			var events = [
+				{id:1, text: "COMP 352", start_date:"09/14/2016 2:30", end_date: "09/14/2016 5:45"},
+				{id:2, text: "COMP 348", start_date:"09/12/2016 8:45", end_date: "09/12/2016 10:00"}
+			]
+
+				scheduler.init('guide', new Date(2016, 8, 12), "week");
+				scheduler.parse(events, "json");
+	//		}
+=======
 		
 		<script type="text/javascript">
-			scheduler.init('guide', new Date(), "month");
+			scheduler.init('guide', new Date(), "week");
+>>>>>>> 00cc223a6cc5eab7a2f640da3d1922bac2e94e5e
 		</script>
+				
+				
+		
 		
 	</body>
 </html>

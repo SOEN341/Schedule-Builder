@@ -43,6 +43,8 @@ Route::resource('/register', 'HomeController@register');
 
 Route::resource('/login', 'HomeController@login');
 
+Route::get('/scheduler', 'HomeController@getTheScheduler');
+
 
 
 

@@ -68,15 +68,19 @@ var LoginPage = React.createClass({
 		}
 	},
 	
-	logIn: function() {	
-		var success = serverBridge.login(this.state.username, this.state.password);
-		if(success) {
-			cookieManager.addCookie('username', this.state.username, 7);
-			this.props.changePage(1);
-		}
-		else {
-			alert('Invalid username and/or password');
-		}
+	logIn: function() {
+		var self = this;
+		serverBridge.login(this.state.username, this.state.password, function(data) {
+			console.log(data);
+			if(data.success) {
+				cookieManager.addCookie('username', self.state.username, 7);
+				self.props.changePage(1);
+			}
+			else {
+				console.log('Invalid username and/or password');
+			}
+		});
+		
 	},
 	
 	onUsernameChange: function(value) {
