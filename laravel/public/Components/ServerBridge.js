@@ -42,7 +42,7 @@ var mockServerBridge = {
 				section: 'HH',
 				classroom: 'H321',
 				type: 'Lecture',
-				day: '13'
+				day: '13',
 				beginTime: '11:30',
 				endTime: '14:00',
 				course: 'SOEN 341'
@@ -65,7 +65,7 @@ var mockServerBridge = {
 				section: 'HH',
 				classroom: 'H321',
 				type: 'Lecture',
-				day: '13'
+				day: '13',
 				beginTime: '11:30',
 				endTime: '14:00',
 				course: 'SOEN 346'
@@ -225,23 +225,14 @@ var realServerBridge = {
 		});
 	},
 	
-	login: function(username, password) {
+	login: function(username, password, response) {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/login",
-			dataType: "text",
+			dataType: "json",
 			data:    {username:username, password:password},
 			async: false,
-			success: function(data) {
-				console.log(data);
-				if(data.success) {
-					return true;
-				}
-				else {
-					console.log('Bad username and/or password');
-					return false;
-				}
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
