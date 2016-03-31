@@ -64,9 +64,16 @@
                 $row['username'] . '</td><td align="left">' .
                 $row['email'] . '</td><td align="left">' .
                 $row['userType'] . '</td><td align="left">' .
-                $row['password'] . '</td><td align="left">' ;
-                foreach (unserialize($row['CoursesDones']) as $arr) { echo nl2br( $arr->name . ",  " .  $arr->number . " ||||  " ); } 
+                $row['password'] . '</td><td align="left">' ;            
+
+                foreach (json_decode($row['CoursesDones'])->List as $course) {
+                  echo '<p>';
+                  echo 'Course : ' . htmlspecialchars($course->name) . '<br />';
+                  echo 'Number : ' . htmlspecialchars($course->number) . '<br />';                  
+                  echo '</p>';
+                }
                 echo '</td><td align="left">' .
+
                 $row['CoursesRem'] . '</td><td align="left">' .
                 $row['CLoad'] . '</td><td align="left">' .
                 $row['dayOff'] . '</td><td align="left">' .
