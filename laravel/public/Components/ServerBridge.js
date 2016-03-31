@@ -318,7 +318,7 @@ var realServerBridge = {
 		});
 	},
 	
-	getTakenCourses: function() {
+	getTakenCourses: function(response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
