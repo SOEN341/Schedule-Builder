@@ -23,25 +23,25 @@ Route::get('/account', 'AccountController@index');
 
 Route::get('/bigbrother', 'HomeController@bigbrother');
 
-Route::get('/editpassword', 'HomeController@pass');
+Route::resource('/editpassword', 'HomeController@pass');
 
-Route::get('/editusername','HomeController@username');
+Route::resource('/editusername','HomeController@username');
 
-Route::get('/editemail', 'HomeController@email'); 
+Route::resource('/editemail', 'HomeController@email'); 
 
-Route::get('/editpreferences', 'HomeController@setPreferences');  //edit the preferences
+Route::resource('/editpreferences', 'HomeController@setPreferences');  //edit the preferences
 
-Route::get('/userprefs', 'HomeController@getPreferences'); // get the user preferences
+Route::resource('/userprefs', 'HomeController@getPreferences'); // get the user preferences
 
-Route::get('/email', 'HomeController@getEmail'); ///get the email of the user
+Route::resource('/email', 'HomeController@getEmail'); ///get the email of the user
 
-Route::get('/editneededcourses', 'HomeController@setNeeded'); ///set the needed courses
+Route::resource('/editneededcourses', 'HomeController@setNeeded'); ///set the needed courses
 
-Route::get('/needed', 'HomeController@getNeeded'); ///set the needed courses
+Route::resource('/needed', 'HomeController@getNeeded'); ///set the needed courses
 
-Route::get('/edittakencourses', 'HomeController@setTaken'); ///set the taken courses
+Route::resource('/edittakencourses', 'HomeController@setTaken'); ///set the taken courses
 
-Route::get('/taken', 'HomeController@getTaken'); ///set the taken courses
+Route::resource('/taken', 'HomeController@getTaken'); ///set the taken courses
 
 Route::resource('/register', 'HomeController@register');
 

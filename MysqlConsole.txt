@@ -19,6 +19,7 @@ CREATE TABLE courses(semester VARCHAR(15) NOT NULL,code VARCHAR(15) NOT NULL,nam
 //Command to populate the student table
 
 $sql = "INSERT INTO `341`.`users` (`username`, `email`, `userType`, `password`, `CoursesDones`, `CoursesRem`, `CLoad`, `dayOff`, `pTime`) VALUES (\'Jason\', \'jasonbourne@email.com\', \'1\', \'pass\', \'cdone\', \'crem\', \'4\', \'Monday\', \'Afternoons\');";
+INSERT INTO `341db`.`users` (`username`, `email`, `userType`, `password`, `CoursesDones`, `CoursesRem`, `CLoad`, `dayOff`, `pTime`) VALUES ('jason', 'jasonbourne@email.com', '1', 'pass', '{"List":[{"name":"oop", "number":"248"},{"name":"oop2", "number":"249"}]}', '{"List":[{"name":"oop", "number":"248"},{"name":"oop2", "number":"249"}]}', '4', 'Monday', 'Afternoons');
 
 //Populating the course table
 

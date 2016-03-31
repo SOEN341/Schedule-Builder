@@ -1,4 +1,4 @@
-var serverBridge = mockServerBridge;
+var serverBridge= realServerBridge;
 
 var Main = React.createClass({
 	getInitialState: function() {
