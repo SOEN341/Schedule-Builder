@@ -1,8 +1,8 @@
 var PreferencesPage = React.createClass({
 	getInitialState: function() {
-		/*cookieManager.removeCookie('taken');
+		cookieManager.removeCookie('taken');
 		cookieManager.removeCookie('needed');
-		cookieManager.removeCookie('prefs');*/
+		cookieManager.removeCookie('prefs');
 		var cookies=this.loadCookies();
 		return {
 			classDialogOpen: false,
@@ -12,7 +12,7 @@ var PreferencesPage = React.createClass({
 			neededCourses: cookies.needed,
 			takenCourses: cookies.taken,
 			courses: serverBridge.getCourses(),
-			courseLoad: cookies.preferences.classes,
+			courseLoad: cookies.preferences.courseLoad,
 			day: cookies.preferences.day,
 			time: cookies.preferences.time
 		}
@@ -67,7 +67,19 @@ var PreferencesPage = React.createClass({
 		
 		var prefs = cookieManager.getCookie('prefs');
 		if(prefs=='') {
-			prefs = serverBridge.getUserPrefs();
+			prefs={
+				courseLoad: 5,
+				day: 'Monday',
+				time: 'Any'
+			}
+			var self=this;
+			serverBridge.getUserPrefs(function(data) {
+				self.setState({
+					courseLoad: data.courseLoad,
+					day: data.dayOff,
+					time: data.preferredTime
+				});
+			});
 			cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
 		}
 		else {

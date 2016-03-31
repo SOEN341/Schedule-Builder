@@ -76,12 +76,12 @@ var mockServerBridge = {
 		]
 	},
 	
-	getUserPrefs: function() {
-		return {
-			classes: 5,
-			day: 'Monday',
-			time: 'Any'
-		}
+	getUserPrefs: function(response) {
+		response({
+			courseLoad: 5,
+			dayOff: 'Monday',
+			preferredTime: 'Any'
+		});
 	},
 	
 	getNeededCourses: function() {

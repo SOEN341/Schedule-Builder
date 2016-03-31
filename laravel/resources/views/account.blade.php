@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.js"></script>
-    <script src="jquery-1.12.0.min.js"></script>
     <script src="Components/typeahead.bundle.js" type="text/jsx"></script>
     <script src="Components/ServerBridge.js" type="text/jsx"></script>
     <script src="Components/CookieManager.js" type="text/jsx"></script>
