@@ -1,8 +1,8 @@
 var PreferencesPage = React.createClass({
 	getInitialState: function() {
-		cookieManager.removeCookie('taken');
+		/*cookieManager.removeCookie('taken');
 		cookieManager.removeCookie('needed');
-		cookieManager.removeCookie('prefs');
+		cookieManager.removeCookie('prefs');*/
 		var cookies=this.loadCookies();
 		return {
 			classDialogOpen: false,

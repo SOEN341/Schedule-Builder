@@ -56,15 +56,17 @@ var LoginPage = React.createClass({
 			alert('All inputs are mandatory');
 		}
 		else {
-			var success = serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword);
-			if(success) {
-				cookieManager.addCookie('username', this.state.rUsername, 7);
-				cookieManager.addCookie('email', this.state.email, 7);
-				this.props.changePage(1);
-			}
-			else {
-				alert('Username already exists');
-			}
+			var self = this;
+			serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword, function(data) {
+				if(data.success) {
+					cookieManager.addCookie('username', self.state.rUsername, 7);
+					cookieManager.addCookie('email', self.state.email, 7);
+					self.props.changePage(1);
+				}
+				else {
+					alert('Username already exists');
+				}
+			});
 		}
 	},
 	
@@ -77,7 +79,7 @@ var LoginPage = React.createClass({
 				self.props.changePage(1);
 			}
 			else {
-				console.log('Invalid username and/or password');
+				alert('Invalid username and/or password');
 			}
 		});
 		

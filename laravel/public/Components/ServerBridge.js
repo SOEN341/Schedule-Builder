@@ -1,20 +1,20 @@
 var mockServerBridge = {
-	register: function(username, email, password) {
-		if(username=='taken')
-			return false;
+	register: function(username, email, password, response) {
+		if(username=='taken'||username=='Taken')
+			response({success: false, username: username, password: password});
 		else
-			return true;
+			response({success: true, username: username, password: password});
 	},
 	
 	login: function(username, password, response) {
 		if(username=='user'&&password=='pass') {
-			response({success: 'true', username: username, isAdmin: 'false'});
+			response({success: true, username: username, isAdmin: 'false'});
 		}
 		else if(username=='Jason'&&password=='pass') {
-			response({success: 'true', username: username, isAdmin: 'true'});
+			response({success: true, username: username, isAdmin: 'true'});
 		}
 		else
-			response({success: 'false', username: username, error: 'usernamenotfound'});
+			response({success: false, username: username, error: 'usernamenotfound'});
 	},
 	
 	getCourses: function() {
@@ -204,22 +204,14 @@ var mockServerBridge = {
 };
 
 var realServerBridge = {
-	register: function(username, email, password) {
+	register: function(username, email, password, response) {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/register",
 			dataType: "json",
 			data:    {"username":username, "email":email, "password":password },
 			async: false,
-			success: function(data) {
-				 //return data
-				 if(data.result.localeCompare('registered') == 0) {
-					return true;
-				 }
-				 else {
-				 	return false;
-				 }
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
