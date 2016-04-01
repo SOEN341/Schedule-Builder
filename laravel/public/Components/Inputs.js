@@ -97,7 +97,7 @@ var TypeaheadInput = React.createClass({
 		else if(this.props.type=='number') {
 			local = [];
 			for(var i=0; i<this.props.data.length; i++) {
-				local.push(this.props.data[i].number);
+				local.push(this.props.data[i].courseCode);
 			}
 		}
 		
