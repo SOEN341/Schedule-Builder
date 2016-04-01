@@ -17,7 +17,6 @@ while($current = mysqli_fetch_assoc($response)) {
 		echo json_encode($current) . ',' ;
 	}
 }
-
 echo ']';
 
 

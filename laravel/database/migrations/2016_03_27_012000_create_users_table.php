@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->boolean('userType');
             $table->string('password');
-            $table->string('CoursesDones', 1000);
-            $table->string('CoursesRem', 1000);
+            $table->string('CoursesDones', 5000);
+            $table->string('CoursesRem', 5000);
             $table->smallInteger('CLoad');
             $table->enum('dayOff', ['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']);
             $table->enum('pTime', ['Any', 'Mornings', 'Afternoons', 'Evenings']);
