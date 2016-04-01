@@ -51,6 +51,8 @@ Route::resource('/login', 'HomeController@login');
 
 Route::get('/schedule', 'HomeController@getschedule');
 
+Route::get('/admin', 'HomeController@getadmin');
+
 
 
 

@@ -70,9 +70,15 @@ class HomeController extends Controller {
         return view('schedule');
     }
 
-     public function courses(){
-        return view('getCourses');
+     public function courses()
+     {
+         return view('getCourses');
+     }
+
+    public function getAdmin(){
+        return view('admin');
     }
+
 
 
 }

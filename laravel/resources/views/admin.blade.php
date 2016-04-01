@@ -29,7 +29,7 @@
 <script type="text/jsx">
     var RBS = ReactBootstrap;
     ReactDOM.render(
-            <Main currentPage={2}/>, document.getElementById('pageContent')
+            <Main currentPage={6}/>, document.getElementById('pageContent')
     );
 </script>
 </body>
