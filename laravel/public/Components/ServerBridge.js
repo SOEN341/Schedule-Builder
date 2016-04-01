@@ -92,8 +92,8 @@ var mockServerBridge = {
 		response([{name: 'Object Oriented 1', number: 'COMP 248'}, {name: 'Object Oriented 2', number: 'COMP 249'}]);
 	},
 	
-	generateSchedule: function() {
-		return [
+	generateSchedule: function(response) {
+		response([
 			{
 				schedule: [
 					{
@@ -138,7 +138,7 @@ var mockServerBridge = {
 					}
 				]
 			}
-		]
+		]);
 	},
 	
 	addCourse: function(course) {
