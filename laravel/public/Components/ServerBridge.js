@@ -333,9 +333,10 @@ var realServerBridge = {
 				console.log(data);
 				response(data.List);
 			},
-			error:   function(jqXHR, textStatus, errorThrown) {
+			error:   function(jqXHR, textStatus, errorThrown,ts) {
 				alert("Error, status = " + textStatus + ", " +
-					"error thrown: " + errorThrown
+					"error thrown: " + errorThrown +
+					ts.responseText
 				);
 			}
 		});
