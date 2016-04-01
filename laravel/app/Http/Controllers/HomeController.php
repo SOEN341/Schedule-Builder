@@ -70,5 +70,9 @@ class HomeController extends Controller {
         return view('schedule');
     }
 
+     public function getCourses(){
+        return view('getCourses');
+    }
+
 
 }

@@ -237,11 +237,13 @@ var realServerBridge = {
 	},
 	
 	getCourses: function(response) {
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/courses",
 			dataType: "json",
 			async: false,
+			data: { username: username },
 			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -287,11 +289,13 @@ var realServerBridge = {
 	},
 	
 	getUserPrefs: function(response) {
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/userprefs",
 			dataType: "json",
 			async: false,
+			data: { username: username },
 			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -308,7 +312,7 @@ var realServerBridge = {
 			url:     "http://localhost:8000/needed",
 			dataType: "json",
 			async: false,
-			data: username,
+			data: { username: username },
 			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -325,7 +329,7 @@ var realServerBridge = {
 			url:     "http://localhost:8000/taken",
 			dataType: "json",
 			async: false,
-			data: username,
+			data: { username: username },
 			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -342,7 +346,7 @@ var realServerBridge = {
 			url:     "http://localhost:8000/scheduler",
 			dataType: "json",
 			async: false,
-			data: username,
+			data: { username: username },
 			success: function(data) {
 				return data
 			},

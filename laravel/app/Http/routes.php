@@ -23,6 +23,8 @@ Route::get('/account', 'AccountController@index');
 
 Route::get('/bigbrother', 'HomeController@bigbrother');
 
+Route::resource('/courses', 'HomeController@courses');
+
 Route::resource('/editpassword', 'HomeController@pass');
 
 Route::resource('/editusername','HomeController@username');
