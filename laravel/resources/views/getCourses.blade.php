@@ -6,14 +6,19 @@ $query ="SELECT * FROM courses"; // search for the user
 
 $response= mysqli_query($dbc,$query); 
 $rows = array();
+
+$numResults = mysqli_num_rows($response);
+$counter = 0;
+echo '[' ;
 while($current = mysqli_fetch_assoc($response)) {
-    // $rows[] = $current;
-     echo json_encode($current);
+    if(++$counter == $numResults) {
+    	echo json_encode($current);
+    }  else {
+		echo json_encode($current) . ',' ;
+	}
 }
-foreach ($rows as &$value) {
-   
-}
-//echo $rows;
+
+echo ']';
 
 
 //echo mysqli_fetch_array($response);

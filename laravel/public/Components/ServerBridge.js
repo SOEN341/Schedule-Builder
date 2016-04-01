@@ -1,20 +1,20 @@
 var mockServerBridge = {
 	register: function(username, email, password, response) {
 		if(username=='taken'||username=='Taken')
-			response({success: false, username: username, password: password});
+			response({success: 'false', username: username, password: password});
 		else
-			response({success: true, username: username, password: password});
+			response({success: 'true', username: username, password: password});
 	},
 	
 	login: function(username, password, response) {
 		if(username=='user'&&password=='pass') {
-			response({success: true, username: username, isAdmin: 'false'});
+			response({success: 'true', username: username, isAdmin: 'false'});
 		}
 		else if(username=='Jason'&&password=='pass') {
-			response({success: true, username: username, isAdmin: 'true'});
+			response({success: 'true', username: username, isAdmin: 'true'});
 		}
 		else
-			response({success: false, username: username, error: 'usernamenotfound'});
+			response({success: 'false', username: username, error: 'usernamenotfound'});
 	},
 	
 	getCourses: function(response) {
@@ -78,8 +78,8 @@ var mockServerBridge = {
 	
 	getUserPrefs: function(response) {
 		response({
-			courseLoad: 5,
-			dayOff: 'Monday',
+			courseload: 5,
+			dayoff: 'Monday',
 			preferredTime: 'Any'
 		});
 	},
@@ -181,12 +181,12 @@ var mockServerBridge = {
 		
 	},
 	
-	editUsername: function(newUsername) {
+	editUsername: function(newUsername, response) {
 		if(newUsername=='taken')
-			return false;
+			response({result:'false', username: 'user'});
 		else {
 			console.log('username edited to ' + newUsername);
-			return true;
+			response({result:'true', username: 'user'});
 		}
 	},
 	
@@ -198,8 +198,8 @@ var mockServerBridge = {
 		console.log('password edited to ' + newPassword);
 	},
 	
-	getEmail: function() {
-		return 'imaguy@email.ca';
+	getEmail: function(response) {
+		response({email:'imaguy@email.ca', username:'user', result:'good'});
 	}
 };
 
@@ -241,9 +241,9 @@ var realServerBridge = {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/courses",
-			dataType: "json",
+			dataType: "text",
 			async: false,
-			data: { username: username },
+			data: {username: username},
 			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -313,7 +313,11 @@ var realServerBridge = {
 			dataType: "json",
 			async: false,
 			data: { username: username },
-			success: response,
+			success: function(data) {
+				
+				console.log(data);
+				response(data.List);
+			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -330,11 +334,15 @@ var realServerBridge = {
 			dataType: "json",
 			async: false,
 			data: { username: username },
-			success: response,
+			success: function(data) {
+				//console.log(data);
+				response(data.List);
+			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
 				);
+				console.log(errorThrown);
 			}
 		});
 	},
@@ -453,7 +461,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/editpreferences",
 			dataType: "json",
-			data: {'username':username, 'new':newPrefs},
+			data: {'username':username, 'cload':newPrefs.courseLoad, 'dayoff':newPrefs.day, 'preftime':newPrefs.time},
 			success: function(data) {
 				console.log('Preferences edited');
 			},
@@ -471,7 +479,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/editneededcourses",
 			dataType: "json",
-			data: {'username':username, 'new':newList},
+			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
 				console.log('Needed Courses edited');
 			},
@@ -489,7 +497,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/edittakencourses",
 			dataType: "json",
-			data: {'username':username, 'new':newList},
+			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
 				console.log('Taken Courses edited');
 			},
@@ -501,21 +509,14 @@ var realServerBridge = {
 		});
 	},
 	
-	editUsername: function(newUsername) {
+	editUsername: function(newUsername, response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/editusername",
 			dataType: "json",
 			data: {'old':username, 'new':newUsername},
-			success: function(data) {
-				if(data.success) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -530,7 +531,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/editemail",
 			dataType: "json",
-			data: {'username':username, 'new':newEmail},
+			data: {'old':username, 'new':newEmail},
 			success: function(data) {
 				console.log('Email edited');
 			},
@@ -548,7 +549,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/editpassword",
 			dataType: "json",
-			data: {'username':username, 'new':newPassword},
+			data: {'old':username, 'new':newPassword},
 			success: function(data) {
 				console.log('Password edited');
 			},
@@ -560,7 +561,7 @@ var realServerBridge = {
 		});
 	},
 	
-	getEmail: function() {
+	getEmail: function(response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
@@ -568,9 +569,7 @@ var realServerBridge = {
 			dataType: "json",
 			async: false,
 			data: {'username':username},
-			success: function(data) {
-				return data;
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown

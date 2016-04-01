@@ -58,7 +58,7 @@ var LoginPage = React.createClass({
 		else {
 			var self = this;
 			serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword, function(data) {
-				if(data.success) {
+				if(data.success=='true') {
 					cookieManager.addCookie('username', self.state.rUsername, 7);
 					cookieManager.addCookie('email', self.state.email, 7);
 					self.props.changePage(1);
@@ -74,7 +74,7 @@ var LoginPage = React.createClass({
 		var self = this;
 		serverBridge.login(this.state.username, this.state.password, function(data) {
 			console.log(data);
-			if(data.success) {
+			if(data.success=='true') {
 				cookieManager.addCookie('username', self.state.username, 7);
 				self.props.changePage(1);
 			}

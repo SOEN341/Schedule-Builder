@@ -1,4 +1,4 @@
-var serverBridge= mockServerBridge;
+var serverBridge= realServerBridge;
 
 var Main = React.createClass({
 	getInitialState: function() {
@@ -54,6 +54,7 @@ var Main = React.createClass({
 		cookieManager.removeCookie('taken');
 		cookieManager.removeCookie('prefs');
 		cookieManager.removeCookie('needed');
+		cookieManager.removeCookie('email');
 		this.changePage(0);
 	}
 });
