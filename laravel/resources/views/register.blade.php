@@ -21,9 +21,9 @@ $response= mysqli_query($dbc,$query);
          $encryptedPassword = Hash::make('$password');
      }
 
-     $sql = "INSERT INTO users (username, email, userType, password, CoursesDones, CoursesRem, CLoad, dayOff, pTime) VALUES ('$username', '$email', FALSE ,'$encryptedPassword', '{}, '{}', '4', 'Monday', 'Afternoons')";
 
-        if (mysqli_query($dbc, $sql)) {
+     $sql = "INSERT INTO users (username, email, userType, password, CoursesDones, CoursesRem, CLoad, dayOff, pTime) VALUES ('$username', '$email', FALSE ,'$encryptedPassword', '{}, '{}', '4', 'Monday', 'Afternoons')";
+    if (mysqli_query($dbc, $sql)) {
             echo json_encode(array("success"=>"true","username"=>"$username","password"=>"$password"));
     }
 

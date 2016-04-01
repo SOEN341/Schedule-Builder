@@ -200,6 +200,22 @@ var mockServerBridge = {
 	
 	getEmail: function(response) {
 		response({email:'imaguy@email.ca', username:'user', result:'good'});
+	},
+	
+	sendPasswordEmail: function(username, response) {
+		if(username=='nah')
+			response({success:'false'});
+		else
+			response({success:'true'});
+	},
+	
+	resetPasswordFromEmail: function(code, password, response) {
+		if(code=='ye') {
+			response({success:'true'});
+		}
+		else {
+			response({success:'false'});
+		}
 	}
 };
 
@@ -314,7 +330,6 @@ var realServerBridge = {
 			async: false,
 			data: { username: username },
 			success: function(data) {
-				
 				console.log(data);
 				response(data.List);
 			},
@@ -335,7 +350,7 @@ var realServerBridge = {
 			async: false,
 			data: { username: username },
 			success: function(data) {
-				//console.log(data);
+			console.log(data);
 				response(data.List);
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {

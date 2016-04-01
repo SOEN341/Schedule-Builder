@@ -128,6 +128,8 @@ var PreferencesPage = React.createClass({
 				})
 			});
 		}, 10);
+
+
 		
 		return {needed: neededCourses, taken: takenCourses, preferences: prefs};
 	},
