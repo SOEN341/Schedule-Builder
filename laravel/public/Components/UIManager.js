@@ -54,6 +54,7 @@ var Main = React.createClass({
 		cookieManager.removeCookie('taken');
 		cookieManager.removeCookie('prefs');
 		cookieManager.removeCookie('needed');
+		cookieManager.removeCookie('email');
 		this.changePage(0);
 	}
 });

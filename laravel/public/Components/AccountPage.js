@@ -1,12 +1,11 @@
 var AccountPage = React.createClass({
 	getInitialState : function(){
-		var cookies=this.loadCookies();
 		return{
 			usernameDialogOpen: false,
 			emailDialogOpen: false,
 			passwordDialogOpen: false,
-			username: cookies.username,
-			email: cookies.email
+			username: '',
+			email: ''
 		}
 	},
 	
@@ -34,6 +33,14 @@ var AccountPage = React.createClass({
 		)
 	},
 	
+	componentDidMount: function() {
+		var cookies=this.loadCookies();
+		this.setState({
+			username: cookies.username,
+			email: cookies.email
+		});
+	},
+	
 	loadCookies: function() {
 		var username=cookieManager.getCookie('username');
 		if(username=='') {
@@ -41,8 +48,15 @@ var AccountPage = React.createClass({
 		}
 		var email=cookieManager.getCookie('email');
 		if(email=='') {
-			email = serverBridge.getEmail();
-			cookieManager.addCookie('email', email, 7);
+			var self=this;
+			setTimeout(function() {
+				serverBridge.getEmail(function(data) {
+					self.setState({
+						email: data.email
+					});
+					cookieManager.addCookie('email', data.email, 7);
+				});
+			}, 10);
 		}
 		
 		return {
@@ -138,13 +152,15 @@ var ChangeUsernameDialog = React.createClass({
 	changeUsername: function() {
 		if(this.state.username!='') {
 			if(this.state.username!=cookieManager.getCookie('username')) {
-				var success = serverBridge.editUsername(this.state.username);
-				if(success) {
-					this.props.change(this.state.username);
-				}
-				else {
-					alert('Username already taken');
-				}
+				var self=this;
+				serverBridge.editUsername(self.state.username, function(data) {
+					if(data.result=='true') {
+						self.props.change(self.state.username);
+					}
+					else {
+						alert('Username already taken');
+					}
+				});
 			}
 			else {
 				alert('The new username entered is the same as the old one');
@@ -247,24 +263,26 @@ var ChangePasswordDialog = React.createClass({
 	
 	changePassword: function() {
 		if(this.state.password!=''&&this.state.newPassword!='') {
-			var login = serverBridge.login(cookieManager.getCookie('username'), this.state.password);
-			if(login) {
-				if(this.state.newPassword==this.state.newPassRetype) {
-					if(this.state.password!=this.state.newPassword) {
-						serverBridge.editPassword(this.state.newPassword);
-						this.props.close();
+			var self=this;
+			serverBridge.login(cookieManager.getCookie('username'), this.state.password, function(data) {
+				if(data.success=='true') {
+					if(self.state.newPassword==self.state.newPassRetype) {
+						if(self.state.password!=self.state.newPassword) {
+							serverBridge.editPassword(self.state.newPassword);
+							self.props.close();
+						}
+						else {
+							alert('New entered password is the same as the old one');
+						}
 					}
 					else {
-						alert('New entered password is the same as the old one');
+						alert('New password does not match the retyped password');
 					}
 				}
 				else {
-					alert('New password does not match the retyped password');
+					alert('Incorrect password entered for current user');
 				}
-			}
-			else {
-				alert('Incorrect password entered for current user');
-			}
+			});
 		}
 		else {
 			alert('Inputs cannot be empty');
