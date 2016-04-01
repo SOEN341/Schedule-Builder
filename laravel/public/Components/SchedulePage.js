@@ -58,7 +58,7 @@ var Schedule = React.createClass({
 	
 	componentDidMount: function() {
 		var self = this;
-		//serverBridge.generateSchedule(function(data) {
+		serverBridge.generateSchedule(function(data) {
 			//here, data is the json object with all the schedules
 			//You also need to use self instead of this from inside this method (ex: this.setState you would have to do as self.setState)
 			
@@ -117,7 +117,7 @@ var Schedule = React.createClass({
 			});
 			
 			$('<div id="message" class="ui-corner-all"></div>').prependTo($('body'));
-		//});
+		});
 	},
 	
 	displayMessage: function(message) {

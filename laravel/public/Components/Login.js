@@ -5,9 +5,12 @@ var LoginPage = React.createClass({
 			username: '',
 			password: '',
 			registerDialogOpen: false,
+			forgotDialogOpen: false,
+			forgotDialogMode: 1,
 			rUsername: '',
 			rPassword: '',
-			email: ''
+			email: '',
+			code: ''
 		}
 	},
 	
@@ -15,6 +18,7 @@ var LoginPage = React.createClass({
 		return (
 			<div>
 				{this.state.registerDialogOpen? <RegistrationDialog close={this.closeRegistrationDialog} register={this.register} username={this.state.rUsername} password={this.state.rPassword} email={this.state.email} passwordChange={this.onRegPasswordChange} usernameChange={this.onRegUsernameChange} emailChange={this.onEmailChange}/>: null}
+				{this.state.forgotDialogOpen? <ForgotDialog username={this.state.username} usernameChange={this.onUsernameChange} close={this.closeForgotDialog} password={this.state.rPassword} passwordChange={this.onRegPasswordChange} code={this.state.code} codeChange={this.onCodeChange} forgot={this.sendEmail} mode={this.state.forgotDialogMode} resetPassword={this.resetPassword}/>: null}
 				<Logo/>
 				<br/>
 				<RBS.Grid  fluid={true} style={{width:'30%'}}>
@@ -24,8 +28,9 @@ var LoginPage = React.createClass({
 					<RBS.Row>
 						<InputElement label='Password' type='password' onChange={this.onPasswordChange}/>
 					</RBS.Row>
+					<a onClick={this.openForgotDialog}>Forgot Password?</a>
+					<span style={{float:'right'}}><RBS.Button bsStyle='primary' onClick={this.logIn}>Log In</RBS.Button></span><br/>
 					<a onClick={this.openRegisterDialog}>Create Account</a>
-					<span style={{float:'right'}}><RBS.Button bsStyle='primary' onClick={this.logIn}>Log In</RBS.Button></span>
 				</RBS.Grid>
 			</div>
 		)
@@ -44,10 +49,22 @@ var LoginPage = React.createClass({
 		})
 	},
 
-
 	closeRegistrationDialog: function() {
 		this.setState({
 			registerDialogOpen: false
+		})
+	},
+	
+	openForgotDialog: function() {
+		this.setState({
+			forgotDialogOpen: true,
+			forgotDialogMode: 1
+		})
+	},
+
+	closeForgotDialog: function() {
+		this.setState({
+			forgotDialogOpen: false
 		})
 	},
 	
@@ -85,6 +102,35 @@ var LoginPage = React.createClass({
 		
 	},
 	
+	sendEmail: function() {
+		var self=this;
+		serverBridge.sendPasswordEmail(this.state.username, function(data) {
+			if(data.success=='true') {
+				setTimeout(function() {
+					self.setState({
+						forgotDialogMode: 2
+					});
+				}, 10);
+			}
+			else {
+				alert('There is no user in the database with that username');
+			}
+		});
+	},
+	
+	resetPassword: function() {
+		var self=this;
+		serverBridge.resetPasswordFromEmail(this.state.code, this.state.rPassword, function(data) {
+			if(data.success=='true') {
+				cookieManager.addCookie('username', self.state.username, 7);
+				self.props.changePage(1);
+			}
+			else {
+				alert('The code entered is invalid');
+			}
+		});
+	},
+	
 	onUsernameChange: function(value) {
 		this.setState({
 			username: value
@@ -112,6 +158,12 @@ var LoginPage = React.createClass({
 	onEmailChange: function(value) {
 		this.setState({
 			email: value
+		})
+	},
+	
+	onCodeChange: function(value) {
+		this.setState({
+			code: value
 		})
 	}
 });

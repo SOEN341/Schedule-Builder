@@ -212,3 +212,49 @@ var RegistrationDialog = React.createClass({
 		)
 	}
 });
+
+var ForgotDialog = React.createClass({
+	render:function() {
+		return (
+			<div>{this.props.mode==1? <RBS.Modal show={true} onHide={this.props.close}>
+				<RBS.Modal.Header closeButton>
+					<RBS.Modal.Title>Forgot Password</RBS.Modal.Title>
+				</RBS.Modal.Header>
+				<RBS.Modal.Body>
+					<RBS.Grid fluid={true}>
+						<RBS.Row>
+							<RBS.Col>Enter your username and we will send you an e-mail with a code to let you reset your password</RBS.Col><br/>
+						</RBS.Row>
+						<RBS.Row>
+							<InputElement label='Username' onChange={this.props.usernameChange} value={this.props.username}/>
+						</RBS.Row>
+					</RBS.Grid>
+				</RBS.Modal.Body>
+				<RBS.Modal.Footer>
+					<RBS.Button onClick={this.props.forgot} bsStyle='primary'>Send E-mail</RBS.Button>
+				</RBS.Modal.Footer>
+			</RBS.Modal>:
+			<RBS.Modal show={true} onHide={this.props.close}>
+				<RBS.Modal.Header closeButton>
+					<RBS.Modal.Title>Forgot Password</RBS.Modal.Title>
+				</RBS.Modal.Header>
+				<RBS.Modal.Body>
+					<RBS.Grid fluid={true}>
+						<RBS.Row>
+							<RBS.Col>An e-mail has been sent to the e-mail registered to this account. Please check this e-mail and enter the code contained along with the new password you want</RBS.Col><br/>
+						</RBS.Row>
+						<RBS.Row>
+							<InputElement label='Code' onChange={this.props.codeChange} value={this.props.code}/>
+						</RBS.Row>
+						<RBS.Row>
+							<InputElement label='Password' type='password' onChange={this.props.passwordChange} value={this.props.password}/>
+						</RBS.Row>
+					</RBS.Grid>
+				</RBS.Modal.Body>
+				<RBS.Modal.Footer>
+					<RBS.Button onClick={this.props.resetPassword} bsStyle='primary'>Reset Password</RBS.Button>
+				</RBS.Modal.Footer>
+			</RBS.Modal>}</div>
+		)
+	}
+});
