@@ -22,6 +22,7 @@
     <script src="Components/Preferences.js" type="text/jsx"></script>
     <script src="Components/AccountPage.js" type="text/jsx"></script>
     <script src="Components/SchedulePage.js" type="text/jsx"></script>
+    <script src="Components/AdminPage.js" type="text/jsx"></script>
 </head>
 <body>
 <div id="pageContent"></div>

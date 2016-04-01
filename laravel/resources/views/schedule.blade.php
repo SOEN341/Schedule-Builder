@@ -22,6 +22,7 @@
     <script src="Components/Preferences.js" type="text/jsx"></script>
     <script src="Components/AccountPage.js" type="text/jsx"></script>
     <script src="Components/SchedulePage.js" type="text/jsx"></script>
+	<script src="Components/AdminPage.js" type="text/jsx"></script>
 	
 	<script type='text/javascript' src='Components/jquery-week-calendar-master/libs/jquery-1.4.4.min.js'></script>
 	<script type='text/javascript' src='Components/jquery-week-calendar-master/libs/jquery-ui-1.8.11.custom.min.js'></script>

@@ -20,12 +20,20 @@ var mockServerBridge = {
 	getCourses: function(response) {
 		response([
 			{
+				courseID: '1',
 				name: 'Object Oriented Programming 1',
-				number: 'COMP 248'
+				courseCode: 'COMP 248',
+				semester: 'Fall',
+				description: 'Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.',
+				credits: '3',
 			},
 			{
+				courseID: '2',
 				name: 'Object Oriented Programming 2',
-				number: 'COMP 249'
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				description: 'Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.',
+				credits: '3'
 			}
 		]);
 	},

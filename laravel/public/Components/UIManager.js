@@ -9,11 +9,13 @@ var Main = React.createClass({
 	render: function() {
 		return (
 			<div>
-				{this.state.currentPage!=0? <div style={{textAlign:'center'}}><a onClick={this.openPreferencesPage}>Preferences</a> &#124; <a onClick={this.openSchedulePage}>Schedule</a> &#124; <a onClick={this.openAccountPage}>Account Management</a> &#124; <a onClick={this.logout}>Log Out</a></div>: null}
+				{this.state.currentPage!=0 && this.state.currentPage!=6? <div style={{textAlign:'center'}}><a onClick={this.openPreferencesPage}>Preferences</a> &#124; <a onClick={this.openSchedulePage}>Schedule</a> &#124; <a onClick={this.openAccountPage}>Account Management</a> &#124; <a onClick={this.logout}>Log Out</a></div>: null}
+				{this.state.currentPage==6? <div style={{textAlign: 'center'}}><a onClick={this.logout}>Log Out</a></div>:null}
 				{this.state.currentPage==0? <LoginPage changePage={this.changePage}/>: null}
 				{this.state.currentPage==1? <PreferencesPage changePage={this.changePage}/>: null}
 				{this.state.currentPage==2? <AccountPage changePage={this.changePage}/>: null}
 				{this.state.currentPage==3? <SchedulePage changePage={this.changePage}/>: null}
+				{this.state.currentPage==6? <AdminPage changePage={this.changePage}/>: null}
 			</div>
 		)
 	},
@@ -30,6 +32,9 @@ var Main = React.createClass({
 		}
 		else if(newPage==3) {
 			window.location = 'http://localhost:8000/schedule';
+		}
+		else if(newPage==6) {
+			window.location = 'http://localhost:8000/admin';
 		}
 	},
 	

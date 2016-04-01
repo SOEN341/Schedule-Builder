@@ -93,7 +93,15 @@ var LoginPage = React.createClass({
 			console.log(data);
 			if(data.success=='true') {
 				cookieManager.addCookie('username', self.state.username, 7);
-				self.props.changePage(1);
+				if(data.isAdmin=='true')
+				{
+					self.props.changePage(6);
+				}
+				else
+				{
+					self.props.changePage(1);
+				}
+				
 			}
 			else {
 				alert('Invalid username and/or password');
