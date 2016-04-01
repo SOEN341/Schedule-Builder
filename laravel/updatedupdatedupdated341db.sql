@@ -232,6 +232,23 @@ CREATE TABLE IF NOT EXISTS `sections` (
   KEY `sections_courseid_foreign` (`courseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
+INSERT INTO `sections` VALUES
+('UI-X',1,'H-905','Winter','Lab',5,'13:35:00','14:35:00',1,'COMP 248'),
+('UJ-X',2,'H-905','Winter','Lab',3,'13:35:00','14:35:00',1,'COMP 248'),
+('UK-X',3,'H-917','Winter','Lab',5,'13:35:00','14:35:00',1,'COMP 248'),
+('U UA',4,'H-905','Winter','Tutorial',5,'11:45:00','13:25:00',1,'COMP 248'),
+('U UB',5,'H-905','Winter','Tutorial',3,'11:45:00','13:25:00',1,'COMP 248'),
+('WI-X',6,'H-905','Winter','Lab',1,'12:00:00','13:00:00',1,'COMP 248'),
+('WJ-X',7,'H-831','Winter','Lab',5,'16:35:00','17:35:00',1,'COMP 248'),
+('WK-X',8,'H-917','Winter','Lab',1,'12:00:00','13:00:00',1,'COMP 248'),
+('WL-X',9,'H-823','Winter','Lab',5,'16:35:00','17:35:00',1,'COMP 248'),
+('W WA',10,'H-905','Winter','Tutorial',1,'10:15:00','11:50:00',1,'COMP 248'),
+('W WB',11,'H-819','Winter','Tutorial',3,'14:45:00','16:25:00',1,'COMP 248'),
+('W WC',12,'H-823','Winter','Tutorial',3,'14:45:00','16:25:00',1,'COMP 248'),
+('W WD',13,'H-823','Winter','Tutorial',1,'10:15:00','11:50:00',1,'COMP 248'),
+('U',14,'H-820','Winter','Lecture',35,'10:15:00','11:30:00',1,'COMP 248'),
+('W',15,'MB S2.210','Winter','Lecture',35,'11:45:00','13:00:00',1,'COMP 248');
+
 -- --------------------------------------------------------
 
 --
