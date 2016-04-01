@@ -61,12 +61,15 @@ var PreferencesPage = React.createClass({
 		var takenCourses=cookieManager.getCookie('taken');
 		if(takenCourses=='') {
 			takenCourses=[];
-			serverBridge.getTakenCourses(function(data){
-				self.setState({
-					takenCourses: data
+			setTimeout(function() {
+				serverBridge.getTakenCourses(function(data){
+					console.log('taken ' + data);
+					self.setState({
+						takenCourses: data
+					});
+					cookieManager.addCookie('taken', JSON.stringify(data), 7);
 				});
-				cookieManager.addCookie('taken', JSON.stringify(data), 7);
-			});
+			}, 10);
 		}
 		else {
 			takenCourses = JSON.parse(takenCourses);
@@ -75,12 +78,15 @@ var PreferencesPage = React.createClass({
 		var neededCourses=cookieManager.getCookie('needed');
 		if(neededCourses=='') {
 			neededCourses=[];
-			serverBridge.getNeededCourses(function(data){
-				self.setState({
-					neededCourses: data
+			setTimeout(function() {
+				serverBridge.getNeededCourses(function(data){
+					console.log('needed ' + data);
+					self.setState({
+						neededCourses: data
+					});
+					cookieManager.addCookie('needed', JSON.stringify(data), 7);
 				});
-				cookieManager.addCookie('needed', JSON.stringify(data), 7);
-			});
+			}, 10);
 		}
 		else {
 			neededCourses = JSON.parse(neededCourses);
@@ -93,31 +99,41 @@ var PreferencesPage = React.createClass({
 				day: 'None',
 				time: 'Any'
 			}
-			serverBridge.getUserPrefs(function(data) {
-				self.setState({
-					courseLoad: data.courseLoad,
-					day: data.dayOff,
-					time: data.preferredTime
+			setTimeout(function() {
+				serverBridge.getUserPrefs(function(data) {
+					console.log('prefs ' + data);
+					var prefs = {
+						courseLoad: data.courseload,
+						day: data.dayoff,
+						time: data.preferredTime
+					};
+					self.setState({
+						courseLoad: data.courseload,
+						day: data.dayoff,
+						time: data.preferredTime
+					});
+					cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
 				});
-				cookieManager.addCookie('prefs', JSON.stringify(data), 7);
-			});
+			}, 10);
 		}
 		else {
 			prefs = JSON.parse(prefs);
 		}
 		
-		serverBridge.getCourses(function(data){
-			self.setState({
-				courses: data
-			})
-		});
+		/*setTimeout(function() {
+			serverBridge.getCourses(function(data){
+				console.log(data);
+				self.setState({
+					courses: data
+				})
+			});
+		}, 10);*/
 		
 		return {needed: neededCourses, taken: takenCourses, preferences: prefs};
 	},
 	
 	generateSchedule: function() {
-		//Uncomment this when the schedule page actually exists
-		//this.props.changePage(3);
+		this.props.changePage(3);
 	},
 
 	openClassDialog: function(mode) {
@@ -154,7 +170,7 @@ var PreferencesPage = React.createClass({
 			neededCourses: courses
 		});
 		cookieManager.addCookie('needed', JSON.stringify(courses), 7);
-		serverBridge.editNeededCourses(courses);
+		serverBridge.editNeededCourses(JSON.stringify(courses));
 	},
 	
 	addTakenCourse: function(course) {
@@ -164,7 +180,7 @@ var PreferencesPage = React.createClass({
 			takenCourses: courses
 		});
 		cookieManager.addCookie('taken', JSON.stringify(courses), 7);
-		serverBridge.editTakenCourses(courses);
+		serverBridge.editTakenCourses(JSON.stringify(courses));
 	},
 	
 	removeNeededCourse: function(number) {
@@ -182,7 +198,7 @@ var PreferencesPage = React.createClass({
 			this.setState({
 				neededCourses: courses
 			})
-			serverBridge.editNeededCourses(courses);
+			serverBridge.editNeededCourses(JSON.stringify(courses));
 			if(courses.length>0) {
 				cookieManager.addCookie('needed', JSON.stringify(courses), 7);
 			}
@@ -207,7 +223,7 @@ var PreferencesPage = React.createClass({
 			this.setState({
 				takenCourses: courses
 			})
-			serverBridge.editTakenCourses(courses);
+			serverBridge.editTakenCourses(JSON.stringify(courses));
 			if(courses.length>0) {
 				cookieManager.addCookie('taken', JSON.stringify(courses), 7);
 			}
@@ -256,7 +272,7 @@ var PreferencesPage = React.createClass({
 				editingDialogOpen: false
 			});
 			cookieManager.addCookie('taken', JSON.stringify(courses), 7);
-			serverBridge.editTakenCourses(courses);
+			serverBridge.editTakenCourses(JSON.stringify(courses));
 		}
 		else {
 			var courses = React.addons.update(this.state.neededCourses, {});
@@ -266,18 +282,18 @@ var PreferencesPage = React.createClass({
 				editingDialogOpen: false
 			});
 			cookieManager.addCookie('needed', JSON.stringify(courses), 7);
-			serverBridge.editNeededCourses(courses);
+			serverBridge.editNeededCourses(JSON.stringify(courses));
 		}
 	},
 	
 	onClassesChange: function(value) {
 		var prefs = {
-			classes: value,
+			courseLoad: value,
 			day: this.state.day,
 			time: this.state.time
 		}
 		cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
-		serverBridge.editPreferences(JSON.stringify(prefs));
+		serverBridge.editPreferences(prefs);
 		this.setState({
 			courseLoad: value
 		})
@@ -285,12 +301,12 @@ var PreferencesPage = React.createClass({
 	
 	onTimeChange: function(value) {
 		var prefs = {
-			classes: this.state.courseLoad,
+			courseLoad: this.state.courseLoad,
 			day: this.state.day,
 			time: value
 		}
 		cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
-		serverBridge.editPreferences(JSON.stringify(prefs));
+		serverBridge.editPreferences(prefs);
 		this.setState({
 			time: value
 		})
@@ -298,12 +314,12 @@ var PreferencesPage = React.createClass({
 	
 	onDayChange: function(value) {
 		var prefs = {
-			classes: this.state.courseLoad,
+			courseLoad: this.state.courseLoad,
 			day: value,
 			time: this.state.time
 		}
 		cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
-		serverBridge.editPreferences(JSON.stringify(prefs));
+		serverBridge.editPreferences(prefs);
 		this.setState({
 			day: value
 		})
@@ -638,8 +654,10 @@ var PreferencesPage = React.createClass({
 		});
 		cookieManager.addCookie('taken', JSON.stringify(taken), 7);
 		cookieManager.addCookie('needed', JSON.stringify(needed), 7);
-		serverBridge.editTakenCourses(taken);
-		serverBridge.editNeededCourses(needed);
+		setTimeout(function() {
+			serverBridge.editTakenCourses(JSON.stringify(taken));
+		}, 10);
+		serverBridge.editNeededCourses(JSON.stringify(needed));
 	}
 });
 
