@@ -181,12 +181,12 @@ var mockServerBridge = {
 		
 	},
 	
-	editUsername: function(newUsername) {
+	editUsername: function(newUsername, response) {
 		if(newUsername=='taken')
-			return false;
+			response({result:'false', username: 'user'});
 		else {
 			console.log('username edited to ' + newUsername);
-			return true;
+			response({result:'true', username: 'user'});
 		}
 	},
 	
@@ -198,8 +198,8 @@ var mockServerBridge = {
 		console.log('password edited to ' + newPassword);
 	},
 	
-	getEmail: function() {
-		return 'imaguy@email.ca';
+	getEmail: function(response) {
+		response({email:'imaguy@email.ca', username:'user', result:'good'});
 	}
 };
 
@@ -507,21 +507,14 @@ var realServerBridge = {
 		});
 	},
 	
-	editUsername: function(newUsername) {
+	editUsername: function(newUsername, response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/editusername",
 			dataType: "json",
 			data: {'old':username, 'new':newUsername},
-			success: function(data) {
-				if(data.success) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -536,7 +529,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/editemail",
 			dataType: "json",
-			data: {'username':username, 'new':newEmail},
+			data: {'old':username, 'new':newEmail},
 			success: function(data) {
 				console.log('Email edited');
 			},
@@ -554,7 +547,7 @@ var realServerBridge = {
 			type:    "POST",
 			url:     "http://localhost:8000/editpassword",
 			dataType: "json",
-			data: {'username':username, 'new':newPassword},
+			data: {'old':username, 'new':newPassword},
 			success: function(data) {
 				console.log('Password edited');
 			},
@@ -566,7 +559,7 @@ var realServerBridge = {
 		});
 	},
 	
-	getEmail: function() {
+	getEmail: function(response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
@@ -574,9 +567,7 @@ var realServerBridge = {
 			dataType: "json",
 			async: false,
 			data: {'username':username},
-			success: function(data) {
-				return data;
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
