@@ -124,7 +124,7 @@ var PreferencesPage = React.createClass({
 			serverBridge.getCourses(function(data){
 				console.log(data);
 				self.setState({
-					courses: data
+					courses: JSON.parse(data)
 				})
 			});
 		}, 10);

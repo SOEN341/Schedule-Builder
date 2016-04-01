@@ -128,7 +128,7 @@ var LoginPage = React.createClass({
 	
 	resetPassword: function() {
 		var self=this;
-		serverBridge.resetPasswordFromEmail(this.state.code, this.state.rPassword, function(data) {
+		serverBridge.resetPasswordFromEmail(this.state.username, this.state.code, this.state.rPassword, function(data) {
 			if(data.success=='true') {
 				cookieManager.addCookie('username', self.state.username, 7);
 				self.props.changePage(1);

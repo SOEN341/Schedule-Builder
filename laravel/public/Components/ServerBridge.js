@@ -217,7 +217,7 @@ var mockServerBridge = {
 			response({success:'true'});
 	},
 	
-	resetPasswordFromEmail: function(code, password, response) {
+	resetPasswordFromEmail: function(username, code, password, response) {
 		if(code=='ye') {
 			response({success:'true'});
 		}
