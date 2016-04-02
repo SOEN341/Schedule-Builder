@@ -19,7 +19,7 @@ var AdminPage = React.createClass({
 					</tr>
 					{this.state.courses.map(function(course) {
 						return (
-							<AdminCourse key={this.keys++} course={course}/>
+							<AdminCourse key={this.keys++} course={course} changePage={this.props.changePage}/>
 						)
 					}, this)}
 				</tbody>
@@ -41,7 +41,7 @@ var AdminPage = React.createClass({
 var AdminCourse = React.createClass({
 	render: function() {
 		return (
-			<tr><td><h1 onClick={this.edit}>{this.props.course.name}</h1></td>
+			<tr><td><a onClick={this.edit}>{this.props.course.name}</a></td>
 			<td>{this.props.course.courseCode}</td>
 			<td>{this.props.course.semester}</td>
 			<td>{this.props.course.description}</td>
@@ -53,6 +53,6 @@ var AdminCourse = React.createClass({
 	edit: function()
 	{
 		var cookie = cookieManager.addCookie('CourseInfo', JSON.stringify(this.props.course), 7)
-		this.changePage(7)
+		this.props.changePage(7)
 	}
 });
