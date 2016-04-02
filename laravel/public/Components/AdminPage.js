@@ -41,12 +41,12 @@ var AdminPage = React.createClass({
 var AdminCourse = React.createClass({
 	render: function() {
 		return (
-			<tr><td><a href="AdminEdit.js">{this.props.course.name}</a> var cookie = addCookie(CourseInfo, '1', 1)</td>
+			<tr><td><a href="AdminEdit.js">{this.props.course.name}</a></td>
 			<td>{this.props.course.courseCode}</td>
 			<td>{this.props.course.semester}</td>
 			<td>{this.props.course.description}</td>
 			<td>{this.props.course.credits}</td>
-			<td><img src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
+			<td><img onClick={this.props.remove} src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
 		)
 	}
 });
