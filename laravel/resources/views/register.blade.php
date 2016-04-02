@@ -22,7 +22,7 @@ if(mysqli_num_rows($response) <= 0){
      // }
 
 
-     $sql = "INSERT INTO users (username, email, userType, password, CoursesDones, CoursesRem, CLoad, dayOff, pTime) VALUES ('$username', '$email', FALSE ,'$encryptedPassword', '{\"List\":[]}', '{\"List\":[]}', '4', 'Monday', 'Afternoons')";
+     $sql = "INSERT INTO users (username, email, userType, password, CoursesDones, CoursesRem, CLoad, dayOff, pTime) VALUES ('$username', '$email', FALSE ,'$encryptedPassword', '{\"List\":[]}', '{\"List\":[]}', '0', 'None', 'Any')";
     if (mysqli_query($dbc, $sql)) {
             echo json_encode(array("success"=>"true","username"=>"$username","password"=>"$password"));
     } else {

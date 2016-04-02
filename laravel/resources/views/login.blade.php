@@ -4,6 +4,7 @@
  $password=$_POST['password'];
  $saltValue = createSaltData($username);
  $providedPassword = createHashedValue($saltValue, $password);
+ $type='false';
 
 // $username='JASONB';
 // $password='pass1';
