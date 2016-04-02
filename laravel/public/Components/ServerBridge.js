@@ -162,8 +162,57 @@ var mockServerBridge = {
 				courseID: '2',
 				name: 'Object Oriented Programming 2',
 				courseCode: 'COMP 249',
+				semester: 'Fall',
+				year: '1'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Fall',
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
 				semester: 'Winter',
 				year: '1'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '3'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '1'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '3'
 			}
 		]);
 	},

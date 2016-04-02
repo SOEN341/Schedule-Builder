@@ -2,10 +2,17 @@ var SchedulePage = React.createClass({
 	render: function(){
 		return (
 			<div>
-				<Schedule/>
+				<Schedule changePage={this.props.changePage}/>
 			</div>
-		)	
+		)
 	},
+	
+	componentDidMount: function() {
+		var username=cookieManager.getCookie('username');
+		if(username=='') {
+			this.props.changePage(0);
+		}
+	}
 });
 	
 	
@@ -23,7 +30,8 @@ var Schedule = React.createClass({
 	getInitialState: function() {
 		return {
 			currentDataSet: 0,
-			max: 0
+			max: 0,
+			schedules: []
 		}
 	},
 	
@@ -31,9 +39,9 @@ var Schedule = React.createClass({
 		return (
 			<div>
 				<div style={{textAlign: 'center'}}><img onClick={this.left} src="Images/left.png" title="Switch Schedules" style={{height: '30px', width: '30px'}}/>
-				<RBS.Button bsStyle='primary'>Select This Schedule</RBS.Button>
+				<RBS.Button bsStyle='primary' onClick={this.selectSchedule}>Select This Schedule</RBS.Button>
 				<img onClick={this.right} src="Images/right.png" title="Switch Schedules" style={{height: '30px', width: '30px'}}/></div>
-				<div id='calendar' onClick={this.onDataSetChange}></div>
+				<div id='calendar' style={{width:'50%', marginLeft:'25%'}} onClick={this.onDataSetChange}></div>
 			</div>
 		)
 	},
@@ -88,7 +96,8 @@ var Schedule = React.createClass({
 			}
 			
 			self.setState({
-				max: allSchedules.length-1
+				max: allSchedules.length-1,
+				schedules: allSchedules
 			});
 			var eventData = {events: allSchedules[1]};
 			
@@ -104,7 +113,7 @@ var Schedule = React.createClass({
 				firstDayOfWeek: 1,
 				daysToShow: 5,
 				height: function($calendar) {
-					return $(window).height() - $('h1').outerHeight(true);
+					return $(window).height()*9/10;
 				},
 				eventRender : function(calEvent, $event) {
 					if (calEvent.end.getTime() < new Date().getTime()) {
@@ -114,8 +123,13 @@ var Schedule = React.createClass({
 				}
 			});
 			
-			$('<div id="message" class="ui-corner-all"></div>').prependTo($('body'));
+			/*$('<div id="message" class="ui-corner-all"></div>').prependTo($('body'));*/
 		});
+	},
+	
+	selectSchedule: function() {
+		cookieManager.addCookie('schedule', JSON.stringify(this.state.schedules[this.state.currentDataSet]), 7);
+		this.props.changePage(4);
 	},
 	
 	left: function() {

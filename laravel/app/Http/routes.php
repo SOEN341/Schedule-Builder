@@ -53,6 +53,8 @@ Route::get('/schedule', 'HomeController@getschedule');
 
 Route::get('/admin', 'HomeController@getadmin');
 
+Route::get('/sequence', 'HomeController@getsequence');
+
 
 
 

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Account</title>
+    <title>Admin</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="CSS/Custom CSS.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
@@ -23,6 +23,7 @@
     <script src="Components/AccountPage.js" type="text/jsx"></script>
     <script src="Components/SchedulePage.js" type="text/jsx"></script>
     <script src="Components/AdminPage.js" type="text/jsx"></script>
+    <script src="Components/CourseSequence.js" type="text/jsx"></script>
 </head>
 <body>
 <div id="pageContent"></div>

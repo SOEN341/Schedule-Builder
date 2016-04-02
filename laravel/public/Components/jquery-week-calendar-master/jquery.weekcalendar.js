@@ -36,7 +36,7 @@
         alwaysDisplayTimeMinutes: true,
         use24Hour: false,
         daysToShow: 5,
-        minBodyHeight: 100,
+        minBodyHeight: 10,
         firstDayOfWeek: function(calendar) {
                   if ($(calendar).weekCalendar('option', 'daysToShow') != 5) {
                     return 0;
