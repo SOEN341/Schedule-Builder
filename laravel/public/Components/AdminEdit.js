@@ -1,8 +1,7 @@
-var AdminPage = React.createClass({
+var AdminEdit = React.createClass({
 	getInitialState: function() {
 		return {
-			courses: []
-			this.getCookies().JSON.parse
+			sections: []
 		}
 	},
 	
@@ -20,9 +19,9 @@ var AdminPage = React.createClass({
 						<td style={{width: '12%'}}>Classroom</td>
 						<td style={{width: '10%'}}></td>
 					</tr>
-					{this.state.courses.map(function(course) {
+					{this.state.sections.map(function(section) {
 						return (
-							<AdminCourse key={this.keys++} course={course}/>
+							<AdminSection key={this.keys++} section={section}/>
 						)
 					}, this)}
 				</tbody>
@@ -31,32 +30,46 @@ var AdminPage = React.createClass({
 	},
 	
 	componentDidMount: function() {
+		var course = this.loadCookies();
 		this.keys=0;
-		var self=this;
-		serverBridge.getCourses(function(data) {
-			self.setState({
-				courses: data
-			});
-		});
+	},
+	
+	loadCookies: function() {
+		var course = cookieManager.getCookie('CourseInfo');
+		if(course=='') {
+			this.props.changePage(6);
+		}
+		else {
+			course= JSON.parse(course);
+			var self=this;
+			setTimeout(function(){
+				serverBridge.getSectionsFromCourse(course, function(data) {
+					self.setState({
+						sections: data
+					});
+				});
+			}, 10);
+		}
+		return course;
 	}
 });
 
-var AdminCourse = React.createClass({
+var AdminSection = React.createClass({
 	render: function() {
 		return (
-			<tr><td>{this.props.course.section}</td>
-			<td>{this.props.course.courseCode}</td>
-			<td>{this.props.course.type}</td>
-			<td>{this.props.course.day}</td>
-			<td>{this.props.course.beginTime}</td>
-			<td>{this.props.course.endTime}</td>
-			<td>{this.props.course.classroom}</td>
-			<td><img onClick={this.props.editCourse} src="Images/edit.png" title="Edit Course" style={{height: '15px', width: '15px'}}/>&nbsp;&nbsp;</td></tr>
+			<tr><td>{this.props.section.section}</td>
+			<td>{this.props.section.courseCode}</td>
+			<td>{this.props.section.type}</td>
+			<td>{this.props.section.day}</td>
+			<td>{this.props.section.beginTime}</td>
+			<td>{this.props.section.endTime}</td>
+			<td>{this.props.section.classroom}</td>
+			<td><img onClick={this.props.editCourse} src="Images/edit.png" title="Edit Section" style={{height: '15px', width: '15px'}}/>&nbsp;&nbsp;</td></tr>
 		)
 	}
 });
 
-var CourseList = React.createClass({
+var CoursesList = React.createClass({
 	componentWillMount: function() {
 		this.keys=0;
 	},

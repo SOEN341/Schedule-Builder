@@ -79,6 +79,10 @@ class HomeController extends Controller {
         return view('admin');
     }
 
+    public function getAdminCourse(){
+        return view('admincourse');
+    }
+
     public function getSequence(){
         return view('courseSequence');
     }

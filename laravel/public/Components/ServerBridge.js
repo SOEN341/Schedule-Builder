@@ -61,8 +61,8 @@ var mockServerBridge = {
 		]
 	},
 	
-	getSectionsFromCourse: function(course) {
-		return [
+	getSectionsFromCourse: function(course, response) {
+		response([
 			{
 				section: 'JJ',
 				classroom: 'H555',
@@ -81,7 +81,7 @@ var mockServerBridge = {
 				endTime: '14:00',
 				course: 'SOEN 346'
 			}
-		]
+		]);
 	},
 	
 	getUserPrefs: function(response) {
