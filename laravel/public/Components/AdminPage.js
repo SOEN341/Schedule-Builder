@@ -7,17 +7,29 @@ var AdminPage = React.createClass({
 	
 	render: function() {
 		return(
-		 <div>
-				{this.state.courses.map(function(course) {
-					return (
-						<AdminCourse key={this.keys++} course={course}/>
-					)
-				}, this)}
-		 </div>
+			<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
+				<tbody>
+					<tr>
+						<td style={{width: '40%'}}>Class Name</td>
+						<td style={{width: '40%'}}>Course Number</td>
+						<td style={{width: '40%'}}>Course ID</td>
+						<td style={{width: '40%'}}>Semester</td>
+						<td style={{width: '1000%'}}>Description</td>
+						<td style={{width: '40%'}}>Credits</td>
+						<td style={{width: '20%'}}></td>
+					</tr>
+					{this.state.courses.map(function(course) {
+						return (
+							<AdminCourse key={this.keys++} course={course}/>
+						)
+					}, this)}
+				</tbody>
+			</RBS.Table>
 		)
 	},
 	
 	componentDidMount: function() {
+		this.keys=0;
 		var self=this;
 		serverBridge.getCourses(function(data) {
 			self.setState({
@@ -27,36 +39,17 @@ var AdminPage = React.createClass({
 	}
 });
 
-var CourseList = React.createClass({
-	componentWillMount: function() {
-		this.keys=0;
-	},
-	
-	render: function() {
-		return (
-			<tbody>
-				<tr>
-					<td style={{width: '40%'}}>Class Name</td>
-					<td style={{width: '40%'}}>Course Number</td>
-					<td style={{width: '20%'}}></td>
-				</tr>
-				{this.props.courses.map(function(course) {
-					return (
-						<Course key={this.keys++} name={course.name} number={course.number} remove={this.props.remove.bind(this.props.binder, course.number)} edit={this.props.editCourse.bind(this.props.binder, course.number)}/>
-					)
-				}, this)}
-			</tbody>
-		)
-	}
-});
-
 var AdminCourse = React.createClass({
 	render: function() {
 		return (
-			<tr><td>{this.props.name}</td>
-			<td>{this.props.number}</td>
-			<td><img onClick={this.props.edit} src="Images/edit.png" title="Edit Course" style={{height: '15px', width: '15px'}}/>&nbsp;&nbsp;
-			<img onClick={this.props.remove} src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
+			<tr><td>{this.props.course.name}</td>
+			<td>{this.props.course.courseCode}</td>
+			<td>{this.props.course.courseID}</td>
+			<td>{this.props.course.semester}</td>
+			<td>{this.props.course.description}</td>
+			<td>{this.props.course.credits}</td>
+			<td><img src="Images/edit.png" title="Add Course" style={{height: '15px', width: '15px'}}/>&nbsp;&nbsp;
+			<img src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
 		)
 	}
 });
