@@ -32,7 +32,7 @@
       options: {
         date: new Date(),
         timeFormat: null,
-        dateFormat: 'M d Y',
+        dateFormat: '',
         alwaysDisplayTimeMinutes: true,
         use24Hour: false,
         daysToShow: 5,
@@ -261,7 +261,7 @@
          * @param {number} option daysToShow.
          * @return {String} the title attribute for the calendar.
          */
-        title: '%start%  %end% Weekly Schedule',
+        title: 'Weekly Schedule',
         /**
          * default options to pass to callback
          * you can pass a function returning an object or a litteral object
