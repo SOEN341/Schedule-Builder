@@ -10,13 +10,13 @@ var AdminPage = React.createClass({
 			<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
 				<tbody>
 					<tr>
-						<td style={{width: '40%'}}>Class Name</td>
-						<td style={{width: '40%'}}>Course Number</td>
-						<td style={{width: '40%'}}>Course ID</td>
-						<td style={{width: '40%'}}>Semester</td>
-						<td style={{width: '1000%'}}>Description</td>
-						<td style={{width: '40%'}}>Credits</td>
-						<td style={{width: '20%'}}></td>
+						<td style={{width: '12%'}}>Class Name</td>
+						<td style={{width: '12%'}}>Course Number</td>
+						<td style={{width: '12%'}}>Course ID</td>
+						<td style={{width: '12%'}}>Semester</td>
+						<td style={{width: '30%'}}>Description</td>
+						<td style={{width: '12%'}}>Credits</td>
+						<td style={{width: '10%'}}></td>
 					</tr>
 					{this.state.courses.map(function(course) {
 						return (
