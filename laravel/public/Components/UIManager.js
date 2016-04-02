@@ -17,6 +17,7 @@ var Main = React.createClass({
 				{this.state.currentPage==3? <SchedulePage changePage={this.changePage}/>: null}
 				{this.state.currentPage==4? <CourseSequencePage changePage={this.changePage}/>: null}
 				{this.state.currentPage==6? <AdminPage changePage={this.changePage}/>: null}
+				{this.state.currentPage==7? <AdminEdit changePage={this.changePage}/>: null}
 			</div>
 		)
 	},
@@ -39,6 +40,9 @@ var Main = React.createClass({
 		}
 		else if(newPage==6) {
 			window.location = 'http://localhost:8000/admin';
+		}
+		else if(newPage==7) {
+			window.location = 'http://localhost:8000/admin/edit';
 		}
 	},
 	
