@@ -48,8 +48,7 @@ var AdminCourse = React.createClass({
 			<td>{this.props.course.semester}</td>
 			<td>{this.props.course.description}</td>
 			<td>{this.props.course.credits}</td>
-			<td><img src="Images/edit.png" title="Add Course" style={{height: '15px', width: '15px'}}/>&nbsp;&nbsp;
-			<img src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
+			<td><img src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
 		)
 	}
 });
