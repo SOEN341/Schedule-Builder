@@ -53,6 +53,10 @@ Route::resource('/sections', 'HomeController@sections'); //get the sections
 
 Route::resource('/sectioncourse', 'HomeController@sectioncourse'); // get the section from a courses
 
+Route::resource('/editsection', 'HomeController@editsection'); //edit a section as admin
+
+Route::resource('/editcourse', 'HomeController@editcourse'); //edit an section as admin
+
 Route::get('/schedule', 'HomeController@getschedule');
 
 Route::get('/admin', 'HomeController@getadmin');
