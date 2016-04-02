@@ -12,7 +12,6 @@ var AdminPage = React.createClass({
 					<tr>
 						<td style={{width: '12%'}}>Class Name</td>
 						<td style={{width: '12%'}}>Course Number</td>
-						<td style={{width: '12%'}}>Course ID</td>
 						<td style={{width: '12%'}}>Semester</td>
 						<td style={{width: '30%'}}>Description</td>
 						<td style={{width: '12%'}}>Credits</td>
@@ -44,7 +43,6 @@ var AdminCourse = React.createClass({
 		return (
 			<tr><td>{this.props.course.name}</td>
 			<td>{this.props.course.courseCode}</td>
-			<td>{this.props.course.courseID}</td>
 			<td>{this.props.course.semester}</td>
 			<td>{this.props.course.description}</td>
 			<td>{this.props.course.credits}</td>
