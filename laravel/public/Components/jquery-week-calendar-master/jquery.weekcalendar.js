@@ -32,7 +32,7 @@
       options: {
         date: new Date(),
         timeFormat: null,
-        dateFormat: '',
+        dateFormat: 'M d Y',
         alwaysDisplayTimeMinutes: true,
         use24Hour: false,
         daysToShow: 5,
@@ -49,15 +49,15 @@
         timeSeparator: ' to ',
         startParam: 'start',
         endParam: 'end',
-        businessHours: {start: 8, end: 18, limitDisplay: false},
+        businessHours: {start: 8, end: 24, limitDisplay: true},
         newEventText: 'New Event',
         timeslotHeight: 20,
         defaultEventLength: 2,
         timeslotsPerHour: 4,
-        minDate: null,
-        maxDate: null,
+        minDate: new Date(2016, 4, 16),
+        maxDate: new Date(2016, 4, 20),
         showHeader: true,
-        buttons: true,
+        buttons: false,
         buttonText: {
           today: 'today',
           lastWeek: 'previous',
@@ -261,7 +261,7 @@
          * @param {number} option daysToShow.
          * @return {String} the title attribute for the calendar.
          */
-        title: '%start%  %end%',
+        title: '%start%  %end% Weekly Schedule',
         /**
          * default options to pass to callback
          * you can pass a function returning an object or a litteral object

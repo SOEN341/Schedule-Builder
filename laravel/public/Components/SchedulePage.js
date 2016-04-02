@@ -2,8 +2,7 @@ var SchedulePage = React.createClass({
 	render: function(){
 		return (
 			<div>
-				<ScheduleLogo />
-				<Schedule />
+				<Schedule/>
 			</div>
 		)	
 	},
@@ -20,66 +19,88 @@ var ScheduleLogo = React.createClass({
 	}
 });
 
-/*var Initialize = React.createClass({
-	render: function() {
-			return (
-				<div></div>
-			)
-	}
-});
-
-var ScheduleGrid = React.createClass({
-	render: function() {
-			return (
-				<div id="guide" className="dhx_cal_container" style={{width:'100%', height:'100%'}}>
-					<div className="dhx_cal_navline">
-						<div className="dhx_cal_prev_button"></div>
-						<div className="dhx_cal_next_button"></div>
-						<div className="dhx_cal_date"></div>
-						<div className="dhx_cal_tab" name="week_tab" style={{right:'140px'}}></div>
-					</div>
-					<div className="dhx_cal_header"></div>
-					<div className="dhx_cal_data"></div>
-				</div>
-			)
+var Schedule = React.createClass({
+	getInitialState: function() {
+		return {
+			currentDataSet: 0,
+			max: 0
+		}
 	},
 	
-	componentDidMount: function() {
-		scheduler.init('guide', new Date(2016, 8, 12), "week");
-	}
-});*/
-
-var Schedule = React.createClass({
 	render: function() {
 		return (
-			<div id='calendar'></div>
+			<div>
+				<div style={{textAlign: 'center'}}><img onClick={this.left} src="Images/left.png" title="Switch Schedules" style={{height: '30px', width: '30px'}}/>
+				<RBS.Button bsStyle='primary'>Select This Schedule</RBS.Button>
+				<img onClick={this.right} src="Images/right.png" title="Switch Schedules" style={{height: '30px', width: '30px'}}/></div>
+				<div id='calendar' onClick={this.onDataSetChange}></div>
+			</div>
 		)
 	},
 	
 	componentDidMount: function() {
 		var self = this;
-		//serverBridge.generateSchedule(function(data) {
-			//here, data is the json object with all the schedules
-			//You also need to use self instead of this from inside this method (ex: this.setState you would have to do as self.setState)
+		serverBridge.generateSchedule(function(data) {
+			var year = 2016;
+			var month = 4;
+			var day = 16;
+			var events=[];
+			var schedule=data[0].schedule;
+			var eventDay;
+			var beginTime;
+			var endTime;
+			var description;
+			var id=0;
+			var allSchedules = [];
+			for(var k=0; k<data.length; k++) {
+				schedule=data[k].schedule;
+				events=[];
+				for(var i=0; i<schedule.length; i++) {
+					for(var j=0; j<schedule[i].day.length; j++) {
+						//Handle the day
+						if(schedule[i].day.charAt(j)=='1') {
+							eventDay=day;
+						}
+						else if(schedule[i].day.charAt(j)=='2') {
+							eventDay=day+1;
+						}
+						else if(schedule[i].day.charAt(j)=='3') {
+							eventDay=day+2;
+						}
+						else if(schedule[i].day.charAt(j)=='4') {
+							eventDay=day+3;
+						}
+						else if(schedule[i].day.charAt(j)=='5') {
+							eventDay=day+4;
+						}
+						
+						//Handle the time
+						beginTime=schedule[i].beginTime.split(':');
+						endTime=schedule[i].endTime.split(':');
+						
+						//Handle the description (course name, code, section, classroom, and type)
+						description = '<br/>'+schedule[i].course+'<br/>'+schedule[i].type+' '+schedule[i].section+'<br/>'+schedule[i].classroom;
+						
+						events.push({'id':id++, 'start': new Date(year, month, eventDay, beginTime[0], beginTime[1]), 'end': new Date(year, month, eventDay, endTime[0], endTime[1]),'title':description, readOnly: true});
+					}
+				}
+				allSchedules.push(events);
+			}
 			
-			var year = new Date().getFullYear();
-			var month = new Date().getMonth();
-			var day = new Date().getDate();
-
-			var eventData = {
-				events : [
-					{'id':1, 'start': new Date(year, month, day, 12), 'end': new Date(year, month, day, 13, 35),'title':'Lunch with Mike', readOnly: true},
-					{'id':2, 'start': new Date(year, month, day, 14), 'end': new Date(year, month, day, 14, 45),'title':'Dev Meeting', readOnly: true},
-					{'id':3, 'start': new Date(year, month, day + 1, 18), 'end': new Date(year, month, day + 1, 18, 45),'title':'Hair cut', readOnly: true},
-					{'id':4, 'start': new Date(year, month, day - 1, 8), 'end': new Date(year, month, day - 1, 9, 30),'title':'Team breakfast', readOnly: true},
-					{'id':5, 'start': new Date(year, month, day + 1, 14), 'end': new Date(year, month, day + 1, 15),'title':'Product showcase', readOnly: true}
-				]
-			};
+			self.setState({
+				max: allSchedules.length-1
+			});
+			var eventData = {events: allSchedules[1]};
+			
 			$('#calendar').weekCalendar({
 				timeslotsPerHour: 4,
 				timeslotHeigh: 30,
 				hourLine: true,
-				data: eventData,
+				data: function(start, end, callback) {
+					var dataSource = self.state.currentDataSet;
+					
+					callback(allSchedules[dataSource]);
+				  },
 				firstDayOfWeek: 1,
 				daysToShow: 5,
 				height: function($calendar) {
@@ -90,38 +111,40 @@ var Schedule = React.createClass({
 						$event.css('backgroundColor', '#aaa');
 						$event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
 					}
-				},
-				  /*
-				  eventNew: function(calEvent, $event) {
-					this.displayMessage('<strong>Added event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-					alert('You\'ve added a new event. You would capture this event, add the logic for creating a new event with your own fields, data and whatever backend persistence you require.');
-				  },
-				  eventDrop: function(calEvent, $event) {
-					this.displayMessage('<strong>Moved Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-				  },
-				  eventResize: function(calEvent, $event) {
-					  
-				  eventClick: function(calEvent, $event) {
-					  
-				  },
-				  eventMouseover: function(calEvent, $event) {
-					this.displayMessage('<strong>Mouseover Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-				  },
-				  eventMouseout: function(calEvent, $event) {
-					this.displayMessage('<strong>Mouseout Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-				  },
-				  noEvents: function() {
-					  console.log('no events');
-					this.displayMessage('There are no events for this week');
-				  }*/
+				}
 			});
 			
 			$('<div id="message" class="ui-corner-all"></div>').prependTo($('body'));
-		//});
+		});
 	},
 	
-	displayMessage: function(message) {
-		console.log('here');
-	  $('#message').html(message).fadeIn();
+	left: function() {
+		var set = React.addons.update(this.state.currentDataSet, {});
+		set--;
+		if(set<0) {
+			set=this.state.max;
+		}
+		this.setState({
+			currentDataSet: set
+		});
+		this.onDataSetChange();
+	},
+	
+	right: function() {
+		var set = React.addons.update(this.state.currentDataSet, {});
+		set++;
+		if(set>this.state.max) {
+			set=0;
+		}
+		this.setState({
+			currentDataSet: set
+		});
+		this.onDataSetChange();
+	},
+	
+	onDataSetChange: function() {
+		setTimeout(function(){
+			$('#calendar').weekCalendar('refresh');
+		}, 10);
 	}
 });
