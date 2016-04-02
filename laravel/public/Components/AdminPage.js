@@ -41,7 +41,7 @@ var AdminPage = React.createClass({
 var AdminCourse = React.createClass({
 	render: function() {
 		return (
-			<tr><td><h1 onclick=edit()>{this.props.course.name}</h1></td>
+			<tr><td><h1 onClick={this.edit}>{this.props.course.name}</h1></td>
 			<td>{this.props.course.courseCode}</td>
 			<td>{this.props.course.semester}</td>
 			<td>{this.props.course.description}</td>
