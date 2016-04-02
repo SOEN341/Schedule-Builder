@@ -49,6 +49,10 @@ Route::resource('/register', 'HomeController@register');
 
 Route::resource('/login', 'HomeController@login');
 
+Route::resource('/sections', 'HomeController@sections'); //get the sections
+
+Route::resource('/sectioncourse', 'HomeController@sectioncourse'); // get the section from a courses
+
 Route::get('/schedule', 'HomeController@getschedule');
 
 Route::get('/admin', 'HomeController@getadmin');

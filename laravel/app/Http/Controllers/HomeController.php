@@ -83,4 +83,12 @@ class HomeController extends Controller {
         return view('courseSequence');
     }
 
+    public function sections(){
+        return view('getSections');
+    }
+
+    public function sectioncourse(){
+        return view('getCourseSections');
+    }
+
 }
