@@ -149,6 +149,74 @@ var mockServerBridge = {
 		]);
 	},
 	
+	generateCourseSequence: function(schedule, response) {
+		response([
+			{
+				courseID: '1',
+				semester: 'Fall',
+				year: '3',
+				name: 'Object Oriented Programming 1',
+				courseCode: 'COMP 248'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Fall',
+				year: '1'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Fall',
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '1'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '3'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '1'
+			},
+			{
+				courseID: '2',
+				name: 'Object Oriented Programming 2',
+				courseCode: 'COMP 249',
+				semester: 'Winter',
+				year: '3'
+			}
+		]);
+	},
+	
 	addCourse: function(course) {
 		if(course.number=='SOEN 341') {
 			return false;
