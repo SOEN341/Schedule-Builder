@@ -15,7 +15,7 @@ class CreateSectionsTable extends Migration
         Schema::create('sections', function(Blueprint $table){
 
            $table->string('section');
-           $table->increments('sectionId');
+           $table->increments('sectionId')->integer();
            $table->string('classroom');
            $table->string('semester');
            $table->string('type');
@@ -25,6 +25,7 @@ class CreateSectionsTable extends Migration
            $table->integer('courseId')->unsigned();
            $table->foreign('courseId')->references('courseId')->on('courses');
            $table->string('courseCode');
+           $table->integer('sectionNum')->unsigned();
 
         });
     }
