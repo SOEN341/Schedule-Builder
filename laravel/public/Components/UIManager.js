@@ -42,7 +42,7 @@ var Main = React.createClass({
 			window.location = 'http://localhost:8000/admin';
 		}
 		else if(newPage==7) {
-			window.location = 'http://localhost:8000/admin/edit';
+			window.location = 'http://localhost:8000/admincourse';
 		}
 	},
 	

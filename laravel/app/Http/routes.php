@@ -59,6 +59,6 @@ Route::get('/admin', 'HomeController@getadmin');
 
 Route::get('/sequence', 'HomeController@getsequence');
 
-
+Route::get('/admincourse', 'HomeController@getadmincourse');
 
 
