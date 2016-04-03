@@ -95,12 +95,28 @@ class HomeController extends Controller {
         return view('getCourseSections');
     }
 
-     public function editsection(){
-        return view('editSections');
+    public function editsection(){
+        return view('editSection');
     }
 
     public function editcourse(){
-        return view('editCourses');
+        return view('editCourse');
+    }
+
+    public function addadminsection(){
+         return view('addadminsection');
+    }
+
+    public function addadmincourse(){
+        return view('addadmincourse');
+    }
+
+    public function removeadminsection(){
+         return view('removesection');
+    }
+
+    public function removeadmincourse(){
+        return view('removecourse');
     }
 
 }

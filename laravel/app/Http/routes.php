@@ -57,6 +57,14 @@ Route::resource('/editsection', 'HomeController@editsection'); //edit a section 
 
 Route::resource('/editcourse', 'HomeController@editcourse'); //edit an section as admin
 
+Route::resource('/addadminsection', 'HomeController@addadminsection'); //edit a section as admin
+
+Route::resource('/addadmincourse', 'HomeController@addadmincourse'); //edit an section as admin
+
+Route::resource('/removeadminsection', 'HomeController@removeadminsection'); //remove a section as admin
+
+Route::resource('/removeadmincourse', 'HomeController@removeadmincourse'); //remove an section as admin
+
 Route::get('/schedule', 'HomeController@getschedule');
 
 Route::get('/admin', 'HomeController@getadmin');

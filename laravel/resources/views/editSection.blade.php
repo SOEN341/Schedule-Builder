@@ -1,6 +1,6 @@
 <?php
-//$json=$_POST['json'];//username
-$json='{"section":"UI-X","sectionId":"1","classroom":"H-42000000000000","semester":"Winter","type":"Lab","dayOffered":"5","beginTime":"13:35:00","endTime":"14:35:00","courseId":"2","courseCode":"COMP 248","sectionNum":"1"}';
+$json=$_POST['json'];//username
+//$json='{"section":"UI-X","sectionId":"1","classroom":"H-42000000000000","semester":"Winter","type":"Lab","dayOffered":"5","beginTime":"13:35:00","endTime":"14:35:00","courseId":"2","courseCode":"COMP 248","sectionNum":"1"}';
 
 $content = json_decode($json, true);
 
