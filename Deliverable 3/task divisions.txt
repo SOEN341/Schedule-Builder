@@ -1,0 +1,15 @@
+Task division version 2
+
+2 Introduction: Adil
+1.1 Test coverage: Emili
+1.2.1 Unit testing: Prog team (dias/nick - manage courses; le vinh - login/logout/sign up, gariele - manage preferences)
+1.2.2 Black box testing: Salma, Ying-Chen 
+1.2.3 Stress testing: Nick
+1.2.4 Security testing: Nick
+2.1 Installation manual: Adil(local server), Emili (public server)
+2.2 User manual: Alex 
+3 Estimation: Adil
+Database: Emili, Ying-Chen, Salma, Le Vinh - DONE 
+Put deliverable together: Adil
+
+Good luck
