@@ -1,4 +1,3 @@
-
 <?php
 $json=$_POST['json'];//username
 //$json='{"courseId":"1","courseCode":"COMP 248","semester":"Fall","description":"Introduction to programming. Critical amount of salt atteined","name":"Object-Oriented Programming I","credits":"3"}';
