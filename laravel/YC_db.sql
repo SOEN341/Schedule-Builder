@@ -15,15 +15,15 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
  INSERT INTO `sections` VALUES
 ('B',1,'MB-S2.330','Winter','Lecture',13,'11:45:00','13:00:00',59,'BIOL 206',1);
 
-('02',2,'SP-S110','Winter','Lecture',35,'11:45:00','13:00:00',61,'BIOL 261',1);
-('0201',3,'CC-301','Winter','Tutorial',2,'13:30:00','15:30:00',61,'BIOL 261',1);
-('0202',4,'CC-301','Winter','Tutorial',2,'15:30:00','17:30:00',61,'BIOL 261',1);
-('0203',5,'CJ-1.125','Winter','Tutorial',3,'13:30:00','15:30:00',61,'BIOL 261',1);
-('0204',6,'CJ-1.125','Winter','Tutorial',3,'15:30:00','17:30:00',61,'BIOL 261',1);
-('0205',7,'CC-101','Winter','Tutorial',4,'13:30:00','15:30:00',61,'BIOL 261',1);
-('0206',8,'CC-101','Winter','Tutorial',4,'15:30:00','17:30:00',61,'BIOL 261',1);
-('0207',9,'CC-106','Winter','Tutorial',4,'13:30:00','15:30:00',61,'BIOL 261',1);
-('0208',10,'CC-106','Winter','Tutorial',4,'15:30:00','17:30:00',61,'BIOL 261',1);
+('02',2,'SP-S110-Loy','Winter','Lecture',35,'11:45:00','13:00:00',61,'BIOL 261',1);
+('0201',3,'CC-301-Loy','Winter','Tutorial',2,'13:30:00','15:30:00',61,'BIOL 261',1);
+('0202',4,'CC-301-Loy','Winter','Tutorial',2,'15:30:00','17:30:00',61,'BIOL 261',1);
+('0203',5,'CJ-1.125-Loy','Winter','Tutorial',3,'13:30:00','15:30:00',61,'BIOL 261',1);
+('0204',6,'CJ-1.125-Loy','Winter','Tutorial',3,'15:30:00','17:30:00',61,'BIOL 261',1);
+('0205',7,'CC-101-Loy','Winter','Tutorial',4,'13:30:00','15:30:00',61,'BIOL 261',1);
+('0206',8,'CC-101-Loy','Winter','Tutorial',4,'15:30:00','17:30:00',61,'BIOL 261',1);
+('0207',9,'CC-106-Loy','Winter','Tutorial',4,'13:30:00','15:30:00',61,'BIOL 261',1);
+('0208',10,'CC-106-Loy','Winter','Tutorial',4,'15:30:00','17:30:00',61,'BIOL 261',1);
 
 ('ECEA',11,'H-605','Winter','Tutorial',2,'13:15:00','14:05:00',66,'ELEC 321',1);
 ('EI-X',12,'H-823','Winter','Lab',1,'17:45:00','20:30:00',66,'ELEC 321',1);
@@ -84,6 +84,6 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
 ('W-WB',62,'H-523','Winter','Tutorial',5,'15:15:00','16:05:00',79,'MECH 221',1);
 ('W',63,'H-531','Winter','Lecture',24,'11:30:00','11:30:00',79,'MECH 221',1);
 
-('01',64,'CC-112','Winter','Lecture',24,'10:15:00','11:30:00',80,'PHYS 252',1);
+('01',64,'CC-112-Loy','Winter','Lecture',24,'10:15:00','11:30:00',80,'PHYS 252',1);
 
 --insert chem 221 here
