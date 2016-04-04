@@ -122,7 +122,8 @@ var AccountPage = React.createClass({
 var ChangeUsernameDialog = React.createClass({
 	getInitialState: function() {
 		return {
-			username: ''
+			username: '',
+			help: ''
 		}
 	},
 	
@@ -137,7 +138,7 @@ var ChangeUsernameDialog = React.createClass({
 				<RBS.Modal.Body>
 				  <RBS.Grid fluid={true}>
 				    <RBS.Row>
-					   <InputElement label='New Username' value={this.state.username} onChange={this.onUsernameChange}/>
+					   <InputElement label='New Username' value={this.state.username} bsStyle={this.state.valid} help={this.state.help} onChange={this.onUsernameChange}/>
 					</RBS.Row>
 				  </RBS.Grid>
 				</RBS.Modal.Body>
@@ -150,7 +151,7 @@ var ChangeUsernameDialog = React.createClass({
 	},
 	
 	changeUsername: function() {
-		if(this.state.username!='') {
+		if(this.state.username!=''&&this.state.valid!='error') {
 			if(this.state.username!=cookieManager.getCookie('username')) {
 				var self=this;
 				serverBridge.editUsername(self.state.username, function(data) {
@@ -158,22 +159,33 @@ var ChangeUsernameDialog = React.createClass({
 						self.props.change(self.state.username);
 					}
 					else {
-						alert('Username already taken');
+						self.setState({
+							help: 'Username already taken',
+							valid: 'error'
+						});
 					}
 				});
 			}
 			else {
-				alert('The new username entered is the same as the old one');
+				this.setState({
+					help:'The new username entered is the same as the old one',
+					valid: 'error'
+				});
 			}
-		}
-		else {
-			alert('Username can not be blank');
 		}
 	},
 	
 	onUsernameChange: function(value) {
+		var validation=undefined;
+		var help='';
+		if(value.length<4||value.length>16) {
+			validation='error';
+			help='Username must be between 4 and 16 characters';
+		}
 		this.setState({
-			username: value
+			username: value,
+			valid: validation,
+			help: help
 		})
 	}
 });
@@ -181,7 +193,8 @@ var ChangeUsernameDialog = React.createClass({
 var ChangeEmailDialog = React.createClass({
 	getInitialState: function() {
 		return {
-			email: ''
+			email: '',
+			help: ''
 		}
 	},
 	
@@ -195,7 +208,7 @@ var ChangeEmailDialog = React.createClass({
 				<RBS.Modal.Body>
 				  <RBS.Grid fluid={true}>
 				    <RBS.Row>
-					   <InputElement label='New E-mail' value={this.state.email} onChange={this.onEmailChange}/>
+					   <InputElement label='New E-mail' value={this.state.email} bsStyle={this.state.valid} help={this.state.help} onChange={this.onEmailChange}/>
 					</RBS.Row>
 				  </RBS.Grid>
 				</RBS.Modal.Body>
@@ -209,7 +222,16 @@ var ChangeEmailDialog = React.createClass({
 	
 	changeEmail: function() {
 		if(this.state.email=='') {
-			alert('E-mail cannot be blank');
+			this.setState({
+				help: 'E-mail cannot be blank',
+				valid: 'error'
+			});
+		}
+		else if(this.state.email==cookieManager.getCookie('email')) {
+			this.setState({
+				help: 'New e-mail entered is the same as the old e-mail',
+				valid: 'error'
+			});
 		}
 		else {
 			serverBridge.editEmail(this.state.email);
@@ -218,8 +240,14 @@ var ChangeEmailDialog = React.createClass({
 	},
 	
 	onEmailChange: function(value) {
+		var validation=undefined;
+		if(value.length==0) {
+			validation='error';
+		}
 		this.setState({
-			email: value
+			email: value,
+			help: '',
+			valid: validation
 		})
 	}
 });
@@ -229,7 +257,10 @@ var ChangePasswordDialog = React.createClass({
 		return {
 			password: '',
 			newPassword: '',
-			newPassRetype: ''
+			newPassRetype: '',
+			passwordHelp: '',
+			newPasswordHelp: '',
+			newPassRetypeHelp: ''
 		}
 	},
 	
@@ -243,13 +274,13 @@ var ChangePasswordDialog = React.createClass({
 				<RBS.Modal.Body>
 				  <RBS.Grid fluid={true}>
 					<RBS.Row>
-					   <InputElement label='Current Password' type='password' value={this.state.password} onChange={this.onPasswordChange}/>
+					   <InputElement label='Current Password' type='password' value={this.state.password} help={this.state.passwordHelp} bsStyle={this.state.passwordValid} onChange={this.onPasswordChange}/>
 					</RBS.Row>
 					<RBS.Row>
-					   <InputElement label='New Password' type='password' value={this.state.newPassword} onChange={this.onNewPasswordChange}/>
+					   <InputElement label='New Password' type='password' value={this.state.newPassword} help={this.state.newPasswordHelp} bsStyle={this.state.newPasswordValid} onChange={this.onNewPasswordChange}/>
 					</RBS.Row>
 				    <RBS.Row>
-					   <InputElement label='Re-type New Password' type='password' value={this.state.newPassRetype} onChange={this.onNewPassRetypeChange}/>
+					   <InputElement label='Re-type New Password' type='password' value={this.state.newPassRetype} help={this.state.newPassRetypeHelp} bsStyle={this.state.newPassRetypeValid} onChange={this.onNewPassRetypeChange}/>
 					</RBS.Row>
 				  </RBS.Grid>
 				</RBS.Modal.Body>
@@ -262,48 +293,92 @@ var ChangePasswordDialog = React.createClass({
 	},
 	
 	changePassword: function() {
-		if(this.state.password!=''&&this.state.newPassword!='') {
+		if(this.state.password!=''&&this.state.newPassword!=''&&this.state.newPassRetype!=''&&this.state.passwordValid!='error'&&this.state.newPasswordValid!='error'&&this.state.newPassRetypeValid!='error'&&this.state.password!=this.state.newPassword) {
 			var self=this;
 			serverBridge.login(cookieManager.getCookie('username'), this.state.password, function(data) {
 				if(data.success=='true') {
-					if(self.state.newPassword==self.state.newPassRetype) {
-						if(self.state.password!=self.state.newPassword) {
-							serverBridge.editPassword(self.state.newPassword);
-							self.props.close();
-						}
-						else {
-							alert('New entered password is the same as the old one');
-						}
-					}
-					else {
-						alert('New password does not match the retyped password');
-					}
+					serverBridge.editPassword(self.state.newPassword);
+					self.props.close();
 				}
 				else {
-					alert('Incorrect password entered for current user');
+					self.setState({
+						passwordHelp: 'Incorrect password entered for current user',
+						passwordValid: 'error'
+					});
 				}
 			});
 		}
+		else if(this.state.password==this.state.newPassword) {
+			this.setState({
+				newPasswordHelp: 'New entered password is the same as the old one',
+				newPasswordValid: 'error'
+			});
+		}
 		else {
-			alert('Inputs cannot be empty');
+			if(this.state.password=='') {
+				this.setState({
+					passwordHelp: 'Password cannot be left blank',
+					passwordValid: 'error'
+				})
+			}
+			if(this.state.newPassword=='') {
+				this.setState({
+					newPasswordHelp: 'Password cannot be left blank',
+					newPasswordValid: 'error'
+				})
+			}
+			if(this.state.newPassRetype=='') {
+				this.setState({
+					newPassRetypeHelp: 'Password cannot be left blank',
+					newPassRetypeValid: 'error'
+				})
+			}
 		}
 	},
 	
 	onPasswordChange: function(value) {
+		var validation=undefined;
+		if(value.length<8||value.length>16) {
+			validation='error';
+		}
 		this.setState({
-			password: value
+			password: value,
+			passwordValid: validation,
+			passwordHelp: ''
 		})
 	},
 	
 	onNewPasswordChange: function(value) {
+		var validation=undefined;
+		var help='';
+		if(value.length<8||value.length>16) {
+			validation='error';
+			help='Password must be between 8 and 16 characters';
+		}
 		this.setState({
-			newPassword: value
+			newPassword: value,
+			newPasswordValid: validation,
+			newPasswordHelp: help
 		})
+		if(value!=this.state.newPassRetype) {
+			this.setState({
+				newPassRetypeValid: 'error',
+				newPassRetypeHelp: 'Passwords don\'t match'
+			})
+		}
 	},
 	
 	onNewPassRetypeChange: function(value) {
+		var validation=undefined;
+		var help='';
+		if(value!=this.state.newPassword) {
+			validation='error';
+			help='Passwords don\'t match';
+		}
 		this.setState({
-			newPassRetype: value
+			newPassRetype: value,
+			newPassRetypeValid: validation,
+			newPassRetypeHelp: help
 		})
 	}
 });
