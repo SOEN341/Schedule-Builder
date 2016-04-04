@@ -68,6 +68,8 @@ var Main = React.createClass({
 		cookieManager.removeCookie('prefs');
 		cookieManager.removeCookie('needed');
 		cookieManager.removeCookie('email');
+		cookieManager.removeCookie('schedule');
+		cookieManager.removeCookie('CourseInfo');
 		this.changePage(0);
 	}
 });

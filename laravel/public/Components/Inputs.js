@@ -4,16 +4,26 @@ var InputElement = React.createClass({
 			type: 'text',
 			label: '',
 			label_md: 3,
-			input_md: 7
+			input_md: 7,
+			help:'',
+			bsStyle:undefined,
+			hasFeedback:false
 		}
 	},
 	
 	render: function() {
-		if(this.props.label.length>0) {
-			var input = <div><RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} onChange={this.onChange}/></RBS.Col></div>
+		var input;
+		if(this.props.label.length>0/* && this.props.bsStyle!=''*/) {
+			input = <div><RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} help={this.props.help} onChange={this.onChange} hasFeedback={this.props.hasFeedback}/></RBS.Col></div>
 		}
+		/*else if(this.props.label.length>0) {
+			input = <div><RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input type={this.props.type} value={this.props.value} help={this.props.help} onChange={this.onChange} hasFeedback={this.props.hasFeedback}/></RBS.Col></div>
+		}
+		else if(this.props.bsStyle!='') {
+			input = <div><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} onChange={this.onChange}/></div>
+		}*/
 		else {
-			var input = <div><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} onChange={this.onChange}/></div>
+			input = <div><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} help={this.props.help} onChange={this.onChange} hasFeedback={this.props.hasFeedback}/></div>
 		}
 		
 		return(

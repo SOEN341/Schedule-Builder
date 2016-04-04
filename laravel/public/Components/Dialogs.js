@@ -196,13 +196,13 @@ var RegistrationDialog = React.createClass({
 				<RBS.Modal.Body>
 					<RBS.Grid fluid={true}>
 						<RBS.Row>
-							<InputElement label='Username' onChange={this.props.usernameChange} value={this.props.username}/>
+							<InputElement label='Username' onChange={this.props.usernameChange} value={this.props.username} help={this.props.usernameHelp} bsStyle={this.props.usernameValid}/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='E-mail' onChange={this.props.emailChange} value={this.props.email}/>
+							<InputElement label='E-mail' onChange={this.props.emailChange} value={this.props.email} bsStyle={this.props.emailValid} help={this.props.emailHelp}/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='Password' type='password' onChange={this.props.passwordChange} value={this.props.password}/>
+							<InputElement label='Password' type='password' onChange={this.props.passwordChange} value={this.props.password} bsStyle={this.props.passwordValid} help={this.props.passwordHelp}/>
 						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>
@@ -227,7 +227,7 @@ var ForgotDialog = React.createClass({
 							<RBS.Col>Enter your username and we will send you an e-mail with a code to let you reset your password</RBS.Col><br/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='Username' onChange={this.props.usernameChange} value={this.props.username}/>
+							<InputElement label='Username' onChange={this.props.usernameChange} bsStyle={this.props.usernameValid} help={this.props.usernameHelp} value={this.props.username}/>
 						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>
@@ -245,10 +245,10 @@ var ForgotDialog = React.createClass({
 							<RBS.Col>An e-mail has been sent to the e-mail registered to this account. Please check this e-mail and enter the code contained along with the new password you want</RBS.Col><br/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='Code' onChange={this.props.codeChange} value={this.props.code}/>
+							<InputElement label='Code' onChange={this.props.codeChange} value={this.props.code} bsStyle={this.props.codeValid} help={this.props.codeHelp}/>
 						</RBS.Row>
 						<RBS.Row>
-							<InputElement label='Password' type='password' onChange={this.props.passwordChange} value={this.props.password}/>
+							<InputElement label='Password' type='password' onChange={this.props.passwordChange} bsStyle={this.props.passwordValid} help={this.props.passwordHelp} value={this.props.password}/>
 						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>

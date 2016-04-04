@@ -279,7 +279,7 @@ var mockServerBridge = {
 	},
 	
 	sendPasswordEmail: function(username, response) {
-		if(username=='nah')
+		if(username=='nahh')
 			response({success:'false'});
 		else
 			response({success:'true'});
