@@ -28,7 +28,9 @@ var ClassDialog = React.createClass({
 	getInitialState: function() {
 		return {
 			name: '',
-			number: ''
+			number: '',
+			nameHelp: '',
+			numberHelp: ''
 		}
 	},
 	
@@ -47,11 +49,11 @@ var ClassDialog = React.createClass({
 						<tbody>
 							<tr>
 								<td style={{width: '30%'}}>Course Number</td>
-								<td style={{width: '70%'}}><TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={this.props.courses} type='number'/></td>
+								<td style={{width: '70%'}}><TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={this.props.courses} bsStyle={this.state.numberValid} help={this.state.numberHelp} type='number'/></td>
 							</tr>
 							<tr>
 								<td>Course Name</td>
-								<td><TypeaheadInput label='Course Name' onChange={this.nameChange} value={this.state.name} data={this.props.courses} type='name' id='bloodhound2'/></td>
+								<td><TypeaheadInput label='Course Name' onChange={this.nameChange} value={this.state.name} data={this.props.courses} bsStyle={this.state.nameValid} help={this.state.nameHelp} type='name' id='bloodhound2'/></td>
 							</tr>
 						</tbody>
 					</RBS.Table>
@@ -67,7 +69,7 @@ var ClassDialog = React.createClass({
 		var name = this.state.name;
 		if(value.length==8) {
 			for(var i=0; i<this.props.courses.length; i++) {
-				if(this.props.courses[i].number==value) {
+				if(this.props.courses[i].courseCode==value) {
 					name = this.props.courses[i].name;
 					break;
 				}
@@ -83,7 +85,7 @@ var ClassDialog = React.createClass({
 		var number = this.state.number;
 		for(var i=0; i<this.props.courses.length; i++) {
 			if(this.props.courses[i].name==value) {
-				number = this.props.courses[i].number;
+				number = this.props.courses[i].courseCode;
 				break;
 			}
 		}
@@ -94,15 +96,57 @@ var ClassDialog = React.createClass({
 	},
 	
 	addCourse: function() {
-		var course = {
-			name: this.state.name,
-			number: this.state.number
-		};
-		if(this.props.mode==1)
-			this.props.addTakenCourse(course);
-		else
-			this.props.addNeededCourse(course);
-		this.props.close();
+		var verify = this.verifyCourse();
+		if(verify==0) {
+			var course = {
+				name: this.state.name,
+				number: this.state.number
+			};
+			if(this.props.mode==1)
+				this.props.addTakenCourse(course);
+			else
+				this.props.addNeededCourse(course);
+			this.props.close();
+		}
+		else if(verify==1) {
+			this.setState({
+				numberValid: 'error',
+				numberHelp: 'Course code entered does not match the course name entered'
+			})
+		}
+		else if(verify==2) {
+			this.setState({
+				nameValid: 'error',
+				nameHelp: 'Course name entered does not match the course code entered'
+			})
+		}
+		else {
+			this.setState({
+				nameValid: 'error',
+				numberValid: 'error',
+				numberHelp: 'Course info entered does not match the courses in the database'
+			})
+		}
+	},
+	
+	verifyCourse: function() {
+		if(this.state.number.length==8&&this.state.name.length>0) {
+			for(var i=0; i<this.props.courses.length; i++) {
+				if(this.props.courses[i].name==this.state.name&&this.props.courses[i].courseCode==this.state.number) {
+					return 0;
+				}
+				else if(this.props.courses[i].name==this.state.name) {
+					return 1;
+				}
+				else if(this.props.courses[i].courseCode==this.state.number) {
+					return 2;
+				}
+			}
+			return 3;
+		}
+		else {
+			return 3;
+		}
 	}
 });
 
@@ -110,7 +154,9 @@ var EditingDialog = React.createClass({
 	getInitialState: function() {
 		return {
 			name: this.props.course.name,
-			number: this.props.course.number
+			number: this.props.course.number,
+			nameHelp: '',
+			numberHelp: ''
 		}
 	},
 	
@@ -130,11 +176,11 @@ var EditingDialog = React.createClass({
 						<tbody>
 							<tr>
 								<td style={{width: '30%'}}>Course Number</td>
-								<td style={{width: '70%'}}><TypeaheadInput label='Course Number' onChange={this.numberChange} value={this.state.number} data={this.props.courses} type='number'/></td>
+								<td style={{width: '70%'}}><TypeaheadInput label='Course Code' onChange={this.numberChange} value={this.state.number} data={this.props.courses} bsStyle={this.state.numberValid} help={this.state.numberHelp} type='number'/></td>
 							</tr>
 							<tr>
 								<td>Course Name</td>
-								<td><TypeaheadInput label='Course Name' onChange={this.nameChange} value={this.state.name} data={this.props.courses} type='name' id='bloodhound2'/></td>
+								<td><TypeaheadInput label='Course Name' onChange={this.nameChange} value={this.state.name} data={this.props.courses} bsStyle={this.state.nameValid} help={this.state.nameHelp} type='name' id='bloodhound2'/></td>
 							</tr>
 						</tbody>
 					</RBS.Table>
@@ -150,7 +196,7 @@ var EditingDialog = React.createClass({
 		var name = this.state.name;
 		if(value.length==8) {
 			for(var i=0; i<this.props.courses.length; i++) {
-				if(this.props.courses[i].number==value) {
+				if(this.props.courses[i].courseCode==value) {
 					name = this.props.courses[i].name;
 					break;
 				}
@@ -158,7 +204,11 @@ var EditingDialog = React.createClass({
 		}
 		this.setState({
 			number: value,
-			name: name
+			name: name,
+			numberHelp: '',
+			nameHelp: '',
+			nameValid: undefined,
+			numberValid: undefined
 		});
 	},
 	
@@ -166,23 +216,69 @@ var EditingDialog = React.createClass({
 		var number = this.state.number;
 		for(var i=0; i<this.props.courses.length; i++) {
 			if(this.props.courses[i].name==value) {
-				number = this.props.courses[i].number;
+				number = this.props.courses[i].courseCode;
 				break;
 			}
 		}
 		this.setState({
 			name: value,
-			number: number
+			number: number,
+			numberHelp: '',
+			nameHelp: '',
+			nameValid: undefined,
+			numberValid: undefined
 		});
 	},
 	
 	editCourse: function() {
-		var course = {
-			name: this.state.name,
-			number: this.state.number
-		};
-		this.props.edit(course);
-		this.props.close();
+		var verify = this.verifyCourse();
+		if(verify==0) {
+			var course = {
+				name: this.state.name,
+				number: this.state.number
+			};
+			this.props.edit(course);
+			this.props.close();
+		}
+		else if(verify==1) {
+			this.setState({
+				numberValid: 'error',
+				numberHelp: 'Course code entered does not match the course name entered'
+			})
+		}
+		else if(verify==2) {
+			this.setState({
+				nameValid: 'error',
+				nameHelp: 'Course name entered does not match the course code entered'
+			})
+		}
+		else {
+			this.setState({
+				nameValid: 'error',
+				numberValid: 'error',
+				numberHelp: 'Course info entered does not match the courses in the database'
+			})
+		}
+	},
+	
+	verifyCourse: function() {
+		if(this.state.number.length==8&&this.state.name.length>0) {
+			for(var i=0; i<this.props.courses.length; i++) {
+				if(this.props.courses[i].name==this.state.name&&this.props.courses[i].courseCode==this.state.number) {
+					return 0;
+				}
+				else if(this.props.courses[i].name==this.state.name) {
+					return 1;
+				}
+				else if(this.props.courses[i].courseCode==this.state.number) {
+					return 2;
+				}
+			}
+			return 3;
+		}
+		else {
+			return 3;
+		}
 	}
 });
 

@@ -7,10 +7,10 @@ var mockServerBridge = {
 	},
 	
 	login: function(username, password, response) {
-		if(username=='user'&&password=='pass') {
+		if(username=='user'&&password=='password1') {
 			response({success: 'true', username: username, isAdmin: 'false'});
 		}
-		else if(username=='Jason'&&password=='pass') {
+		else if(username=='Jason'&&password=='password1') {
 			response({success: 'true', username: username, isAdmin: 'true'});
 		}
 		else
@@ -18,7 +18,7 @@ var mockServerBridge = {
 	},
 	
 	getCourses: function(response) {
-		response([
+		/*response([
 			{
 				courseID: '1',
 				name: 'Object Oriented Programming 1',
@@ -35,7 +35,8 @@ var mockServerBridge = {
 				description: 'Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.',
 				credits: '3'
 			}
-		]);
+		]);*/
+		response('[{"courseID":"1","name":"Object Oriented Programming 1","courseCode":"COMP 248","semester":"Fall","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"},{"courseID":"2","name":"Object Oriented Programming 2","courseCode":"COMP 249","semester":"Winter","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"}]');
 	},
 	
 	getSections: function() {

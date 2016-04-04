@@ -13,15 +13,9 @@ var InputElement = React.createClass({
 	
 	render: function() {
 		var input;
-		if(this.props.label.length>0/* && this.props.bsStyle!=''*/) {
+		if(this.props.label.length>0) {
 			input = <div><RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} help={this.props.help} onChange={this.onChange} hasFeedback={this.props.hasFeedback}/></RBS.Col></div>
 		}
-		/*else if(this.props.label.length>0) {
-			input = <div><RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input type={this.props.type} value={this.props.value} help={this.props.help} onChange={this.onChange} hasFeedback={this.props.hasFeedback}/></RBS.Col></div>
-		}
-		else if(this.props.bsStyle!='') {
-			input = <div><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} onChange={this.onChange}/></div>
-		}*/
 		else {
 			input = <div><RBS.Input type={this.props.type} value={this.props.value} bsStyle={this.props.bsStyle} help={this.props.help} onChange={this.onChange} hasFeedback={this.props.hasFeedback}/></div>
 		}
@@ -88,7 +82,10 @@ var TypeaheadInput = React.createClass({
 			data: [],
 			value: '',
 			type: '',
-			id: 'bloodhound'
+			id: 'bloodhound',
+			help:'',
+			bsStyle:undefined,
+			hasFeedback:false
 		}
 	},
 
@@ -143,7 +140,7 @@ var TypeaheadInput = React.createClass({
 				</div>*/
 		return (
 				<div id={this.props.id} style={{width:'300px'}}>
-					<RBS.Input style={{width:'300px'}} className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange}/>
+					<RBS.Input style={{width:'300px'}} className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} bsStyle={this.props.bsStyle} help={this.props.help} hasFeedback={this.props.hasFeedback}/>
 				</div>
 		);
 	}

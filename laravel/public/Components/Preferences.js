@@ -6,14 +6,18 @@ var PreferencesPage = React.createClass({
 		return {
 			classDialogOpen: false,
 			editingDialogOpen: false,
+			replaceConfirmDialogOpen: false,
 			editingIndex:0,
+			replaceIndex: 0,
+			editing: false,
 			dialogMode: 1,
 			neededCourses: [],
 			takenCourses: [],
 			courses: [],
 			courseLoad: 5,
 			day: 'None',
-			time: 'Any'
+			time: 'Any',
+			courseLoadHelp: ''
 		}
 	},
 
@@ -29,11 +33,32 @@ var PreferencesPage = React.createClass({
 				editingCourse=this.state.neededCourses[this.state.editingIndex];
 			}
 		}
+		if(this.state.replaceConfirmDialogOpen) {
+			var editingCourse={};
+			var confirmMessage='';
+			var replaceFunction=this.replaceTaken;
+			if(this.state.dialogMode==1&&this.state.takenCourses.length>0) {
+				console.log('replace taken course ' + this.state.replaceIndex);
+				editingCourse=this.state.takenCourses[this.state.replaceIndex];
+				confirmMessage='The course ' + editingCourse.number + ' that you are trying to add to your needed course list was found in the taken courses list. If we added it, it would have to be removed from the taken courses list. Do you wish to do this?'
+				if(this.state.editing)
+					replaceFunction=this.replaceTakenEdit;
+			}
+			else if(this.state.neededCourses.length>0) {
+				console.log('replace needed course ' + this.state.replaceIndex);
+				editingCourse=this.state.neededCourses[this.state.replaceIndex];
+				replaceFunction=this.replaceNeeded;
+				if(this.state.editing)
+					replaceFunction=this.replaceNeededEdit;
+				confirmMessage='The course ' + editingCourse.number + ' that you are trying to add to your taken course list was found in the needed courses list. If we added it, it would have to be removed from the needed courses list. Do you wish to do this?'
+			}
+		}
 		return (
 			<div>
 				{this.state.classDialogOpen? <ClassDialog mode={this.state.dialogMode} close={this.closeClassDialog} addNeededCourse={this.addNeededCourse} addTakenCourse={this.addTakenCourse} courses={this.state.courses}/>: null}
 				{this.state.editingDialogOpen? <EditingDialog mode={this.state.dialogMode} close={this.closeEditingDialog} courses={this.state.courses} course={editingCourse} edit={this.editCourse}/>: null}
-				<Preferences courseLoad={this.state.courseLoad} day={this.state.day} time={this.state.time} courseLoad={this.state.courseLoad} onTimeChange={this.onTimeChange} onClassesChange={this.onClassesChange} onDayChange={this.onDayChange}/>
+				{this.state.replaceConfirmDialogOpen? <ConfirmationDialog close={this.closeReplaceConfirmDialog} confirm={replaceFunction} reject={this.closeReplaceConfirmDialog} message={confirmMessage}/>: null}
+				<Preferences courseLoad={this.state.courseLoad} day={this.state.day} time={this.state.time} courseLoad={this.state.courseLoad} courseLoadHelp={this.state.courseLoadHelp} courseLoadValid={this.state.courseLoadValid} onTimeChange={this.onTimeChange} onClassesChange={this.onClassesChange} onDayChange={this.onDayChange}/>
 				<Classes binder={this} openDialog={this.openClassDialog} takenCourses={this.state.takenCourses} neededCourses={this.state.neededCourses} removeTakenCourse={this.removeTakenCourse} removeNeededCourse={this.removeNeededCourse} editNeededCourse={this.startEditNeededCourse} editTakenCourse={this.startEditTakenCourse} generateClassList={this.generateClassList}/>
 				<br/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.generateSchedule} bsStyle='primary'>Build Schedule</RBS.Button></div>
@@ -141,7 +166,8 @@ var PreferencesPage = React.createClass({
 	openClassDialog: function(mode) {
 		this.setState({
 			classDialogOpen: true,
-			dialogMode: mode
+			dialogMode: mode,
+			editing: false
 		})
 	},
 
@@ -155,7 +181,8 @@ var PreferencesPage = React.createClass({
 		this.setState({
 			editingDialogOpen: true,
 			dialogMode: mode,
-			editingIndex: index
+			editingIndex: index,
+			editing: true
 		})
 	},
 
@@ -165,24 +192,164 @@ var PreferencesPage = React.createClass({
 		})
 	},
 	
-	addNeededCourse: function(course) {
-		var courses = React.addons.update(this.state.neededCourses, {});
+	checkInNeeded: function(courseCode) {
+		for(var i=0; i<this.state.neededCourses.length; i++) {
+			if(this.state.neededCourses[i].number==courseCode) {
+				return i;
+			}
+		}
+		return -1;
+	},
+	
+	checkInTaken: function(courseCode) {
+		for(var i=0; i<this.state.takenCourses.length; i++) {
+			if(this.state.takenCourses[i].number==courseCode) {
+				return i;
+			}
+		}
+		return -1;
+	},
+	
+	replaceTaken: function() {
+		var course = this.state.takenCourses[this.state.editingIndex];
+		var courses = React.addons.update(this.state.takenCourses, {});
+		courses.splice(this.editingIndex, 1);
+		this.setState({
+			takenCourses: courses
+		})
+		serverBridge.editTakenCourses(JSON.stringify(courses));
+		if(courses.length>0) {
+			cookieManager.addCookie('taken', JSON.stringify(courses), 7);
+		}
+		else {
+			cookieManager.removeCookie('taken');
+		}
+		
+		courses = React.addons.update(this.state.neededCourses, {});
 		courses.push(course);
 		this.setState({
-			neededCourses: courses
+			neededCourses: courses,
+			replaceConfirmDialogOpen: false
 		});
 		cookieManager.addCookie('needed', JSON.stringify(courses), 7);
 		serverBridge.editNeededCourses(JSON.stringify(courses));
 	},
 	
-	addTakenCourse: function(course) {
-		var courses = React.addons.update(this.state.takenCourses, {});
+	replaceNeeded: function() {
+		var course = this.state.neededCourses[this.state.editingIndex];
+		var courses = React.addons.update(this.state.neededCourses, {});
+		courses.splice(this.editingIndex, 1);
+		this.setState({
+			neededCourses: courses,
+			replaceConfirmDialogOpen: false
+		})
+		serverBridge.editNeededCourses(JSON.stringify(courses));
+		if(courses.length>0) {
+			cookieManager.addCookie('needed', JSON.stringify(courses), 7);
+		}
+		else {
+			cookieManager.removeCookie('needed');
+		}
+		
+		courses = React.addons.update(this.state.takenCourses, {});
 		courses.push(course);
 		this.setState({
 			takenCourses: courses
 		});
 		cookieManager.addCookie('taken', JSON.stringify(courses), 7);
 		serverBridge.editTakenCourses(JSON.stringify(courses));
+	},
+	
+	replaceNeededEdit: function() {
+		var course = this.state.neededCourses[this.state.editingIndex];
+		var courses = React.addons.update(this.state.neededCourses, {});
+		courses.splice(this.editingIndex, 1);
+		this.setState({
+			neededCourses: courses,
+			replaceConfirmDialogOpen: false
+		})
+		serverBridge.editNeededCourses(JSON.stringify(courses));
+		if(courses.length>0) {
+			cookieManager.addCookie('needed', JSON.stringify(courses), 7);
+		}
+		else {
+			cookieManager.removeCookie('needed');
+		}
+		
+		courses = React.addons.update(this.state.takenCourses, {});
+		courses[this.state.editingIndex]=course;
+		this.setState({
+			takenCourses: courses,
+			editingDialogOpen: false
+		});
+		cookieManager.addCookie('taken', JSON.stringify(courses), 7);
+		serverBridge.editTakenCourses(JSON.stringify(courses));
+	},
+	
+	replaceTakenEdit: function() {
+		var course = this.state.takenCourses[this.state.editingIndex];
+		var courses = React.addons.update(this.state.takenCourses, {});
+		courses.splice(this.editingIndex, 1);
+		this.setState({
+			takenCourses: courses,
+			replaceConfirmDialogOpen: false
+		})
+		serverBridge.editTakenCourses(JSON.stringify(courses));
+		if(courses.length>0) {
+			cookieManager.addCookie('taken', JSON.stringify(courses), 7);
+		}
+		else {
+			cookieManager.removeCookie('taken');
+		}
+		
+		courses = React.addons.update(this.state.neededCourses, {});
+		courses[this.state.editingIndex]=course;
+		this.setState({
+			neededCourses: courses,
+			editingDialogOpen: false
+		});
+		cookieManager.addCookie('needed', JSON.stringify(courses), 7);
+		serverBridge.editNeededCourses(JSON.stringify(courses));
+	},
+	
+	addNeededCourse: function(course) {
+		var check=this.checkInTaken(course.number);
+		if(check==-1) {
+			var courses = React.addons.update(this.state.neededCourses, {});
+			courses.push(course);
+			this.setState({
+				neededCourses: courses
+			});
+			cookieManager.addCookie('needed', JSON.stringify(courses), 7);
+			serverBridge.editNeededCourses(JSON.stringify(courses));
+		}
+		else {
+			this.setState({
+				replaceIndex: check,
+				replaceConfirmDialogOpen: true,
+				dialogMode: 1
+			})
+		}
+	},
+	
+	addTakenCourse: function(course) {
+		var check=this.checkInNeeded(course.number);
+		if(check==-1) {
+			var courses = React.addons.update(this.state.takenCourses, {});
+			courses.push(course);
+			this.setState({
+				takenCourses: courses
+			});
+			cookieManager.addCookie('taken', JSON.stringify(courses), 7);
+			serverBridge.editTakenCourses(JSON.stringify(courses));
+		}
+		else {
+			this.setState({
+				replaceIndex: check,
+				replaceConfirmDialogOpen: true,
+				dialogMode: 2
+			})
+		}
 	},
 	
 	removeNeededCourse: function(number) {
@@ -267,37 +434,71 @@ var PreferencesPage = React.createClass({
 	
 	editCourse: function(course) {
 		if(this.state.dialogMode==1) {
-			var courses = React.addons.update(this.state.takenCourses, {});
-			courses[this.state.editingIndex]=course;
-			this.setState({
-				takenCourses: courses,
-				editingDialogOpen: false
-			});
-			cookieManager.addCookie('taken', JSON.stringify(courses), 7);
-			serverBridge.editTakenCourses(JSON.stringify(courses));
+			var check=this.checkInNeeded(course.number);
+			if(check==-1) {
+				var courses = React.addons.update(this.state.takenCourses, {});
+				courses[this.state.editingIndex]=course;
+				this.setState({
+					takenCourses: courses,
+					editingDialogOpen: false
+				});
+				cookieManager.addCookie('taken', JSON.stringify(courses), 7);
+				serverBridge.editTakenCourses(JSON.stringify(courses));
+			}
+			else {
+				this.setState({
+					replaceIndex: check,
+					replaceConfirmDialogOpen: true,
+					dialogMode: 2
+				})
+			}
 		}
 		else {
-			var courses = React.addons.update(this.state.neededCourses, {});
-			courses[this.state.editingIndex]=course;
-			this.setState({
-				neededCourses: courses,
-				editingDialogOpen: false
-			});
-			cookieManager.addCookie('needed', JSON.stringify(courses), 7);
-			serverBridge.editNeededCourses(JSON.stringify(courses));
+			var check=this.checkInTaken(course.number);
+			if(check==-1) {
+				var courses = React.addons.update(this.state.neededCourses, {});
+				courses[this.state.editingIndex]=course;
+				this.setState({
+					neededCourses: courses,
+					editingDialogOpen: false
+				});
+				cookieManager.addCookie('needed', JSON.stringify(courses), 7);
+				serverBridge.editNeededCourses(JSON.stringify(courses));
+			}
+			else {
+				this.setState({
+					replaceIndex: check,
+					replaceConfirmDialogOpen: true,
+					dialogMode: 1
+				})
+			}
 		}
 	},
 	
 	onClassesChange: function(value) {
-		var prefs = {
-			courseLoad: value,
-			day: this.state.day,
-			time: this.state.time
+		var validation=undefined;
+		var help='';
+		if(isNaN(value)) {
+			validation='error';
+			help='Course load must be a number';
 		}
-		cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
-		serverBridge.editPreferences(prefs);
+		else if(Number(value)<1||Number(value)>7){
+			validation='error';
+			help='Only course loads between 1 and 7 are permitted';
+		}
+		if(validation!='error') {
+			var prefs = {
+				courseLoad: value,
+				day: this.state.day,
+				time: this.state.time
+			}
+			cookieManager.addCookie('prefs', JSON.stringify(prefs), 7);
+			serverBridge.editPreferences(prefs);
+		}
 		this.setState({
-			courseLoad: value
+			courseLoad: value,
+			courseLoadHelp: help,
+			courseLoadValid: validation
 		})
 	},
 	
@@ -349,7 +550,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -385,7 +586,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -421,7 +622,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -457,7 +658,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -493,7 +694,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Software Process', number: 'SOEN 341'}
 			];
 			needed=[
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -527,7 +728,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -563,7 +764,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -599,7 +800,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -635,7 +836,7 @@ var PreferencesPage = React.createClass({
 				{name: 'Probability and Statistics in Engineering', number: 'ENGR 371'},
 				{name: 'Introduction to Formal Methods for Software Engineering', number: 'SOEN 331'},
 				{name: 'Software Process', number: 'SOEN 341'},
-				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 3335'},
+				{name: 'Introduction to Theoretical Computer Science', number: 'SOEN 335'},
 				{name: 'Software Requirements and Specifications', number: 'SOEN 342'},
 				{name: 'Software Architecture and Design I', number: 'SOEN 343'},
 				{name: 'Management Measurement and Quality Control', number: 'SOEN 384'},
@@ -670,7 +871,7 @@ var Preferences = React.createClass({
 				<h3>Preferences</h3>
 				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5'}}>
 					<RBS.Row>
-						<InputElement label='Classes per semester' value={this.props.courseLoad} onChange={this.props.onClassesChange}/>
+						<InputElement label='Classes per semester' value={this.props.courseLoad} onChange={this.props.onClassesChange} help={this.props.courseLoadHelp} bsStyle={this.props.courseLoadValid}/>
 					</RBS.Row>
 					<RBS.Row>
 						<SelectElement label='Desired day off' value={this.props.day} placeholder='None' data={['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']} onChange={this.props.onDayChange}/>
@@ -706,6 +907,7 @@ var Classes = React.createClass({
 	getInitialState: function() {
 		return {
 			semesters: '',
+			semestersHelp: '',
 			confirmDialogOpen: false
 		}
 	},
@@ -718,7 +920,7 @@ var Classes = React.createClass({
 				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5', paddingTop:'10px'}}>
 					<RBS.Row>
 						<RBS.Col md={2}/>
-						<InputElement label='Semesters Taken' value={this.state.semesters} onChange={this.onSemestersChange} label_md={2} input_md={4}/>
+						<InputElement label='Semesters Taken' help={this.state.semestersHelp} bsStyle={this.state.semestersValid} value={this.state.semesters} onChange={this.onSemestersChange} label_md={2} input_md={4}/>
 						<RBS.Col md={2}><RBS.Button onClick={this.checkGenerateClassList}>Generate course list</RBS.Button></RBS.Col>
 					</RBS.Row>
 				</RBS.Grid>
@@ -729,8 +931,16 @@ var Classes = React.createClass({
 	},
 	
 	onSemestersChange: function(value) {
+		var validation = undefined;
+		var help='';
+		if((isNaN(value)||Number(value)<0||Number(value)!==parseInt(value, 10))&&value!='') {
+			validation='error';
+			help='Must be a positive integer';
+		}
 		this.setState({
-			semesters: value
+			semesters: value,
+			semestersValid: validation,
+			semestersHelp: help
 		})
 	},
 	
@@ -747,11 +957,8 @@ var Classes = React.createClass({
 	},
 	
 	checkGenerateClassList: function() {
-		if(!isNaN(this.state.semesters)&&this.state.semesters!=''&&this.state.semesters>=0) {
+		if(!isNaN(this.state.semesters)&&this.state.semesters!=''&&this.state.semesters>=0&&Number(this.state.semesters)===parseInt(this.state.semesters, 10)) {
 			this.openConfirmDialog();
-		}
-		else {
-			alert('Invalid number of semesters. Must be a positive number');
 		}
 	},
 	

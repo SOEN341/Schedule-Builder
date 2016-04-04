@@ -118,7 +118,7 @@ var LoginPage = React.createClass({
 				passwordValid: 'error'
 			})
 		}
-		if(this.state.usernameValid!='error'&&this.state.username!=''&&this.state.password!='') {
+		if(this.state.usernameValid!='error'&&this.state.passwordValid!='error'&&this.state.username!=''&&this.state.password!='') {
 			var self = this;
 			serverBridge.login(this.state.username, this.state.password, function(data) {
 				if(data.success=='true') {
