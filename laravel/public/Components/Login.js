@@ -92,7 +92,7 @@ var LoginPage = React.createClass({
 				rPasswordValid: 'error'
 			})
 		}
-		if(this.state.rUsernameValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''){
+		if(this.state.rUsernameValid!='error'&&this.state.rPasswordValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''){
 			var self = this;
 			serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword, function(data) {
 				if(data.success=='true') {
@@ -184,7 +184,7 @@ var LoginPage = React.createClass({
 				fPasswordHelp: 'Password cannot be left blank'
 			});
 		}
-		if(this.state.code!=''&&this.state.fPassword!=''&&this.state.codeValid!='error') {
+		if(this.state.fPasswordValid!='error'&&this.state.code!=''&&this.state.fPassword!=''&&this.state.codeValid!='error') {
 			var self=this;
 			serverBridge.resetPasswordFromEmail(this.state.username, this.state.code, this.state.rPassword, function(data) {
 				if(data.success=='true') {
@@ -219,9 +219,9 @@ var LoginPage = React.createClass({
 	},
 	
 	onPasswordChange: function(value) {
-		var validation='error';
-		if(value.length>0) {
-			validation=undefined;
+		var validation=undefined;
+		if(value.length<8||value.length>16) {
+			validation='error';
 		}
 		this.setState({
 			password: value,
@@ -250,14 +250,16 @@ var LoginPage = React.createClass({
 	},
 	
 	onRegPasswordChange: function(value) {
-		var validation='error';
-		if(value.length>0) {
-			validation=undefined;
+		var validation=undefined;
+		var help='';
+		if(value.length<8||value.length>16) {
+			validation='error';
+			help='Password must be between 8 and 16 characters';
 		}
 		this.setState({
 			rPassword: value,
 			rPasswordValid: validation,
-			rPasswordHelp: ''
+			rPasswordHelp: help
 		})
 	},
 	
@@ -302,13 +304,15 @@ var LoginPage = React.createClass({
 	
 	onFPasswordChange: function(value) {
 		var validation=undefined;
-		if(value.length==0) {
+		var help='';
+		if(value.length<8||value.length>16) {
 			validation='error';
+			help='Password must be between 8 and 16 characters';
 		}
 		this.setState({
 			fPassword: value,
 			fPasswordValid: validation,
-			fPasswordHelp: ''
+			fPasswordHelp: help
 		})
 	}
 });
