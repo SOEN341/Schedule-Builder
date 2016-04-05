@@ -15,14 +15,15 @@ var LoginPage = React.createClass({
 			usernameHelp:'',
 			fUsernameHelp: '',
 			codeHelp: '',
-			fPasswordHelp: ''
+			fPasswordHelp: '',
+			rePasswordHelp: ''
 		}
 	},
 	
 	render: function() {
 		return (
 			<div>
-				{this.state.registerDialogOpen? <RegistrationDialog close={this.closeRegistrationDialog} register={this.register} username={this.state.rUsername} password={this.state.rPassword} email={this.state.email} passwordChange={this.onRegPasswordChange} usernameChange={this.onRegUsernameChange} emailChange={this.onEmailChange} usernameValid={this.state.rUsernameValid} usernameHelp={this.state.rUsernameHelp} passwordValid={this.state.rPasswordValid} emailValid={this.state.emailValid} emailHelp={this.state.emailHelp} passwordHelp={this.state.rPasswordHelp}/>: null}
+				{this.state.registerDialogOpen? <RegistrationDialog close={this.closeRegistrationDialog} register={this.register} username={this.state.rUsername} password={this.state.rPassword} email={this.state.email} passwordChange={this.onRegPasswordChange} usernameChange={this.onRegUsernameChange} emailChange={this.onEmailChange} usernameValid={this.state.rUsernameValid} usernameHelp={this.state.rUsernameHelp} passwordValid={this.state.rPasswordValid} emailValid={this.state.emailValid} emailHelp={this.state.emailHelp} passwordHelp={this.state.rPasswordHelp} rePassword={this.state.rePassword} rePasswordValid={this.state.rePasswordValid} rePasswordHelp={this.state.rePasswordHelp} rePasswordChange={this.onRePasswordChange}/>: null}
 				{this.state.forgotDialogOpen? <ForgotDialog username={this.state.username} usernameChange={this.onFUsernameChange} usernameHelp={this.state.fUsernameHelp} usernameValid={this.state.fUsernameValid} close={this.closeForgotDialog} password={this.state.fPassword} passwordChange={this.onFPasswordChange} passwordValid={this.state.fPasswordValid} passwordHelp={this.state.fPasswordHelp} code={this.state.code} codeChange={this.onCodeChange} codeValid={this.state.codeValid} codeHelp={this.state.codeHelp} forgot={this.sendEmail} mode={this.state.forgotDialogMode} resetPassword={this.resetPassword}/>: null}
 				<Logo/>
 				<br/>
@@ -92,7 +93,13 @@ var LoginPage = React.createClass({
 				rPasswordValid: 'error'
 			})
 		}
-		if(this.state.rUsernameValid!='error'&&this.state.rPasswordValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''){
+		if(this.state.rePassword!=this.state.rPassword) {
+			this.setState({
+				rePasswordHelp: 'Passwords do not match',
+				rePasswordValid: 'error'
+			})
+		}
+		if(this.state.rUsernameValid!='error'&&this.state.rPasswordValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''&&this.state.rePassword==this.state.rPassword){
 			var self = this;
 			serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword, function(data) {
 				if(data.success=='true') {
@@ -256,10 +263,36 @@ var LoginPage = React.createClass({
 			validation='error';
 			help='Password must be between 8 and 16 characters';
 		}
+		if(value!=this.state.rePassword) {
+			this.setState({
+				rePasswordValid: 'error',
+				rePasswordHelp: 'Passwords do not match'
+			});
+		}
+		else {
+			this.setState({
+				rePasswordValid: undefined,
+				rePasswordHelp: ''
+			});
+		}
 		this.setState({
 			rPassword: value,
 			rPasswordValid: validation,
 			rPasswordHelp: help
+		})
+	},
+	
+	onRePasswordChange: function(value) {
+		var validation=undefined;
+		var help='';
+		if(value!=this.state.rPassword) {
+			validation='error';
+			help='Passwords do not match';
+		}
+		this.setState({
+			rePassword: value,
+			rePasswordValid: validation,
+			rePasswordHelp: help
 		})
 	},
 	
