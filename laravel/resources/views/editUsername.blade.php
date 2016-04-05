@@ -13,7 +13,7 @@ $query ="SELECT username FROM users WHERE username='$new' "; // search for the u
 // with these credentials                          
 
 $response= mysqli_query($dbc,$query); 
-
+//echo 'Error: ' . mysqli_error($dbc);
 
 if(mysqli_num_rows($response) <= 0){
   $sql = "UPDATE `users` SET `username`= '$new' WHERE username='$old'";

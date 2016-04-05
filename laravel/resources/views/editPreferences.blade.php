@@ -15,12 +15,9 @@ require_once('../preferences.php'); //preference class
 
 $pref= new preferences($cload,$dayoff,$preftime);
 
-$query ="SELECT username FROM users WHERE username='$username' "; // search for the user
-// with these credentials                          
+$query ="SELECT username FROM users WHERE username='$username' "; 
 
 $response= mysqli_query($dbc,$query); 
-
-
 if(mysqli_num_rows($response) <= 0){ 
  echo json_encode(array("success"=>"false","username"=>"$username","error"=>"usernamenotfound"));             
 } else {

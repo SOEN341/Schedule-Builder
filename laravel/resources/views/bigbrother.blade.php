@@ -36,7 +36,10 @@
     <body>
         <div class="container">
             <div class="content">
+
                 <?php
+
+               
                 // Full texts   username    email   userType    password    CoursesDones    CoursesRem  CLoad   dayOff  pTime 
 
                 require_once('../mysqli_connect.php'); // defini

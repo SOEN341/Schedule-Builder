@@ -2,9 +2,10 @@
 require_once('../mysqli_connect.php'); // defining and connecting to the database as root
 
 $query ="SELECT * FROM sections"; // search for the user
-// with these credentials                          
+            
 
 $response= mysqli_query($dbc,$query); 
+//echo 'Error: ' . mysqli_error($dbc);
 $rows = array();
 
 $numResults = mysqli_num_rows($response);

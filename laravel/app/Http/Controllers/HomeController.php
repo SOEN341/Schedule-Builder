@@ -70,10 +70,10 @@ class HomeController extends Controller {
         return view('schedule');
     }
 
-     public function courses()
-     {
-         return view('getCourses');
-     }
+    public function courses()
+    {
+        return view('getCourses');
+    }
 
     public function getAdmin(){
         return view('admin');
@@ -104,19 +104,19 @@ class HomeController extends Controller {
     }
 
     public function addadminsection(){
-         return view('addadminsection');
+         return view('addAdminSection');
     }
 
     public function addadmincourse(){
-        return view('addadmincourse');
+        return view('addAdminCourse');
     }
 
     public function removeadminsection(){
-         return view('removesection');
+         return view('removeSection');
     }
 
     public function removeadmincourse(){
-        return view('removecourse');
+        return view('removeCourse');
     }
 
 }

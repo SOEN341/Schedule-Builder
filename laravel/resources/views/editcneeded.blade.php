@@ -9,7 +9,6 @@ $contents = utf8_encode($json);
 //var_dump(json_decode($contents, true)); //testing purposes
 
 require_once('../mysqli_connect.php'); // defining and connecting to the database as root
-require_once('../needed_taken.php');
 
 //CoursesDones 	CoursesRem 	CLoad 	dayOff 	pTime 
 $sql = "UPDATE `users` SET `CoursesDones`='$contents' WHERE username='$old'";

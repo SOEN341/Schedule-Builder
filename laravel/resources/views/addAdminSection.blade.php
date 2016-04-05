@@ -23,6 +23,7 @@ require_once('../mysqli_connect.php');
 $query ="SELECT sectionId FROM sections WHERE sectionId='$sectionId' ";
 
 $response= mysqli_query($dbc,$query);
+//echo 'Error: ' . mysqli_error($dbc);
 
 if(mysqli_num_rows($response) <= 0){ //no section with id
 

@@ -18,15 +18,13 @@ $sql2="DELETE FROM `sections` WHERE courseId='$courseId'";
 
 mysqli_query($dbc,$sql2);
 
-echo 'Section: ' . mysqli_error($dbc) ;	
+//echo 'Section: ' . mysqli_error($dbc) ;	
 
 $sql="DELETE FROM `courses` WHERE courseId='$courseId'";
 
 mysqli_query($dbc,$sql);
 
-echo 'Course: ' . mysqli_error($dbc);
-
-
+//echo 'Course: ' . mysqli_error($dbc);
 
 echo json_encode(array("Sucess"=>"true","Course"=>"$courseId"));  
 
