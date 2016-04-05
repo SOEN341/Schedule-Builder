@@ -74,3 +74,4 @@ Route::get('/sequence', 'HomeController@getsequence');
 Route::get('/admincourse', 'HomeController@getadmincourse');
 
 
+Route::get('/test', 'TestController@getTestPage');
