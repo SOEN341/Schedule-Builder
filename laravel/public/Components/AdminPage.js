@@ -4,6 +4,9 @@ var AdminPage = React.createClass({
 			courses: []
 		}
 	},
+
+
+
 	
 	render: function() {
 		return(
@@ -24,6 +27,10 @@ var AdminPage = React.createClass({
 					}, this)}
 				</tbody>
 			</RBS.Table>
+			
+			
+			
+		
 		)
 	},
 	
@@ -31,9 +38,7 @@ var AdminPage = React.createClass({
 		this.keys=0;
 		var self=this;
 		serverBridge.getCourses(function(data) {
-			self.setState({
-				courses: data
-			});
+		self.setState({courses: JSON.parse(data)});
 		});
 	}
 });
@@ -46,7 +51,8 @@ var AdminCourse = React.createClass({
 			<td>{this.props.course.semester}</td>
 			<td>{this.props.course.description}</td>
 			<td>{this.props.course.credits}</td>
-			<td><img onClick={this.props.remove} src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
+			<td><img onClick={this.props.edit} src="Images/edit.png" title="Add Course" style={{height: '15px', width: '15px'}}/>&nbsp;&nbsp;
+			<img onClick={this.props.remove} src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
 		)
 	},
 	
@@ -55,4 +61,6 @@ var AdminCourse = React.createClass({
 		var cookie = cookieManager.addCookie('CourseInfo', JSON.stringify(this.props.course), 7)
 		this.props.changePage(7)
 	}
+	
+	
 });
