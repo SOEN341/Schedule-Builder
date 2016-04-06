@@ -5,7 +5,12 @@
  $saltValue = createSaltData($username);
  $providedPassword = createHashedValue($saltValue, $password);
  $type='false';
-
+ if (!(isset($username))) {
+   $username='';
+}
+if (!(isset($password))) {
+   $password='';
+}
 // $username='JASONB';
 // $password='pass1';
 

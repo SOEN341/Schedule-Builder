@@ -1,5 +1,8 @@
 <?php
 $sectionId=$_POST['sectionId']; //section id
+if (!(isset($sectionId))) {
+   $sectionId='';
+}
 //$sectionId='4';
 
 require_once('../mysqli_connect.php'); 

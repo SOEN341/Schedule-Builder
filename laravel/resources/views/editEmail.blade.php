@@ -2,6 +2,12 @@
 <?php
 $old=$_POST['old'];//username
 $new=$_POST['new'];//new emails
+if (!(isset($old))) {
+   $old='';
+}
+if (!(isset($new))) {
+   $new='';
+}
 // $old='JasonB';
 // $new='newEnail@email.com';
 

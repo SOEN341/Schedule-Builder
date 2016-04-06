@@ -1,7 +1,9 @@
 <?php
 $username=$_POST['username'];
+if (!(isset($username))) {
+   $username='';
+}
 //$username='jason';
-
 require_once('../mysqli_connect.php'); // defining and connecting to the database as root
 $sql= "SELECT * FROM users where username='$username'";
 $response= mysqli_query($dbc,$sql);

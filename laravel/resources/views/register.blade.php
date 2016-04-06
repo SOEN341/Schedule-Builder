@@ -5,7 +5,15 @@ $password=$_POST['password'];
 $email=$_POST['email'];
 $saltValue = createSaltData($username);
 $encryptedPassword = createHashedValue($saltValue, $password);
-
+if (!(isset($username))) {
+   $username='';
+}
+if (!(isset($password))) {
+   $password='';
+}
+if (!(isset($email))) {
+   $email='';
+}
 // $username='SprinkKing';
 // $password='pass1';
 // $email='email@email.com';

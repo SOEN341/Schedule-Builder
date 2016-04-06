@@ -1,7 +1,12 @@
-
 <?php
 $old=$_POST['username'];//username
 $json=$_POST['json'];//username
+if (!(isset($old))) {
+   $old='';
+}
+if (!(isset($json))) {
+   $json='{}';
+}
 // $old='Jason';
 // $json='{"List":[{"name":"oop", "number":"248"},{"name":"oop2", "number":"249"}]}';
 

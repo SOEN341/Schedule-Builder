@@ -1,6 +1,9 @@
 
 <?php
 $json=$_POST['json'];//username
+if (!(isset($json))) {
+   $json='{}';
+}
 //$json='{"courseId":"1","courseCode":"COMP 248","semester":"Fall","description":"Salt level critical, abort !","name":"Object-Oriented Programming I","credits":"3"}';
 
 $content = json_decode($json, true);

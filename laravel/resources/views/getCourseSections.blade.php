@@ -1,8 +1,10 @@
 <?php
 require_once('../mysqli_connect.php'); 
-//$courseId=$_POST('courseId');
-$courseId='7'; //test pursposes
-
+$courseId=$_POST('courseId');
+if (!(isset($courseId))) {
+   $courseId='';
+}
+//$courseId='7'; //test pursposes
 $query ="SELECT * FROM sections WHERE courseId='$courseId'"; // search for the user
               
 

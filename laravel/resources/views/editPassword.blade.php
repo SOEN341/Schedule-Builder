@@ -1,12 +1,17 @@
-
 <?php
+require_once('../mysqli_connect.php');
 $username=$_POST['old'];
 $newPassword=$_POST['new'];
+if (!(isset($username))) {
+   $username='';
+}
+if (!(isset($newPassword))) {
+   $newPassword='';
+}
+
 // $old='jason';
 // $new='pass1';
 
-
-require_once('../mysqli_connect.php'); // defining and connecting to the database as root
 $saltValue = createSaltData($username);
 $encryptedPassword = createHashedValue($saltValue, $newPassword);
 

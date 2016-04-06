@@ -1,9 +1,10 @@
 <?php
-$username=$_POST['username'];
- //$username='SprinkKing';
-
 require_once('../mysqli_connect.php'); // defining and connecting to the database as root
-
+$username=$_POST['username'];
+if (!(isset($username))) {
+   $username='';
+}
+ //$username='SprinkKing';
 $query ="SELECT email,CLoad,dayOff,pTime  FROM users WHERE username='$username'"; // search for the user
   
 $response= mysqli_query($dbc,$query); 

@@ -1,10 +1,12 @@
 <?php
+require_once('../mysqli_connect.php'); 
 $username=$_POST['username'];
+if (!(isset($username))) {
+   $username='';
+}
 // $username='JasonB';
 
-require_once('../mysqli_connect.php'); // defining and connecting to the database as root
-
-$query ="SELECT email FROM users WHERE username='$username'"; // search for the user
+$query ="SELECT email FROM users WHERE username='$username'"; 
 // with these credentials                          
 
 $response= mysqli_query($dbc,$query); 

@@ -1,5 +1,8 @@
 <?php
 $courseId=$_POST['courseId']; //course id
+if (!(isset($courseId))) {
+   $courseId='';
+}
 //$courseId='13';
 
 require_once('../mysqli_connect.php'); 
