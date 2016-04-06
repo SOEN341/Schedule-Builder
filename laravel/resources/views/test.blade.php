@@ -58,14 +58,38 @@
 	var cookie = cookieManager.addCookie("username", "Jason", 1);
 	serverBridge.getUserPrefs(function(data){
 
-		if (data == testPref){
+		if (data.courseload == testPref.courseLoad && data.dayoff == testPref.day && data.preferredTime == testPref.time){
 			console.log('Test valid set preferences successful');
 		}
 		else{
 			console.log('Test valid set preferences failed');
 		}
-		cookieManager.removeCookie(cookie);
+
 	});
+	serverBridge.editPreferences({"courseLoad": "", "day" : "", "time" : ""});
+	cookieManager.removeCookie("username");
+
+
+	response = serverBridge.register('Jason', '123', 'pass', function(data){
+		if(data.success == "false"){
+			console.log("Registration for existing user test succeeded");
+		}
+		else{
+			console.log("Registration for existing user test failed!");
+		}
+	});
+
+	response = serverBridge.register('BatmanVsSuperman', 'justiceleague', 'password', function(data){
+		if(data.success == "true"){
+			console.log("Registration for new user test succeeded");
+		}
+		else{
+			console.log("Registration for new user test failed");
+		}
+	});
+
+
+
 </script>
 </body>
 </html>
