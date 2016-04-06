@@ -30,13 +30,29 @@
 <script type="text/jsx">
 	var serverBridge=realServerBridge;
 	var response = serverBridge.login('User', 'password', function(data) {
-				if(data.success=='true'&&data.username=='User'&&data.isAdmin=='false') {
-					console.log('Test valid user successful');
-				}
-				else {
-					console.log('Test valid user failed');
-				}
-			});
+		if(data.success=='true'&&data.username=='User'&&data.isAdmin=='false') {
+			console.log('Test valid user successful');
+		}
+		else {
+			console.log('Test valid user failed');
+		}
+	});
+	response = serverBridge.login('Admin', 'password', function(data) {
+		if(data.success=='true'&&data.username=='Admin'&&data.isAdmin=='true') {
+			console.log('Test valid admin successful');
+		}
+		else {
+			console.log('Test valid admin failed');
+		}
+	});
+	response = serverBridge.login('notauser', 'password', function(data) {
+		if(data.success=='false') {
+			console.log('Test invalid user successful');
+		}
+		else {
+			console.log('Test invalid user failed');
+		}
+	});
 </script>
 </body>
 </html>
