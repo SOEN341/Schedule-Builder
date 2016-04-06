@@ -29,42 +29,15 @@
 <div id="pageContent"></div>
 <script type="text/jsx">
 	var serverBridge=realServerBridge;
-	var response = serverBridge.login('User', 'password', function(data) {
-		if(data.success=='true'&&data.username=='User'&&data.isAdmin=='false') {
-			console.log('Test valid user successful');
-		}
-		else {
-			console.log('Test valid user failed');
-		}
-	});
-	response = serverBridge.login('Admin', 'password', function(data) {
-		if(data.success=='true'&&data.username=='Admin'&&data.isAdmin=='true') {
-			console.log('Test valid admin successful');
-		}
-		else {
-			console.log('Test valid admin failed');
-		}
-	});
-	response = serverBridge.login('notauser', 'password', function(data) {
-		if(data.success=='false') {
-			console.log('Test invalid user successful');
-		}
-		else {
-			console.log('Test invalid user failed');
-		}
-	});
 	var testPref = {"courseLoad":"5", "day":"Monday", "time":"Mornings"};
 	var response = serverBridge.editPreferences(testPref);
-	var cookie = cookieManager.addCookie("username", "Jason", 1);
 	serverBridge.getUserPrefs(function(data){
-
 		if (data == testPref){
 			console.log('Test valid set preferences successful');
 		}
 		else{
 			console.log('Test valid set preferences failed');
 		}
-		cookieManager.removeCookie(cookie);
 	});
 </script>
 </body>
