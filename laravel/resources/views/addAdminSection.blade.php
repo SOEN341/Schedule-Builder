@@ -1,6 +1,9 @@
 <?php
-//$json=$_POST['json'];//username
-$json='{"section":"UI-X","sectionId":"400","classroom":"H-4","semester":"Winter","type":"Lab","dayOffered":"5","beginTime":"13:35:00","endTime":"14:35:00","courseId":"2","courseCode":"COMP 248","sectionNum":"1"}';
+$json=$_POST['json'];//username
+if (!(isset($json))) {
+   $json='{}';
+}
+//$json='{"section":"UI-X","sectionId":"400","classroom":"H-4","semester":"Winter","type":"Lab","dayOffered":"5","beginTime":"13:35:00","endTime":"14:35:00","courseId":"2","courseCode":"COMP 248","sectionNum":"1"}';
 
 $content = json_decode($json, true);
 
@@ -23,6 +26,7 @@ require_once('../mysqli_connect.php');
 $query ="SELECT sectionId FROM sections WHERE sectionId='$sectionId' ";
 
 $response= mysqli_query($dbc,$query);
+//echo 'Error: ' . mysqli_error($dbc);
 
 if(mysqli_num_rows($response) <= 0){ //no section with id
 

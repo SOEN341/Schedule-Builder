@@ -5,7 +5,15 @@ $password=$_POST['password'];
 $email=$_POST['email'];
 $saltValue = createSaltData($username);
 $encryptedPassword = createHashedValue($saltValue, $password);
-
+if (!(isset($username))) {
+   $username='';
+}
+if (!(isset($password))) {
+   $password='';
+}
+if (!(isset($email))) {
+   $email='';
+}
 // $username='SprinkKing';
 // $password='pass1';
 // $email='email@email.com';
@@ -22,13 +30,13 @@ if(mysqli_num_rows($response) <= 0){
      // }
 
 
-     $sql = "INSERT INTO users (username, email, userType, password, CoursesDones, CoursesRem, CLoad, dayOff, pTime) VALUES ('$username', '$email', FALSE ,'$encryptedPassword', '{\"List\":[]}', '{\"List\":[]}', '0', 'None', 'Any')";
+    $sql = "INSERT INTO users (username, email, userType, password, CoursesDones, CoursesRem, CLoad, dayOff, pTime) VALUES ('$username', '$email', FALSE ,'$encryptedPassword', '{\"List\":[]}', '{\"List\":[]}', '0', 'None', 'Any')";
     if (mysqli_query($dbc, $sql)) {
             echo json_encode(array("success"=>"true","username"=>"$username","password"=>"$password"));
     } else {
+        //echo 'Salt: ' . mysqli_error($dbc);
         echo json_encode(array("success"=>"false","username"=>"$username","password"=>"$password", "salt" => "$saltValue", "encryptedPassword" => "$encryptedPassword"));;
     }
-
   }
    else {
     echo json_encode(array("success"=>"false","username"=>"$username","error"=>"usernametakenalready"));

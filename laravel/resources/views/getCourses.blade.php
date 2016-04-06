@@ -1,10 +1,9 @@
 <?php
-require_once('../mysqli_connect.php'); // defining and connecting to the database as root
-
-$query ="SELECT * FROM courses"; // search for the user
-// with these credentials                          
+require_once('../mysqli_connect.php'); 
+$query ="SELECT * FROM courses";                   
 
 $response= mysqli_query($dbc,$query); 
+//echo 'Error: ' . mysqli_error($dbc);
 $rows = array();
 
 $numResults = mysqli_num_rows($response);
@@ -18,7 +17,6 @@ while($current = mysqli_fetch_assoc($response)) {
 	}
 }
 echo ']';
-
 
 //echo mysqli_fetch_array($response);
 mysqli_close($dbc);

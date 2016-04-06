@@ -300,6 +300,9 @@ var RegistrationDialog = React.createClass({
 						<RBS.Row>
 							<InputElement label='Password' type='password' onChange={this.props.passwordChange} value={this.props.password} bsStyle={this.props.passwordValid} help={this.props.passwordHelp}/>
 						</RBS.Row>
+						<RBS.Row>
+							<InputElement label='Retype Password' type='password' onChange={this.props.rePasswordChange} value={this.props.rePassword} bsStyle={this.props.rePasswordValid} help={this.props.rePasswordHelp}/>
+						</RBS.Row>
 					</RBS.Grid>
 				</RBS.Modal.Body>
 				<RBS.Modal.Footer>

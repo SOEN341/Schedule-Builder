@@ -334,7 +334,7 @@ var realServerBridge = {
 		$.ajax({
 			type:    "POST",
 			url:     "http://localhost:8000/courses",
-			dataType: "json",
+			dataType: "text",
 			async: false,
 			data: {username: username},
 			success: response,

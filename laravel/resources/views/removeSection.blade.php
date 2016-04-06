@@ -1,6 +1,9 @@
 <?php
 $sectionId=$_POST['sectionId']; //section id
-//$sectionId='2';
+if (!(isset($sectionId))) {
+   $sectionId='';
+}
+//$sectionId='4';
 
 require_once('../mysqli_connect.php'); 
 
@@ -17,6 +20,8 @@ echo json_encode(array("Sucess"=>"false","Section"=>"$sectionId","Salt"=>"That s
 $sql="DELETE FROM `sections` WHERE sectionId='$sectionId'";
 
 mysqli_query($dbc,$sql);
+
+//echo 'Section: bla bla ' . mysqli_error($dbc);
 
 echo json_encode(array("Sucess"=>"true","Section"=>"$sectionId"));  
 }

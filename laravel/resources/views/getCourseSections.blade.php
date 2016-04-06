@@ -1,12 +1,15 @@
 <?php
-require_once('../mysqli_connect.php'); // defining and connecting to the database as root
+require_once('../mysqli_connect.php'); 
 $courseId=$_POST('courseId');
-//$courseId='2'; //test pursposes
-
+if (!(isset($courseId))) {
+   $courseId='';
+}
+//$courseId='7'; //test pursposes
 $query ="SELECT * FROM sections WHERE courseId='$courseId'"; // search for the user
-// with these credentials                          
+              
 
 $response= mysqli_query($dbc,$query); 
+//echo 'Error: ' . mysqli_error($dbc);
 $rows = array();
 
 $numResults = mysqli_num_rows($response);
@@ -20,7 +23,6 @@ while($current = mysqli_fetch_assoc($response)) {
 	}
 }
 echo ']';
-
 
 //echo mysqli_fetch_array($response);
 mysqli_close($dbc);
