@@ -24,13 +24,14 @@
 	<script src="Components/SchedulePage.js" type="text/jsx"></script>
 	<script src="Components/AdminPage.js" type="text/jsx"></script>
 	<script src="Components/CourseSequence.js" type="text/jsx"></script>
+	<script src="Components/LinkProvider.js" type="text/jsx"></script>
 </head>
 <body>
 <div id="pageContent"></div>
 <script type="text/jsx">
 	var serverBridge=realServerBridge;
 	//LOGIN TESTS
-	/*var response = serverBridge.login('User', 'password', function(data) {
+	var response = serverBridge.login('User', 'password', function(data) {
 		if(data.success=='true'&&data.username=='User'&&data.isAdmin=='false') {
 			console.log('Test valid user successful');
 		}
@@ -125,20 +126,7 @@
 		else{
 			console.log("Registration for existing user test failed!");
 		}
-	});*/
-
-
-	console.log('Test valid user successful');
-	console.log('Test valid admin successful');
-	console.log('Test invalid user successful');
-	console.log('Test invalid password successful');
-	console.log('Test valid set preferences existing user successful');
-	console.log('Test set prerefences invalid user successful');
-	console.log("Registration for new user test succeeded");
-	console.log('Login for BatmanVsSuperman successful');
-	console.log("Registration for existing user test succeeded");
-
-
+	});
 </script>
 </body>
 </html>

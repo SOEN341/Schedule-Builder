@@ -25,6 +25,7 @@
     <script src="Components/AdminPage.js" type="text/jsx"></script>
     <script src="Components/AdminEdit.js" type="text/jsx"></script>
     <script src="Components/CourseSequence.js" type="text/jsx"></script>
+    <script src="Components/LinkProvider.js" type="text/jsx"></script>
 </head>
 <body>
 <div id="pageContent"></div>

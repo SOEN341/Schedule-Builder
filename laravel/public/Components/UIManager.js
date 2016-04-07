@@ -25,25 +25,25 @@ var Main = React.createClass({
 	
 	changePage: function(newPage) {
 		if(newPage==0) {
-			window.location = 'http://localhost:8000/index';
+			window.location = linkProvider.getLink()+'/index';
 		}
 		else if(newPage==1) {
-			window.location = 'http://localhost:8000/preferences';
+			window.location = linkProvider.getLink()+'/preferences';
 		}
 		else if(newPage==2) {
-			window.location = 'http://localhost:8000/account';
+			window.location = linkProvider.getLink()+'/account';
 		}
 		else if(newPage==3) {
-			window.location = 'http://localhost:8000/schedule';
+			window.location = linkProvider.getLink()+'/schedule';
 		}
 		else if(newPage==4) {
-			window.location = 'http://localhost:8000/sequence';
+			window.location = linkProvider.getLink()+'/sequence';
 		}
 		else if(newPage==6) {
-			window.location = 'http://localhost:8000/admin';
+			window.location = linkProvider.getLink()+'/admin';
 		}
 		else if(newPage==7) {
-			window.location = 'http://localhost:8000/admincourse';
+			window.location = linkProvider.getLink()+'/admincourse';
 		}
 	},
 	
