@@ -23,5 +23,3 @@ $response= mysqli_query($dbc,$sql);
 echo json_encode(array("success"=>"true","username"=>"$old","List"=>"$contents"));  
 
 mysqli_close($dbc);
-   
-

@@ -14,7 +14,6 @@ $response= mysqli_query($dbc,$query);
 if(mysqli_num_rows($response) <= 0){ //no course with id
 
 echo json_encode(array("Sucess"=>"false","Course"=>"$courseId","Salt"=>"That courseId does not exist.")); 
-
 }else{
 
 $sql2="DELETE FROM `sections` WHERE courseId='$courseId'";

@@ -1,4 +1,5 @@
 <?php
+require_once('../mysqli_connect.php'); 
 $json=$_POST['json'];
 if (!(isset($json))) {
    $json='{}';
@@ -21,7 +22,12 @@ $sectionNum=$content['sectionNum'];
 
 // var_dump($content);
 
-require_once('../mysqli_connect.php'); 
+$query ="SELECT sectionId FROM sections WHERE sectionId='$sectionId' ";
+
+$response= mysqli_query($dbc,$query);
+//echo 'Error: ' . mysqli_error($dbc);
+
+if(mysqli_num_rows($response) <= 0){ //no section with id
 
 $sql="UPDATE `sections` SET `section`='$section',`sectionId`='$sectionId',`classroom`='$classroom',`semester`='$semester',`type`='$semester',`dayOffered`='$dayOffered',`beginTime`='$beginTime',`endTime`='$endTime',`courseId`='$courseId',`courseCode`='$courseCode',`sectionNum`='$sectionNum' WHERE sectionId=$sectionId ";
 
@@ -29,4 +35,8 @@ $response= mysqli_query($dbc,$sql);
 
 echo json_encode(array("success"=>"true","Section"=>"$json"));  
 
+else {
+
+	echo json_encode(array("success"=>"false","Section"=>"$json","Error"=>"This section exist already."));  
+}
 mysqli_close($dbc);

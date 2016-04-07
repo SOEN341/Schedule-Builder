@@ -40,5 +40,3 @@ if(mysqli_num_rows($response) <= 0){
  echo json_encode(array("success"=>"true","username"=>"$username","courseload"=>"$pref->courseLoad","dayoff"=>"$pref->dayOff","preftime"=>"$pref->prefTime"));
 }
 mysqli_close($dbc);
-   
-

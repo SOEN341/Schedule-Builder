@@ -5,8 +5,7 @@ if (!(isset($courseId))) {
    $courseId='';
 }
 //$courseId='7'; //test pursposes
-$query ="SELECT * FROM sections WHERE courseId='$courseId'"; // search for the user
-              
+$query ="SELECT * FROM sections WHERE courseId='$courseId'";              
 
 $response= mysqli_query($dbc,$query); 
 //echo 'Error: ' . mysqli_error($dbc);
@@ -23,8 +22,5 @@ while($current = mysqli_fetch_assoc($response)) {
 	}
 }
 echo ']';
-
 //echo mysqli_fetch_array($response);
 mysqli_close($dbc);
-   
-

@@ -13,8 +13,6 @@ if (!(isset($new))) {
 
 //{'old':username, 'new':newUsername},
 
- // defining and connecting to the database as root
-
 $query ="SELECT username FROM users WHERE username='$new' "; // search for the user
 // with these credentials                          
 
@@ -30,5 +28,3 @@ if(mysqli_num_rows($response) <= 0){
 }
 
 mysqli_close($dbc);
-   
-

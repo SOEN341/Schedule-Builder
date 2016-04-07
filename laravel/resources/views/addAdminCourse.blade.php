@@ -1,5 +1,5 @@
-
 <?php
+require_once('../mysqli_connect.php'); 
 $json=$_POST['json'];//username
 if (!(isset($json))) {
    $json='{}';
@@ -15,8 +15,6 @@ $courseCode= $content['courseCode'];
 $courseId= $content['courseId'];
 
 // var_dump($content);
-
-require_once('../mysqli_connect.php'); 
 
 $query ="SELECT courseId FROM courses WHERE courseId='$courseId' ";
 
@@ -34,5 +32,4 @@ echo json_encode(array("success"=>"true","Course"=>"$json"));
    else {
     echo json_encode(array("success"=>"false","Course"=>"$json","Salt"=>"course id alrady present ?"));
 }
-
 mysqli_close($dbc);

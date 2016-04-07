@@ -1,4 +1,5 @@
 <?php
+require_once('../mysqli_connect.php'); 
 $json=$_POST['json'];//username
 if (!(isset($json))) {
    $json='';
@@ -15,12 +16,22 @@ $courseId= $content['courseId'];
 
 // var_dump($content);
 
-require_once('../mysqli_connect.php'); 
+$query ="SELECT courseId FROM courses WHERE courseId='$courseId' ";
+
+$response= mysqli_query($dbc,$query);
+//echo 'Error: ' . mysqli_error($dbc);
+
+if(mysqli_num_rows($response) <= 0){ //no course with id
 
 $sql="UPDATE `courses` SET `courseId`='$courseId',`courseCode`='$courseCode',`semester`='$semester',`description`='$description',`name`='$name',`credits`='$credits'  WHERE courseId=$courseId ";
 
 $response= mysqli_query($dbc,$sql);
 
 echo json_encode(array("success"=>"true","Course"=>"$json"));  
+
+else {
+	
+echo json_encode(array("success"=>"false","Course"=>"$json","Error"=>"A coruse with this id exist already."));  
+}
 
 mysqli_close($dbc);

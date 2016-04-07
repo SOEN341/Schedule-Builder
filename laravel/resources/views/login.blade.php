@@ -1,4 +1,3 @@
-
 <?php
  $username=$_POST['username'];
  $password=$_POST['password'];
@@ -51,9 +50,6 @@ function createHashedValue($salt, $password){
 	$hashedValue = substr($hashedValue, 29);
 	return $hashedValue;
 }
-
-
-
 //exemple to prevent mysql injection
    
    // $query = "INSERT INTO students (first_name, last_name, email,

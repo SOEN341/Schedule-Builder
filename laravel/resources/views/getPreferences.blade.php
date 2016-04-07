@@ -5,7 +5,7 @@ if (!(isset($username))) {
    $username='';
 }
  //$username='SprinkKing';
-$query ="SELECT email,CLoad,dayOff,pTime  FROM users WHERE username='$username'"; // search for the user
+$query ="SELECT email,CLoad,dayOff,pTime  FROM users WHERE username='$username'"; 
   
 $response= mysqli_query($dbc,$query); 
 //echo 'Error: ' . mysqli_error($dbc);
@@ -21,5 +21,3 @@ if(mysqli_num_rows($response) <= 0){
   echo json_encode(array("success"=>"true","username"=>"$username","courseload"=>"$CLoad","dayoff"=>"$dayOff","preferredTime"=>"$pTime"));  
 }
 mysqli_close($dbc);
-   
-

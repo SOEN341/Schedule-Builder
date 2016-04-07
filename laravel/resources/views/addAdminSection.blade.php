@@ -1,4 +1,5 @@
 <?php
+require_once('../mysqli_connect.php'); 
 $json=$_POST['json'];//username
 if (!(isset($json))) {
    $json='{}';
@@ -20,8 +21,6 @@ $courseCode= $content['courseCode'];
 $sectionNum=$content['sectionNum'];
 
 // var_dump($content);
-
-require_once('../mysqli_connect.php'); 
 
 $query ="SELECT sectionId FROM sections WHERE sectionId='$sectionId' ";
 
