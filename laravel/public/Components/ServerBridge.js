@@ -20,7 +20,7 @@ var mockServerBridge = {
 	getCourses: function(response) {
 		/*response([
 			{
-				courseID: '1',
+				courseId: '1',
 				name: 'Object Oriented Programming 1',
 				courseCode: 'COMP 248',
 				semester: 'Fall',
@@ -28,7 +28,7 @@ var mockServerBridge = {
 				credits: '3',
 			},
 			{
-				courseID: '2',
+				courseId: '2',
 				name: 'Object Oriented Programming 2',
 				courseCode: 'COMP 249',
 				semester: 'Winter',
@@ -36,51 +36,67 @@ var mockServerBridge = {
 				credits: '3'
 			}
 		]);*/
-		response('[{"courseID":"1","name":"Object Oriented Programming 1","courseCode":"COMP 248","semester":"Fall","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"},{"courseID":"2","name":"Object Oriented Programming 2","courseCode":"COMP 249","semester":"Winter","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"}]');
+		response('[{"courseId":"1","name":"Object Oriented Programming 1","courseCode":"COMP 248","semester":"Fall","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"},{"courseId":"2","name":"Object Oriented Programming 2","courseCode":"COMP 249","semester":"Winter","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"}]');
 	},
 	
-	getSections: function() {
-		return [
+	getSections: function(response) {
+		response([
 			{
 				section: 'JJ',
+				sectionId: '1',
 				classroom: 'H555',
-				type: 'Lab',
-				day: '1',
+				semester: 'Winter',
+				type: 'Lecture',
+				dayOffered: '1',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 346'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			},
 			{
 				section: 'HH',
+				sectionId: '2',
 				classroom: 'H321',
+				semester: 'Winter',
 				type: 'Lecture',
-				day: '13',
+				dayOffered: '13',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 341'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			}
-		]
+		]);
 	},
 	
 	getSectionsFromCourse: function(course, response) {
 		response([
 			{
 				section: 'JJ',
+				sectionId: '1',
 				classroom: 'H555',
+				semester: 'Winter',
 				type: 'Lecture',
-				day: '1',
+				dayOffered: '1',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 346'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			},
 			{
 				section: 'HH',
+				sectionId: '2',
 				classroom: 'H321',
+				semester: 'Winter',
 				type: 'Lecture',
-				day: '13',
+				dayOffered: '13',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 346'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			}
 		]);
 	},
@@ -220,14 +236,18 @@ var mockServerBridge = {
 	
 	addCourse: function(course, response) {
 		if(course.courseCode=='SOEN 341') {
-			response({success: 'false', courseID: '5'});
+			response({success: 'false', courseId: '5'});
 		}
 		else
-			response({success: 'true', courseID: '5'});
+			response({success: 'true', courseId: '5'});
 	},
 	
-	addSection: function(section) {
-		
+	addSection: function(section, response) {
+		if(section.section=='QQ') {
+			response({success: 'false', sectionId: '5'});
+		}
+		else
+			response({success: 'true', sectionId: '5'});
 	},
 	
 	removeCourse: function(courseID) {
@@ -235,7 +255,7 @@ var mockServerBridge = {
 	},
 	
 	removeSection: function(courseID, sectionID) {
-		
+		console.log('Section ' + sectionID + ' removed from course ' + courseID);
 	},
 	
 	editCourse: function(course, response) {
@@ -246,8 +266,12 @@ var mockServerBridge = {
 			response({success: 'true', courseID: '5'});
 	},
 	
-	editSection: function(courseID, oldSection, newSection) {
-		
+	editSection: function(section, response) {
+		if(section.section=='QQ') {
+			response({success: 'false', sectionId: '5'});
+		}
+		else
+			response({success: 'true', sectionId: '5'});
 	},
 	
 	editPreferences: function(newPrefs) {
