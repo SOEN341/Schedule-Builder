@@ -218,12 +218,12 @@ var mockServerBridge = {
 		]);
 	},
 	
-	addCourse: function(course) {
-		if(course.number=='SOEN 341') {
-			return false;
+	addCourse: function(course, response) {
+		if(course.courseCode=='SOEN 341') {
+			response({success: 'false', courseID: '5'});
 		}
 		else
-			return true;
+			response({success: 'true', courseID: '5'});
 	},
 	
 	addSection: function(section) {
@@ -231,15 +231,19 @@ var mockServerBridge = {
 	},
 	
 	removeCourse: function(courseID) {
-		
+		console.log('course ' + courseID + ' removed');
 	},
 	
 	removeSection: function(courseID, sectionID) {
 		
 	},
 	
-	editCourse: function(oldCourse, newCourse) {
-		
+	editCourse: function(course, response) {
+		if(course.courseCode=='SOEN 341') {
+			response({success: 'false', courseID: '5'});
+		}
+		else
+			response({success: 'true', courseID: '5'});
 	},
 	
 	editSection: function(courseID, oldSection, newSection) {
