@@ -304,7 +304,7 @@ var realServerBridge = {
 	register: function(username, email, password, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/register",
+			url:     linkProvider.getLink()+"/register",
 			dataType: "json",
 			data:    {"username":username, "email":email, "password":password },
 			async: false,
@@ -320,7 +320,7 @@ var realServerBridge = {
 	login: function(username, password, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/login",
+			url:     linkProvider.getLink()+"/login",
 			dataType: "json",
 			data:    {username:username, password:password},
 			async: false,
@@ -337,7 +337,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/courses",
+			url:     linkProvider.getLink()+"/courses",
 			dataType: "text",
 			async: false,
 			data: {username: username},
@@ -353,7 +353,7 @@ var realServerBridge = {
 	getSections: function() {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/sections",
+			url:     linkProvider.getLink()+"/sections",
 			dataType: "json",
 			async: false,
 			success: function(data) {
@@ -370,7 +370,7 @@ var realServerBridge = {
 	getSectionsFromCourse: function(courseID) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/sections:"+courseID,
+			url:     linkProvider.getLink()+"/sections:"+courseID,
 			dataType: "json",
 			async: false,
 			data:    courseID,
@@ -389,7 +389,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/userprefs",
+			url:     linkProvider.getLink()+"/userprefs",
 			dataType: "json",
 			async: false,
 			data: { username: username },
@@ -406,7 +406,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/needed",
+			url:     linkProvider.getLink()+"/needed",
 			dataType: "json",
 			async: false,
 			data: { username: username },
@@ -427,7 +427,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/taken",
+			url:     linkProvider.getLink()+"/taken",
 			dataType: "json",
 			async: false,
 			data: { username: username },
@@ -448,7 +448,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/scheduler",
+			url:     linkProvider.getLink()+"/scheduler",
 			dataType: "json",
 			async: false,
 			data: { username: username },
@@ -466,7 +466,7 @@ var realServerBridge = {
 	addCourse: function(course) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/addcourse",
+			url:     linkProvider.getLink()+"/addcourse",
 			dataType: "json",
 			data: course,
 			success: function(data) {
@@ -487,7 +487,7 @@ var realServerBridge = {
 	removeCourse: function(courseID) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/removecourse",
+			url:     linkProvider.getLink()+"/removecourse",
 			dataType: "json",
 			data: courseID,
 			success: function(data) {
@@ -504,7 +504,7 @@ var realServerBridge = {
 	removeSection: function(courseID, sectionID) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/removesection",
+			url:     linkProvider.getLink()+"/removesection",
 			dataType: "json",
 			data: {'course':courseID, 'section':sectionID},
 			success: function(data) {
@@ -521,7 +521,7 @@ var realServerBridge = {
 	editCourse: function(oldCourse, newCourse) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editcourse",
+			url:     linkProvider.getLink()+"/editcourse",
 			dataType: "json",
 			data: {'old':oldCourse, 'new':newCourse},
 			success: function(data) {
@@ -538,7 +538,7 @@ var realServerBridge = {
 	editSection: function(courseID, oldSection, newSection) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editsection",
+			url:     linkProvider.getLink()+"/editsection",
 			dataType: "json",
 			data: {'course':courseID, 'old':oldSection, 'new':newSection},
 			success: function(data) {
@@ -556,7 +556,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editpreferences",
+			url:     linkProvider.getLink()+"/editpreferences",
 			dataType: "json",
 			data: {'username':username, 'cload':newPrefs.courseLoad, 'dayoff':newPrefs.day, 'preftime':newPrefs.time},
 			success: function(data) {
@@ -574,7 +574,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editneededcourses",
+			url:     linkProvider.getLink()+"/editneededcourses",
 			dataType: "json",
 			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
@@ -592,7 +592,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/edittakencourses",
+			url:     linkProvider.getLink()+"/edittakencourses",
 			dataType: "json",
 			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
@@ -610,7 +610,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editusername",
+			url:     linkProvider.getLink()+"/editusername",
 			dataType: "json",
 			data: {'old':username, 'new':newUsername},
 			success: response,
@@ -626,7 +626,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editemail",
+			url:     linkProvider.getLink()+"/editemail",
 			dataType: "json",
 			data: {'old':username, 'new':newEmail},
 			success: function(data) {
@@ -644,7 +644,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editpassword",
+			url:     linkProvider.getLink()+"/editpassword",
 			dataType: "json",
 			data: {'old':username, 'new':newPassword},
 			success: function(data) {
@@ -662,7 +662,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/email",
+			url:     linkProvider.getLink()+"/email",
 			dataType: "json",
 			async: false,
 			data: {'username':username},
