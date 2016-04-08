@@ -1,7 +1,27 @@
+/* Global Variables */
+
 h1, h3
 {
 	text-align: center
 }
+
+body
+{
+	background-color: #d3d3d3 ;
+}
+
+/* CSS for file "Login" only */
+#header{
+	font-weight: bold;
+	font-family: Sans-serif, open sans;
+	font-size: 55px;
+	color: #FFFFFF;
+	height: 90px;
+	background-color: #34495e;
+	margin: 0px;
+	padding-top: 20px;
+}
+
 
 /* CSS for file "AccountPage" only */
 #title
