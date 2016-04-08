@@ -2,7 +2,7 @@
 
 h1, h3
 {
-	text-align: center
+
 }
 
 body
@@ -11,17 +11,23 @@ body
 }
 
 /* CSS for file "Login" only */
-#header{
-	font-weight: bold;
-	font-family: Sans-serif, open sans;
-	font-size: 55px;
-	color: #FFFFFF;
-	height: 90px;
-	background-color: #34495e;
+#title{
 	margin: 0px;
 	padding-top: 20px;
+	font-weight: bold;
+	font-size: 40px;
+	font-family: Sans-serif, open sans;
+	padding-left: 380px;
 }
 
+.header{
+	color: #FFFFFF;
+	height: 100px;
+	background-color: #34495e;
+	margin: 0px;
+	padding-top: 10px;
+	
+}
 
 /* CSS for file "AccountPage" only */
 #title

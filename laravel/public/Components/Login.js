@@ -354,9 +354,11 @@ var Logo = React.createClass({
 	//Change this to an actual logo later
 	render: function() {
 		return (
-			<div>
-				<h1 id = "header">SOEN Schedule Builder</h1>
+			<div className="header">
+				<img src="Images/logo2.png" style={{width:'80', height:'80', float: 'left'}} />
+				<h1 id="title">SOEN Schedule Builder</h1>
 			</div>
+
 		)
 	}
 });
