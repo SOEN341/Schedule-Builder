@@ -82,18 +82,28 @@ var TypeaheadInput = React.createClass({
 			data: [],
 			value: '',
 			type: '',
-			id: 'bloodhound',
+			id: 'bloodhound1',
 			help:'',
 			bsStyle:undefined,
 			hasFeedback:false
 		}
 	},
+	
+	shouldComponentUpdate: function(nextProps, nextState) {
+		if(this.props.value!=nextProps.value) {
+			console.log(this.props.id);
+			$('#' + this.props.id + ' .typeahead').typeahead('destroy');
+			$('#' + this.props.id + ' .typeahead').attr('value', nextProps.value);
+			this.constructTypeahead();
+		}
+		return true;
+	},
 
 	handleChange: function(event) {
 		this.props.onChange(event.target.value);
 	},
-
-	componentDidMount: function() {
+	
+	constructTypeahead: function() {
 		var local=this.props.data;
 		if(this.props.type=='name') {
 			local = [];
@@ -128,16 +138,11 @@ var TypeaheadInput = React.createClass({
 		});
 	},
 
+	componentDidMount: function() {
+		this.constructTypeahead();
+	},
+
 	render: function() {
-		/*if(this.props.label.length>0) {
-			var input = <div><RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} /></RBS.Col></div>
-		}
-		else {
-			var input = <div><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} /></div>
-		}*/
-		/*<div id={this.props.id} key={this.props.key}>
-					<RBS.Col md={this.props.label_md}>{this.props.label}</RBS.Col><RBS.Col md={this.props.input_md}><RBS.Input className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} key={this.props.key}/></RBS.Col>
-				</div>*/
 		return (
 				<div id={this.props.id} style={{width:'300px'}}>
 					<RBS.Input style={{width:'300px'}} className="typeahead" type="text" placeholder={this.props.placeholder} ref="myTextInput" value={this.props.value} onChange={this.handleChange} onBlur={this.handleChange} bsStyle={this.props.bsStyle} help={this.props.help} hasFeedback={this.props.hasFeedback}/>
