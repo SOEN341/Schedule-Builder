@@ -11,15 +11,6 @@ body
 }
 
 /* CSS for file "Login" only */
-#title{
-	margin: 0px;
-	padding-top: 20px;
-	font-weight: bold;
-	font-size: 40px;
-	font-family: Sans-serif, open sans;
-	padding-left: 380px;
-}
-
 .header{
 	color: #FFFFFF;
 	height: 100px;
@@ -28,6 +19,29 @@ body
 	padding-top: 10px;
 	
 }
+
+#title{
+	margin: 0px;
+	padding-top: 20px;
+	font-weight: bold;
+	font-size: 40px;
+	font-family: Lato;
+	padding-left: 80px;
+	letter-spacing: 1px;
+}
+
+#input{
+	color:#34495e;
+	font-weight: bold;
+	font-family: Sans-serif;
+}
+
+a{
+	color: #34495e;
+	font-weight: bold;
+}
+
+
 
 /* CSS for file "AccountPage" only */
 #title

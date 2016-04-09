@@ -27,16 +27,18 @@ var LoginPage = React.createClass({
 				{this.state.forgotDialogOpen? <ForgotDialog username={this.state.username} usernameChange={this.onFUsernameChange} usernameHelp={this.state.fUsernameHelp} usernameValid={this.state.fUsernameValid} close={this.closeForgotDialog} password={this.state.fPassword} passwordChange={this.onFPasswordChange} passwordValid={this.state.fPasswordValid} passwordHelp={this.state.fPasswordHelp} code={this.state.code} codeChange={this.onCodeChange} codeValid={this.state.codeValid} codeHelp={this.state.codeHelp} forgot={this.sendEmail} mode={this.state.forgotDialogMode} resetPassword={this.resetPassword}/>: null}
 				<Logo/>
 				<br/>
-				<RBS.Grid  fluid={true} style={{width:'30%'}}>
+				<RBS.Grid  fluid={true} style={{width:'30%', margin:'20px 120px'}}>
 					<RBS.Row>
-						<InputElement label='Username' onChange={this.onUsernameChange} bsStyle={this.state.usernameValid} help={this.state.usernameHelp}/>
+						<p id="input">Username:</p><InputElement onChange={this.onUsernameChange} bsStyle={this.state.usernameValid} help={this.state.usernameHelp}/>
 					</RBS.Row>
 					<RBS.Row>
-						<InputElement label='Password' type='password' onChange={this.onPasswordChange} bsStyle={this.state.passwordValid} bsStyle={this.state.passwordValid}/>
+						<p id="input">Password:</p><InputElement type='password' onChange={this.onPasswordChange} bsStyle={this.state.passwordValid} bsStyle={this.state.passwordValid}/>
 					</RBS.Row>
-					<a onClick={this.openForgotDialog}>Forgot Password?</a>
-					<span style={{float:'right'}}><RBS.Button bsStyle='primary' onClick={this.logIn}>Log In</RBS.Button></span><br/>
-					<a onClick={this.openRegisterDialog}>Create Account</a>
+					<RBS.Row>
+					<a onClick={this.openForgotDialog}>Forgot Password?</a><br/>
+					<a onClick={this.openRegisterDialog}>Create Account</a><br/><br/>
+					<span><RBS.Button bsStyle='primary' onClick={this.logIn} style={{padding: '8px 24px'}}>Log In</RBS.Button></span><br/>
+					</RBS.Row>
 				</RBS.Grid>
 			</div>
 		)
@@ -351,11 +353,10 @@ var LoginPage = React.createClass({
 });
 
 var Logo = React.createClass({
-	//Change this to an actual logo later
 	render: function() {
 		return (
 			<div className="header">
-				<img src="Images/logo2.png" style={{width:'80', height:'80', float: 'left'}} />
+			<img src="Images/logo2.png" style={{width:'80', height:'80', float: 'left'}} />
 				<h1 id="title">SOEN Schedule Builder</h1>
 			</div>
 
@@ -363,5 +364,5 @@ var Logo = React.createClass({
 	}
 });
 
-
+				
 
