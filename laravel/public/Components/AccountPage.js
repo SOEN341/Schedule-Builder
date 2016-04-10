@@ -261,8 +261,18 @@ var ChangeEmailDialog = React.createClass({
 			})
 		}
 		else {
-			serverBridge.editEmail(this.state.email);
-			this.props.change(this.state.email);
+			var self=this;
+			serverBridge.editEmail(this.state.email, function(data){
+				if(data.success=='true') {
+					self.props.change(self.state.email);
+				}
+				else {
+					self.setState({
+						help: 'E-mail already taken by another user',
+						valid: 'error'
+					});
+				}
+			});
 		}
 	},
 	
