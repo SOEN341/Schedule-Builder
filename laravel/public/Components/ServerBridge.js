@@ -391,14 +391,15 @@ var realServerBridge = {
 		});
 	},
 	
-	getSectionsFromCourse: function(courseID) {
+	getSectionsFromCourse: function(course) {
 		$.ajax({
 			type:    "POST",
-			url:     linkProvider.getLink()+"/sections:"+courseID,
+			url:     linkProvider.getLink()+"/sectioncourse",
 			dataType: "json",
 			async: false,
-			data:    courseID,
+			data:    {'courseId':course.courseId},
 			success: function(data) {
+				console.log(data);
 				return data.sections;
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
@@ -487,15 +488,13 @@ var realServerBridge = {
 		});
 	},
 	
-	addCourse: function(course) {
+	addCourse: function(course, response) {
 		$.ajax({
 			type:    "POST",
-			url:     linkProvider.getLink()+"/addcourse",
+			url:     linkProvider.getLink()+"/addadmincourse",
 			dataType: "json",
-			data: course,
-			success: function(data) {
-				return data.success
-			},
+			data: {json: JSON.stringify(course)},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -508,14 +507,14 @@ var realServerBridge = {
 		//TODO: decide on section format
 	},
 	
-	removeCourse: function(courseID) {
+	removeCourse: function(courseId) {
 		$.ajax({
 			type:    "POST",
-			url:     linkProvider.getLink()+"/removecourse",
-			dataType: "json",
-			data: courseID,
+			url:     linkProvider.getLink()+"/removeadmincourse",
+			dataType: "text",
+			data: {'courseId': courseId},
 			success: function(data) {
-				console.log('Course removed');
+				//console.log('Course removed');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -528,7 +527,7 @@ var realServerBridge = {
 	removeSection: function(courseID, sectionID) {
 		$.ajax({
 			type:    "POST",
-			url:     linkProvider.getLink()+"/removesection",
+			url:     linkProvider.getLink()+"/removeadminsection",
 			dataType: "json",
 			data: {'course':courseID, 'section':sectionID},
 			success: function(data) {
@@ -542,15 +541,13 @@ var realServerBridge = {
 		});
 	},
 	
-	editCourse: function(oldCourse, newCourse) {
+	editCourse: function(course, response) {
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/editcourse",
 			dataType: "json",
-			data: {'old':oldCourse, 'new':newCourse},
-			success: function(data) {
-				console.log('Course edited');
-			},
+			data: {json: JSON.stringify(course)},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown

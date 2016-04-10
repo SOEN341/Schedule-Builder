@@ -9,6 +9,7 @@ var AdminPage = React.createClass({
 		return(
 			<div>
 				{this.state.courseDialogOpen? <CourseDialog close={this.closeCourseDialog} addCourse={this.addCourse}/>: null}
+				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openCourseDialog}>Add Course</RBS.Button></div>
 				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
 					<tbody>
 						<tr>
@@ -21,7 +22,7 @@ var AdminPage = React.createClass({
 						</tr>
 						{this.state.courses.map(function(course) {
 							return (
-								<AdminCourse key={course.courseID} course={course} changePage={this.props.changePage} remove={this.removeCourse.bind(this, course.courseID)}/>
+								<AdminCourse key={course.courseId} course={course} changePage={this.props.changePage} remove={this.removeCourse.bind(this, course.courseId)}/>
 							)
 						}, this)}
 					</tbody>
@@ -35,24 +36,25 @@ var AdminPage = React.createClass({
 		//this.keys=0;
 		var self=this;
 		serverBridge.getCourses(function(data) {
+			console.log(data);
 			self.setState({
 				courses: JSON.parse(data)
 			});
 		});
 	},
 	
-	removeCourse: function(courseID) {
+	removeCourse: function(courseId) {
 		var courses = React.addons.update(this.state.courses, {});
 		var index=-1;
 		for(var i=0; i<courses.length; i++) {
-			if(courses[i].courseID==courseID)
+			if(courses[i].courseId==courseId)
 			{
 				index=i;
 				break;
 			}
 		}
 		if(index!=-1) {
-			serverBridge.removeCourse(this.state.courses[index].courseID);
+			serverBridge.removeCourse(this.state.courses[index].courseId);
 			courses.splice(i, 1);
 			this.setState({
 				courses: courses
@@ -189,9 +191,10 @@ var CourseDialog = React.createClass({
 		if(this.state.name.length>0&&this.state.courseCode.length>0&&this.state.description.length>0&&this.state.credits.length>0&&this.state.courseCodeValid!='error'&&this.state.creditsValid!='error') {
 			var self=this;
 			serverBridge.addCourse(course, function(data) {
+				console.log(data);
 				if(data.success=='true') {
 					course = {
-						courseID: Number(data.courseID),
+						courseId: Number(data.courseId),
 						name: course.name,
 						courseCode: course.courseCode,
 						semester: course.semester,

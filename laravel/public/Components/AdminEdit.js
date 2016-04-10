@@ -155,7 +155,7 @@ var AdminEdit = React.createClass({
 		var help = React.addons.update(this.state.courseHelp, {});
 		if(this.state.course.name.length>0&&this.state.course.courseCode.length>0&&this.state.course.description.length>0&&this.state.course.credits.length>0&&this.state.courseValidations.courseCodeValid!='error'&&this.state.courseValidations.creditsValid!='error') {
 			var self=this;
-			serverBridge.addCourse(this.state.course, function(data) {
+			serverBridge.editCourse(this.state.course, function(data) {
 				if(data.success=='true') {
 					cookieManager.addCookie('CourseInfo', JSON.stringify(self.state.course), 7)
 					alert('Course saved successfully!');
