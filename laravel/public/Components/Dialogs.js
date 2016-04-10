@@ -161,7 +161,6 @@ var EditingDialog = React.createClass({
 	},
 	
 	render:function() {
-		console.log(JSON.stringify(this.props.courses));
 		var type='Needed';
 		if(this.props.mode==1) {
 			type='Taken';
