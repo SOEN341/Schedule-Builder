@@ -636,7 +636,7 @@ var realServerBridge = {
 		});
 	},
 	
-	editUsername: function(newUsername, password response) {
+	editUsername: function(newUsername, password, response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
