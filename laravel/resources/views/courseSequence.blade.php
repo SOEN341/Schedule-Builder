@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>Schedule</title>
+	<link rel="icon" href="Images/icon.ico">
+	<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="CSS/Custom CSS.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.js"></script>
@@ -24,6 +26,7 @@
     <script src="Components/SchedulePage.js" type="text/jsx"></script>
 	<script src="Components/AdminPage.js" type="text/jsx"></script>
 	<script src="Components/CourseSequence.js" type="text/jsx"></script>
+	<script src="Components/LinkProvider.js" type="text/jsx"></script>
 	
 	<script type='text/javascript' src='Components/jquery-week-calendar-master/libs/jquery-1.4.4.min.js'></script>
 	<script type='text/javascript' src='Components/jquery-week-calendar-master/libs/jquery-ui-1.8.11.custom.min.js'></script>

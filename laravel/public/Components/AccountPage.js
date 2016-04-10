@@ -151,7 +151,22 @@ var ChangeUsernameDialog = React.createClass({
 	},
 	
 	changeUsername: function() {
-		if(this.state.username!=''&&this.state.valid!='error') {
+		var error=false;
+		if(this.state.username=='') {
+			error=true;
+			this.setState({
+				help:'Username cannot be blank',
+				valid: 'error'
+			});
+		}
+		else if(this.state.username.search(/\s/)!=-1) {
+			error=true;
+			this.setState({
+				help:'Username cannot contain whitespace characters',
+				valid: 'error'
+			});
+		}
+		if(!error&&this.state.valid!='error') {
 			if(this.state.username!=cookieManager.getCookie('username')) {
 				var self=this;
 				serverBridge.editUsername(self.state.username, function(data) {
@@ -233,9 +248,31 @@ var ChangeEmailDialog = React.createClass({
 				valid: 'error'
 			});
 		}
+		else if(this.state.email.search(/\s/)!=-1) {
+			this.setState({
+				help: 'E-mail cannot contain whitespace characters',
+				valid: 'error'
+			});
+		}
+		else if(this.state.email.search(/\S+@\S+\.\S{2,}/)==-1) {
+			this.setState({
+				help: 'E-mail is in incorrect format',
+				valid: 'error'
+			})
+		}
 		else {
-			serverBridge.editEmail(this.state.email);
-			this.props.change(this.state.email);
+			var self=this;
+			serverBridge.editEmail(this.state.email, function(data){
+				if(data.success=='true') {
+					self.props.change(self.state.email);
+				}
+				else {
+					self.setState({
+						help: 'E-mail already taken by another user',
+						valid: 'error'
+					});
+				}
+			});
 		}
 	},
 	
@@ -293,7 +330,7 @@ var ChangePasswordDialog = React.createClass({
 	},
 	
 	changePassword: function() {
-		if(this.state.password!=''&&this.state.newPassword!=''&&this.state.newPassRetype!=''&&this.state.passwordValid!='error'&&this.state.newPasswordValid!='error'&&this.state.newPassRetypeValid!='error'&&this.state.password!=this.state.newPassword) {
+		if(this.state.password!=''&&this.state.newPassword!=''&&this.state.newPassRetype!=''&&this.state.passwordValid!='error'&&this.state.newPasswordValid!='error'&&this.state.newPassRetypeValid!='error'&&this.state.password!=this.state.newPassword&&this.state.newPassword.search(/\s/)==-1) {
 			var self=this;
 			serverBridge.login(cookieManager.getCookie('username'), this.state.password, function(data) {
 				if(data.success=='true') {
@@ -311,6 +348,12 @@ var ChangePasswordDialog = React.createClass({
 		else if(this.state.password==this.state.newPassword) {
 			this.setState({
 				newPasswordHelp: 'New entered password is the same as the old one',
+				newPasswordValid: 'error'
+			});
+		}
+		else if(this.state.newPassword.search(/\s/)!=-1) {
+			this.setState({
+				newPasswordHelp: 'New entered password cannot contain whitespace characters',
 				newPasswordValid: 'error'
 			});
 		}

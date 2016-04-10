@@ -34,5 +34,3 @@ function createHashedValue($salt, $password){
     $hashedValue = substr($hashedValue, 29);
     return $hashedValue;
 }
-
-

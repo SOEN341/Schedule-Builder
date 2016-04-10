@@ -1,7 +1,47 @@
+/* Global Variables */
+
 h1, h3
 {
-	text-align: center
+	text-align:center;
 }
+
+body
+{
+	background-color: #d3d3d3 ;
+}
+
+/* CSS for file "Login" only */
+.header{
+	color: #FFFFFF;
+	height: 100px;
+	background-color: #34495e;
+	margin: 0px;
+	padding-top: 10px;
+	
+}
+
+#title{
+	margin: 0px;
+	padding-top: 20px;
+	font-weight: bold;
+	font-size: 40px;
+	font-family: Lato;
+	padding-left: 80px;
+	letter-spacing: 1px;
+}
+
+#input{
+	color:#34495e;
+	font-weight: bold;
+	font-family: Sans-serif;
+}
+
+a{
+	color: #34495e;
+	font-weight: bold;
+}
+
+
 
 /* CSS for file "AccountPage" only */
 #title

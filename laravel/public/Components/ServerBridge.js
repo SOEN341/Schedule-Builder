@@ -20,7 +20,7 @@ var mockServerBridge = {
 	getCourses: function(response) {
 		/*response([
 			{
-				courseID: '1',
+				courseId: '1',
 				name: 'Object Oriented Programming 1',
 				courseCode: 'COMP 248',
 				semester: 'Fall',
@@ -28,7 +28,7 @@ var mockServerBridge = {
 				credits: '3',
 			},
 			{
-				courseID: '2',
+				courseId: '2',
 				name: 'Object Oriented Programming 2',
 				courseCode: 'COMP 249',
 				semester: 'Winter',
@@ -36,51 +36,67 @@ var mockServerBridge = {
 				credits: '3'
 			}
 		]);*/
-		response('[{"courseID":"1","name":"Object Oriented Programming 1","courseCode":"COMP 248","semester":"Fall","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"},{"courseID":"2","name":"Object Oriented Programming 2","courseCode":"COMP 249","semester":"Winter","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"}]');
+		response('[{"courseId":"1","name":"Object Oriented Programming 1","courseCode":"COMP 248","semester":"Fall","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"},{"courseId":"2","name":"Object Oriented Programming 2","courseCode":"COMP 249","semester":"Winter","description":"Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.","credits":"3"}]');
 	},
 	
-	getSections: function() {
-		return [
+	getSections: function(response) {
+		response([
 			{
 				section: 'JJ',
+				sectionId: '1',
 				classroom: 'H555',
-				type: 'Lab',
-				day: '1',
+				semester: 'Winter',
+				type: 'Lecture',
+				dayOffered: '1',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 346'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			},
 			{
 				section: 'HH',
+				sectionId: '2',
 				classroom: 'H321',
+				semester: 'Winter',
 				type: 'Lecture',
-				day: '13',
+				dayOffered: '13',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 341'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			}
-		]
+		]);
 	},
 	
 	getSectionsFromCourse: function(course, response) {
 		response([
 			{
 				section: 'JJ',
+				sectionId: '1',
 				classroom: 'H555',
+				semester: 'Winter',
 				type: 'Lecture',
-				day: '1',
+				dayOffered: '1',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 346'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			},
 			{
 				section: 'HH',
+				sectionId: '2',
 				classroom: 'H321',
+				semester: 'Winter',
 				type: 'Lecture',
-				day: '13',
+				dayOffered: '13',
 				beginTime: '11:30',
 				endTime: '14:00',
-				course: 'SOEN 346'
+				courseCode: 'SOEN 346',
+				courseId: '1',
+				sectionNum: '1'
 			}
 		]);
 	},
@@ -218,32 +234,44 @@ var mockServerBridge = {
 		]);
 	},
 	
-	addCourse: function(course) {
-		if(course.number=='SOEN 341') {
-			return false;
+	addCourse: function(course, response) {
+		if(course.courseCode=='SOEN 341') {
+			response({success: 'false', courseId: '5'});
 		}
 		else
-			return true;
+			response({success: 'true', courseId: '5'});
 	},
 	
-	addSection: function(section) {
-		
+	addSection: function(section, response) {
+		if(section.section=='QQ') {
+			response({success: 'false', sectionId: '5'});
+		}
+		else
+			response({success: 'true', sectionId: '5'});
 	},
 	
 	removeCourse: function(courseID) {
-		
+		console.log('course ' + courseID + ' removed');
 	},
 	
 	removeSection: function(courseID, sectionID) {
-		
+		console.log('Section ' + sectionID + ' removed from course ' + courseID);
 	},
 	
-	editCourse: function(oldCourse, newCourse) {
-		
+	editCourse: function(course, response) {
+		if(course.courseCode=='SOEN 341') {
+			response({success: 'false', courseID: '5'});
+		}
+		else
+			response({success: 'true', courseID: '5'});
 	},
 	
-	editSection: function(courseID, oldSection, newSection) {
-		
+	editSection: function(section, response) {
+		if(section.section=='QQ') {
+			response({success: 'false', sectionId: '5'});
+		}
+		else
+			response({success: 'true', sectionId: '5'});
 	},
 	
 	editPreferences: function(newPrefs) {
@@ -267,8 +295,14 @@ var mockServerBridge = {
 		}
 	},
 	
-	editEmail: function(newEmail) {
-		console.log('email edited to ' + newEmail);
+	editEmail: function(newEmail, reponse) {
+		if(newEmail=='taken') {
+			response({success:'false', username:'', email:newEmail});
+		}
+		else {
+			response({success:'true', username:'', email:newEmail});
+			console.log('email edited to ' + newEmail);
+		}
 	},
 	
 	editPassword: function(newPassword) {
@@ -300,7 +334,7 @@ var realServerBridge = {
 	register: function(username, email, password, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/register",
+			url:     linkProvider.getLink()+"/register",
 			dataType: "json",
 			data:    {"username":username, "email":email, "password":password },
 			async: false,
@@ -316,7 +350,7 @@ var realServerBridge = {
 	login: function(username, password, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/login",
+			url:     linkProvider.getLink()+"/login",
 			dataType: "json",
 			data:    {username:username, password:password},
 			async: false,
@@ -333,7 +367,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/courses",
+			url:     linkProvider.getLink()+"/courses",
 			dataType: "text",
 			async: false,
 			data: {username: username},
@@ -349,7 +383,7 @@ var realServerBridge = {
 	getSections: function() {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/sections",
+			url:     linkProvider.getLink()+"/sections",
 			dataType: "json",
 			async: false,
 			success: function(data) {
@@ -363,16 +397,14 @@ var realServerBridge = {
 		});
 	},
 	
-	getSectionsFromCourse: function(courseID) {
+	getSectionsFromCourse: function(course, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/sections:"+courseID,
+			url:     linkProvider.getLink()+"/sectioncourse",
 			dataType: "json",
 			async: false,
-			data:    courseID,
-			success: function(data) {
-				return data.sections;
-			},
+			data:    {'courseId':course.courseId},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -385,7 +417,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/userprefs",
+			url:     linkProvider.getLink()+"/userprefs",
 			dataType: "json",
 			async: false,
 			data: { username: username },
@@ -402,12 +434,11 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/needed",
+			url:     linkProvider.getLink()+"/needed",
 			dataType: "json",
 			async: false,
 			data: { username: username },
 			success: function(data) {
-				console.log(data);
 				response(data.List);
 			},
 			error:   function(jqXHR, textStatus, errorThrown,ts) {
@@ -423,19 +454,17 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/taken",
+			url:     linkProvider.getLink()+"/taken",
 			dataType: "json",
 			async: false,
 			data: { username: username },
 			success: function(data) {
-			console.log(data);
 				response(data.List);
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
 				);
-				console.log(errorThrown);
 			}
 		});
 	},
@@ -444,7 +473,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/scheduler",
+			url:     linkProvider.getLink()+"/scheduler",
 			dataType: "json",
 			async: false,
 			data: { username: username },
@@ -459,14 +488,44 @@ var realServerBridge = {
 		});
 	},
 	
-	addCourse: function(course) {
+	addCourse: function(course, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/addcourse",
+			url:     linkProvider.getLink()+"/addadmincourse",
 			dataType: "json",
-			data: course,
+			data: {json: JSON.stringify(course)},
+			success: response,
+			error:   function(jqXHR, textStatus, errorThrown) {
+				alert("Error, status = " + textStatus + ", " +
+					"error thrown: " + errorThrown
+				);
+			}
+		});
+	},
+	
+	addSection: function(section, response) {
+		$.ajax({
+			type:    "POST",
+			url:     linkProvider.getLink()+"/addadminsection",
+			dataType: "json",
+			data: {json: JSON.stringify(section)},
+			success: response,
+			error:   function(jqXHR, textStatus, errorThrown) {
+				alert("Error, status = " + textStatus + ", " +
+					"error thrown: " + errorThrown
+				);
+			}
+		});
+	},
+	
+	removeCourse: function(courseId) {
+		$.ajax({
+			type:    "POST",
+			url:     linkProvider.getLink()+"/removeadmincourse",
+			dataType: "text",
+			data: {'courseId': courseId},
 			success: function(data) {
-				return data.success
+				//console.log('Course removed');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -476,18 +535,14 @@ var realServerBridge = {
 		});
 	},
 	
-	addSection: function() {
-		//TODO: decide on section format
-	},
-	
-	removeCourse: function(courseID) {
+	removeSection: function(courseId, sectionId) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/removecourse",
+			url:     linkProvider.getLink()+"/removeadminsection",
 			dataType: "json",
-			data: courseID,
+			data: {'sectionId':sectionId},
 			success: function(data) {
-				console.log('Course removed');
+				//console.log('Section removed');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -497,15 +552,13 @@ var realServerBridge = {
 		});
 	},
 	
-	removeSection: function(courseID, sectionID) {
+	editCourse: function(course, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/removesection",
+			url:     linkProvider.getLink()+"/editcourse",
 			dataType: "json",
-			data: {'course':courseID, 'section':sectionID},
-			success: function(data) {
-				console.log('Section removed');
-			},
+			data: {json: JSON.stringify(course)},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -514,32 +567,13 @@ var realServerBridge = {
 		});
 	},
 	
-	editCourse: function(oldCourse, newCourse) {
+	editSection: function(section, response) {
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editcourse",
+			url:     linkProvider.getLink()+"/editsection",
 			dataType: "json",
-			data: {'old':oldCourse, 'new':newCourse},
-			success: function(data) {
-				console.log('Course edited');
-			},
-			error:   function(jqXHR, textStatus, errorThrown) {
-				alert("Error, status = " + textStatus + ", " +
-					"error thrown: " + errorThrown
-				);
-			}
-		});
-	},
-	
-	editSection: function(courseID, oldSection, newSection) {
-		$.ajax({
-			type:    "POST",
-			url:     "http://localhost:8000/editsection",
-			dataType: "json",
-			data: {'course':courseID, 'old':oldSection, 'new':newSection},
-			success: function(data) {
-				console.log('Section edited');
-			},
+			data: {json: JSON.stringify(section)},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -552,11 +586,11 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editpreferences",
+			url:     linkProvider.getLink()+"/editpreferences",
 			dataType: "json",
 			data: {'username':username, 'cload':newPrefs.courseLoad, 'dayoff':newPrefs.day, 'preftime':newPrefs.time},
 			success: function(data) {
-				console.log('Preferences edited');
+				//console.log('Preferences edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -570,11 +604,11 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editneededcourses",
+			url:     linkProvider.getLink()+"/editneededcourses",
 			dataType: "json",
 			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
-				console.log('Needed Courses edited');
+				//console.log('Needed Courses edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -588,11 +622,11 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/edittakencourses",
+			url:     linkProvider.getLink()+"/edittakencourses",
 			dataType: "json",
 			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
-				console.log('Taken Courses edited');
+				//console.log('Taken Courses edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -606,7 +640,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editusername",
+			url:     linkProvider.getLink()+"/editusername",
 			dataType: "json",
 			data: {'old':username, 'new':newUsername},
 			success: response,
@@ -618,16 +652,14 @@ var realServerBridge = {
 		});
 	},
 	
-	editEmail: function(newEmail) {
+	editEmail: function(newEmail, response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editemail",
+			url:     linkProvider.getLink()+"/editemail",
 			dataType: "json",
 			data: {'old':username, 'new':newEmail},
-			success: function(data) {
-				console.log('Email edited');
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -640,11 +672,11 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/editpassword",
+			url:     linkProvider.getLink()+"/editpassword",
 			dataType: "json",
 			data: {'old':username, 'new':newPassword},
 			success: function(data) {
-				console.log('Password edited');
+				//console.log('Password edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -658,7 +690,7 @@ var realServerBridge = {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     "http://localhost:8000/email",
+			url:     linkProvider.getLink()+"/email",
 			dataType: "json",
 			async: false,
 			data: {'username':username},

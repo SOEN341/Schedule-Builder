@@ -27,16 +27,18 @@ var LoginPage = React.createClass({
 				{this.state.forgotDialogOpen? <ForgotDialog username={this.state.username} usernameChange={this.onFUsernameChange} usernameHelp={this.state.fUsernameHelp} usernameValid={this.state.fUsernameValid} close={this.closeForgotDialog} password={this.state.fPassword} passwordChange={this.onFPasswordChange} passwordValid={this.state.fPasswordValid} passwordHelp={this.state.fPasswordHelp} code={this.state.code} codeChange={this.onCodeChange} codeValid={this.state.codeValid} codeHelp={this.state.codeHelp} forgot={this.sendEmail} mode={this.state.forgotDialogMode} resetPassword={this.resetPassword}/>: null}
 				<Logo/>
 				<br/>
-				<RBS.Grid  fluid={true} style={{width:'30%'}}>
+				<RBS.Grid  fluid={true} style={{width:'30%', margin:'20px 120px'}}>
 					<RBS.Row>
-						<InputElement label='Username' onChange={this.onUsernameChange} bsStyle={this.state.usernameValid} help={this.state.usernameHelp}/>
+						<p id="input">Username:</p><InputElement onChange={this.onUsernameChange} bsStyle={this.state.usernameValid} help={this.state.usernameHelp}/>
 					</RBS.Row>
 					<RBS.Row>
-						<InputElement label='Password' type='password' onChange={this.onPasswordChange} bsStyle={this.state.passwordValid} bsStyle={this.state.passwordValid}/>
+						<p id="input">Password:</p><InputElement type='password' onChange={this.onPasswordChange} bsStyle={this.state.passwordValid} bsStyle={this.state.passwordValid}/>
 					</RBS.Row>
-					<a onClick={this.openForgotDialog}>Forgot Password?</a>
-					<span style={{float:'right'}}><RBS.Button bsStyle='primary' onClick={this.logIn}>Log In</RBS.Button></span><br/>
-					<a onClick={this.openRegisterDialog}>Create Account</a>
+					<RBS.Row>
+					<a onClick={this.openForgotDialog}>Forgot Password?</a><br/>
+					<a onClick={this.openRegisterDialog}>Create Account</a><br/><br/>
+					<span><RBS.Button bsStyle='primary' onClick={this.logIn} style={{padding: '8px 24px'}}>Log In</RBS.Button></span><br/>
+					</RBS.Row>
 				</RBS.Grid>
 			</div>
 		)
@@ -75,6 +77,7 @@ var LoginPage = React.createClass({
 	},
 	
 	register: function() {
+		var error=false;
 		if(this.state.rUsername==''||this.state.email==''||this.state.rPassword=='') {
 			this.setState({
 				rUsernameHelp: 'Username cannot be left blank',
@@ -84,6 +87,13 @@ var LoginPage = React.createClass({
 		if(this.state.email=='') {
 			this.setState({
 				emailHelp: 'E-mail cannot be left blank',
+				emailValid: 'error'
+			})
+		}
+		else if(this.state.email.search(/\S+@\S+\.\S{2,}/)==-1) {
+			error=true;
+			this.setState({
+				emailHelp: 'E-mail is in incorrect format',
 				emailValid: 'error'
 			})
 		}
@@ -99,7 +109,28 @@ var LoginPage = React.createClass({
 				rePasswordValid: 'error'
 			})
 		}
-		if(this.state.rUsernameValid!='error'&&this.state.rPasswordValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''&&this.state.rePassword==this.state.rPassword){
+		if(this.state.rUsername.search(/\s/)!=-1) {
+			error=true;
+			this.setState({
+				rUsernameHelp: 'Username cannot contain whitespace characters',
+				rUsernameValid: 'error'
+			})
+		}
+		if(this.state.email.search(/\s/)!=-1) {
+			error=true;
+			this.setState({
+				emailHelp: 'E-mail cannot contain whitespace characters',
+				emailValid: 'error'
+			})
+		}
+		if(this.state.rPassword.search(/\s/)!=-1) {
+			error=true;
+			this.setState({
+				rPasswordHelp: 'Password cannot contain whitespace characters',
+				rPasswordValid: 'error'
+			})
+		}
+		if(this.state.rUsernameValid!='error'&&this.state.rPasswordValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''&&this.state.rePassword==this.state.rPassword&&!error){
 			var self = this;
 			serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword, function(data) {
 				if(data.success=='true') {
@@ -109,8 +140,9 @@ var LoginPage = React.createClass({
 				}
 				else {
 					self.setState({
-						rUsernameHelp: 'Username already taken',
-						rUsernameValid: 'error'
+						rUsernameHelp: 'Username or e-mail already taken',
+						rUsernameValid: 'error',
+						emailValue: 'error'
 					});
 				}
 			});
@@ -351,15 +383,16 @@ var LoginPage = React.createClass({
 });
 
 var Logo = React.createClass({
-	//Change this to an actual logo later
 	render: function() {
 		return (
-			<div>
-				<h1>SOEN Schedule Builder</h1>
+			<div className="header">
+			<img src="Images/logo2.png" style={{width:'80', height:'80', float: 'left'}} />
+				<h4 id="title">SOEN Schedule Builder</h4>
 			</div>
+
 		)
 	}
 });
 
-
+				
 

@@ -12,5 +12,3 @@ echo mysqli_fetch_array($response)['CoursesRem'];
 //var_dump(json_decode(utf8_encode(mysqli_fetch_array($response)['CoursesDones']),true));
 
 mysqli_close($dbc);
-   
-

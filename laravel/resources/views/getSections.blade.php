@@ -1,7 +1,6 @@
 <?php
-require_once('../mysqli_connect.php'); // defining and connecting to the database as root
-$query ="SELECT * FROM sections"; // search for the user
-          
+require_once('../mysqli_connect.php'); 
+$query ="SELECT * FROM sections";           
 
 $response= mysqli_query($dbc,$query); 
 //echo 'Error: ' . mysqli_error($dbc);
@@ -18,9 +17,5 @@ while($current = mysqli_fetch_assoc($response)) {
 	}
 }
 echo ']';
-
-
 //echo mysqli_fetch_array($response);
 mysqli_close($dbc);
-   
-

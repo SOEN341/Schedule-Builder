@@ -10,7 +10,8 @@ var Main = React.createClass({
 		return (
 			<div>
 				{this.state.currentPage!=0 && this.state.currentPage!=6&&this.state.currentPage!=7? <div style={{textAlign:'center'}}><a onClick={this.openPreferencesPage}>Preferences</a> &#124; <a onClick={this.openSchedulePage}>Schedule</a> &#124; <a onClick={this.openAccountPage}>Account Management</a> &#124; <a onClick={this.logout}>Log Out</a></div>: null}
-				{(this.state.currentPage==6||this.state.currentPage==7)? <div style={{textAlign: 'center'}}><a onClick={this.logout}>Log Out</a></div>:null}
+				{(this.state.currentPage==6)? <div style={{textAlign: 'center'}}><a onClick={this.logout}>Log Out</a></div>:null}
+				{(this.state.currentPage==7)? <div style={{textAlign: 'center'}}><a onClick={this.openAdminCoursesPage}>Back to Courses Page</a> &#124; <a onClick={this.logout}>Log Out</a></div>:null}
 				{this.state.currentPage==0? <LoginPage changePage={this.changePage}/>: null}
 				{this.state.currentPage==1? <PreferencesPage changePage={this.changePage}/>: null}
 				{this.state.currentPage==2? <AccountPage changePage={this.changePage}/>: null}
@@ -24,25 +25,25 @@ var Main = React.createClass({
 	
 	changePage: function(newPage) {
 		if(newPage==0) {
-			window.location = 'http://localhost:8000/index';
+			window.location = linkProvider.getLink()+'/index';
 		}
 		else if(newPage==1) {
-			window.location = 'http://localhost:8000/preferences';
+			window.location = linkProvider.getLink()+'/preferences';
 		}
 		else if(newPage==2) {
-			window.location = 'http://localhost:8000/account';
+			window.location = linkProvider.getLink()+'/account';
 		}
 		else if(newPage==3) {
-			window.location = 'http://localhost:8000/schedule';
+			window.location = linkProvider.getLink()+'/schedule';
 		}
 		else if(newPage==4) {
-			window.location = 'http://localhost:8000/sequence';
+			window.location = linkProvider.getLink()+'/sequence';
 		}
 		else if(newPage==6) {
-			window.location = 'http://localhost:8000/admin';
+			window.location = linkProvider.getLink()+'/admin';
 		}
 		else if(newPage==7) {
-			window.location = 'http://localhost:8000/admincourse';
+			window.location = linkProvider.getLink()+'/admincourse';
 		}
 	},
 	
@@ -60,6 +61,10 @@ var Main = React.createClass({
 	
 	openSchedulePage: function() {
 		this.changePage(3);
+	},
+	
+	openAdminCoursesPage: function() {
+		this.changePage(6);
 	},
 	
 	logout: function() {

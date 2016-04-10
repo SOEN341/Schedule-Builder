@@ -25,11 +25,9 @@ var PreferencesPage = React.createClass({
 		if(this.state.editingDialogOpen) {
 			var editingCourse={};
 			if(this.state.dialogMode==1&&this.state.takenCourses.length>0) {
-				console.log('edit taken course ' + this.state.editingIndex);
 				editingCourse=this.state.takenCourses[this.state.editingIndex];
 			}
 			else if(this.state.neededCourses.length>0) {
-				console.log('edit needed course ' + this.state.editingIndex);
 				editingCourse=this.state.neededCourses[this.state.editingIndex];
 			}
 		}
@@ -38,14 +36,12 @@ var PreferencesPage = React.createClass({
 			var confirmMessage='';
 			var replaceFunction=this.replaceTaken;
 			if(this.state.dialogMode==1&&this.state.takenCourses.length>0) {
-				console.log('replace taken course ' + this.state.replaceIndex);
 				editingCourse=this.state.takenCourses[this.state.replaceIndex];
 				confirmMessage='The course ' + editingCourse.number + ' that you are trying to add to your needed course list was found in the taken courses list. If we added it, it would have to be removed from the taken courses list. Do you wish to do this?'
 				if(this.state.editing)
 					replaceFunction=this.replaceTakenEdit;
 			}
 			else if(this.state.neededCourses.length>0) {
-				console.log('replace needed course ' + this.state.replaceIndex);
 				editingCourse=this.state.neededCourses[this.state.replaceIndex];
 				replaceFunction=this.replaceNeeded;
 				if(this.state.editing)
@@ -88,7 +84,6 @@ var PreferencesPage = React.createClass({
 			takenCourses=[];
 			setTimeout(function() {
 				serverBridge.getTakenCourses(function(data){
-					console.log('taken ' + data);
 					self.setState({
 						takenCourses: data
 					});
@@ -105,7 +100,6 @@ var PreferencesPage = React.createClass({
 			neededCourses=[];
 			setTimeout(function() {
 				serverBridge.getNeededCourses(function(data){
-					console.log('needed ' + data);
 					self.setState({
 						neededCourses: data
 					});

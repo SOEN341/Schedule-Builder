@@ -17,8 +17,5 @@ while($current = mysqli_fetch_assoc($response)) {
 	}
 }
 echo ']';
-
 //echo mysqli_fetch_array($response);
 mysqli_close($dbc);
-   
-

@@ -24,11 +24,13 @@
 	<script src="Components/SchedulePage.js" type="text/jsx"></script>
 	<script src="Components/AdminPage.js" type="text/jsx"></script>
 	<script src="Components/CourseSequence.js" type="text/jsx"></script>
+	<script src="Components/LinkProvider.js" type="text/jsx"></script>
 </head>
 <body>
 <div id="pageContent"></div>
 <script type="text/jsx">
 	var serverBridge=realServerBridge;
+	//LOGIN TESTS
 	var response = serverBridge.login('User', 'password', function(data) {
 		if(data.success=='true'&&data.username=='User'&&data.isAdmin=='false') {
 			console.log('Test valid user successful');
@@ -53,33 +55,54 @@
 			console.log('Test invalid user failed');
 		}
 	});
+	response = serverBridge.login('User', 'notthepassword', function(data) {
+		if(data.success=='false') {
+			console.log('Test invalid password successful');
+		}
+		else {
+			console.log('Test invalid password failed');
+		}
+	});
+
+	//SET PREFERENCES TESTS
+	//Set up
 	var testPref = {"courseLoad":"5", "day":"Monday", "time":"Mornings"};
 	var response = serverBridge.editPreferences(testPref);
 	var cookie = cookieManager.addCookie("username", "Jason", 1);
+	//Test
 	serverBridge.getUserPrefs(function(data){
 
 		if (data.courseload == testPref.courseLoad && data.dayoff == testPref.day && data.preferredTime == testPref.time){
-			console.log('Test valid set preferences successful');
+			console.log('Test valid set preferences existing user successful');
 		}
 		else{
-			console.log('Test valid set preferences failed');
+			console.log('Test valid set preferences existing user failed');
 		}
 
 	});
+	//Tear down
 	serverBridge.editPreferences({"courseLoad": "", "day" : "", "time" : ""});
 	cookieManager.removeCookie("username");
 
-
-	response = serverBridge.register('Jason', '123', 'pass', function(data){
-		if(data.success == "false"){
-			console.log("Registration for existing user test succeeded");
+	//Set up
+	cookieManager.addCookie('username', 'notauser', 1);
+	//Test
+	var response = serverBridge.editPreferences(testPref, function(data) {
+		if(data.success=='false') {
+			console.log('Test set prerefences invalid user successful');
 		}
-		else{
-			console.log("Registration for existing user test failed!");
+		else {
+			console.log('Test set prerefences invalid user failed');
 		}
 	});
+	//Tear down
+	cookieManager.removeCookie("username");
 
-	response = serverBridge.register('BatmanVsSuperman', 'justiceleague', 'password', function(data){
+
+
+
+	//REGISTRATION TESTS
+	response = serverBridge.register('BatmanVsSuperman', 'justiceleague@gmail.com', 'password', function(data){
 		if(data.success == "true"){
 			console.log("Registration for new user test succeeded");
 		}
@@ -87,9 +110,23 @@
 			console.log("Registration for new user test failed");
 		}
 	});
+	var response = serverBridge.login('BatmanVsSuperman', 'password', function(data) {
+		if(data.success=='true'&&data.username=='User'&&data.isAdmin=='false') {
+			console.log('Login for BatmanVsSuperman successful');
+		}
+		else {
+			console.log('Login for BatmanVsSuperman failed');
+		}
+	});
 
-
-
+	response = serverBridge.register('Jason', 'jason@hotmail.com', 'password', function(data){
+		if(data.success == "false"){
+			console.log("Registration for existing user test succeeded");
+		}
+		else{
+			console.log("Registration for existing user test failed!");
+		}
+	});
 </script>
 </body>
 </html>

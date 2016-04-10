@@ -1,5 +1,5 @@
-
 <?php
+require_once('../mysqli_connect.php'); 
 $old=$_POST['old'];//username
 $new=$_POST['new'];//new emails
 if (!(isset($old))) {
@@ -12,8 +12,6 @@ if (!(isset($new))) {
 // $new='newEnail@email.com';
 
 //{'username':username, 'new':newEmail}, from server bridge
-
-require_once('../mysqli_connect.php'); // defining and connecting to the database as root
 
 $query ="SELECT username FROM users WHERE email='$new' "; // search for the user
 // with these credentials                          
