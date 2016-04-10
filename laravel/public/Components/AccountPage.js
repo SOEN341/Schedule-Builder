@@ -123,7 +123,9 @@ var ChangeUsernameDialog = React.createClass({
 	getInitialState: function() {
 		return {
 			username: '',
-			help: ''
+			password: '',
+			help: '',
+			passwordHelp: ''
 		}
 	},
 	
@@ -139,6 +141,9 @@ var ChangeUsernameDialog = React.createClass({
 				  <RBS.Grid fluid={true}>
 				    <RBS.Row>
 					   <InputElement label='New Username' value={this.state.username} bsStyle={this.state.valid} help={this.state.help} onChange={this.onUsernameChange}/>
+					</RBS.Row>
+					<RBS.Row>
+					   <InputElement type="password" label='Verify Password' value={this.state.password} bsStyle={this.state.passwordValid} help={this.state.passwordHelp} onChange={this.onPasswordChange}/>
 					</RBS.Row>
 				  </RBS.Grid>
 				</RBS.Modal.Body>
@@ -166,17 +171,35 @@ var ChangeUsernameDialog = React.createClass({
 				valid: 'error'
 			});
 		}
+		if(this.state.password.length<8||this.state.password.length>16) {
+			error=true;
+			this.setState({
+				passwordValid: 'error',
+				passwordHelp: 'Password must be between 8 and 16 characters in length'
+			})
+		}
 		if(!error&&this.state.valid!='error') {
-			if(this.state.username!=cookieManager.getCookie('username')) {
+			var username = cookieManager.getCookie('username');
+			if(this.state.username!=username) {
 				var self=this;
-				serverBridge.editUsername(self.state.username, function(data) {
-					if(data.result=='true') {
-						self.props.change(self.state.username);
+				serverBridge.login(username, this.state.password, function(data){
+					if(data.success=='true') {
+						serverBridge.editUsername(self.state.username, self.state.password, function(data) {
+							if(data.result=='true') {
+								self.props.change(self.state.username);
+							}
+							else {
+								self.setState({
+									help: 'Username already taken',
+									valid: 'error'
+								});
+							}
+						});
 					}
 					else {
 						self.setState({
-							help: 'Username already taken',
-							valid: 'error'
+							passwordValid: 'error',
+							passwordHelp: 'Invalid password for the current user'
 						});
 					}
 				});
@@ -201,6 +224,18 @@ var ChangeUsernameDialog = React.createClass({
 			username: value,
 			valid: validation,
 			help: help
+		})
+	},
+	
+	onPasswordChange: function(value) {
+		var validation=undefined;
+		if(value.length<8||value.length>16) {
+			validation='error';
+		}
+		this.setState({
+			password: value,
+			passwordValid: validation,
+			passwordHelp: ''
 		})
 	}
 });
