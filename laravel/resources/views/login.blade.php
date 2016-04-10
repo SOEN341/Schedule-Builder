@@ -19,22 +19,22 @@ $response= mysqli_query($dbc,$query);
 
 //echo 'Salt: '. mysqli_error($dbc);
 
-
 if(mysqli_num_rows($response) <= 0){ //number of response is 0, so no user with these credentials
   echo json_encode(array("success"=>"false","username"=>"$username","error"=>"usernamenotfound"));             
 } else {
 	$row = mysqli_fetch_array($response);
 	$passwordDB = $row['password'];
 	if($providedPassword == $passwordDB){
+		
 		if ($row['userType']==1) {
 			$type= 'true';
 		} else {
 			$type= 'false';
 		}	
-  echo json_encode(array("success"=>"true","username"=>"$username","isAdmin"=>"$type", "storedPassword" => "$passwordDB", "providedPassword" => "$providedPassword"));
+  	echo json_encode(array("success"=>"true","username"=>"$username","isAdmin"=>"$type", "storedPassword" => "$passwordDB", "Password" => "$password", "providedPassword" => "$providedPassword"));
 	 }
 	else{
-		echo json_encode(array("success"=>"false","username"=>"$username","isAdmin"=>"$type","storedPassword" => "$passwordDB", "providedPassword" => "$providedPassword"));
+		echo json_encode(array("success"=>"false","username"=>"$username","isAdmin"=>"$type","storedPassword" => "$passwordDB", "Password" => "$password", "providedPassword" => "$providedPassword"));
 	}
 }
 mysqli_close($dbc);

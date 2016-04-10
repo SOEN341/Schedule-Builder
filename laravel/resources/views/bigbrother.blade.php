@@ -67,11 +67,9 @@
                 $row['username'] . '</td><td align="left">' .
                 $row['email'] . '</td><td align="left">' .
                 $row['userType'] . '</td><td align="left">' .
-                $row['password'] . '</td><td align="left">' .          
-
+                $row['password'] . '</td><td align="left">' .  
                 $row['CoursesDones'] .'</td><td align="left">' .
-
-                $row['CoursesRem'] .'</td><td align="left">' .               
+                $row['CoursesRem'] .'</td><td align="left">' .         
 
                 $row['CLoad'] . '</td><td align="left">' .
                 $row['dayOff'] . '</td><td align="left">' .
