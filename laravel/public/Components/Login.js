@@ -77,6 +77,7 @@ var LoginPage = React.createClass({
 	},
 	
 	register: function() {
+		var error=false;
 		if(this.state.rUsername==''||this.state.email==''||this.state.rPassword=='') {
 			this.setState({
 				rUsernameHelp: 'Username cannot be left blank',
@@ -86,6 +87,13 @@ var LoginPage = React.createClass({
 		if(this.state.email=='') {
 			this.setState({
 				emailHelp: 'E-mail cannot be left blank',
+				emailValid: 'error'
+			})
+		}
+		else if(this.state.email.search(/\S+@\S+\.\S{2,}/)==-1) {
+			error=true;
+			this.setState({
+				emailHelp: 'E-mail is in incorrect format',
 				emailValid: 'error'
 			})
 		}
@@ -101,7 +109,28 @@ var LoginPage = React.createClass({
 				rePasswordValid: 'error'
 			})
 		}
-		if(this.state.rUsernameValid!='error'&&this.state.rPasswordValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''&&this.state.rePassword==this.state.rPassword){
+		if(this.state.rUsername.search(/\s/)!=-1) {
+			error=true;
+			this.setState({
+				rUsernameHelp: 'Username cannot contain whitespace characters',
+				rUsernameValid: 'error'
+			})
+		}
+		if(this.state.email.search(/\s/)!=-1) {
+			error=true;
+			this.setState({
+				emailHelp: 'E-mail cannot contain whitespace characters',
+				emailValid: 'error'
+			})
+		}
+		if(this.state.rPassword.search(/\s/)!=-1) {
+			error=true;
+			this.setState({
+				rPasswordHelp: 'Password cannot contain whitespace characters',
+				rPasswordValid: 'error'
+			})
+		}
+		if(this.state.rUsernameValid!='error'&&this.state.rPasswordValid!='error'&&this.state.rUsername!=''&&this.state.email!=''&&this.state.rPassword!=''&&this.state.rePassword==this.state.rPassword&&!error){
 			var self = this;
 			serverBridge.register(this.state.rUsername, this.state.email, this.state.rPassword, function(data) {
 				if(data.success=='true') {
