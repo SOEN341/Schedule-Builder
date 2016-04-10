@@ -40,9 +40,10 @@ var CourseSequencePage = React.createClass({
 			this.props.changePage(3);
 		}
 		else {
+			var username=cookieManager.getCookie('username');
 			var self=this;
 			setTimeout(function() {
-				serverBridge.generateCourseSequence(schedule, function(data) {
+				serverBridge.generateCourseSequence(username, schedule, function(data) {
 					var max=1;
 					for(var i=0; i<data.length; i++) {
 						if(Number(data[i].year)>max)
@@ -102,8 +103,8 @@ var SelectedSchedule = React.createClass({
 		else {
 			schedule = JSON.parse(schedule);
 			$('#calendar').weekCalendar({
-				timeslotsPerHour: 4,
-				timeslotHeigh: 1,
+				timeslotsPerHour: 2,
+				timeslotHeight: 30,
 				hourLine: true,
 				data: schedule,
 				firstDayOfWeek: 1,
