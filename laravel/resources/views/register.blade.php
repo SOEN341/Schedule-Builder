@@ -28,12 +28,12 @@ if(mysqli_num_rows($response) <= 0){
      // if(Hash::needsRehash($encryptedPassword)){
      //     $encryptedPassword = Hash::make('$password');
      // }
+
     $sql = "INSERT INTO users (username, email, userType, password, CoursesDones, CoursesRem, CLoad, dayOff, pTime) VALUES ('$username', '$email', FALSE ,'$encryptedPassword', '{\"List\":[]}', '{\"List\":[]}', '0', 'None', 'Any')";
     if (mysqli_query($dbc, $sql)) {
             echo json_encode(array("success"=>"true","username"=>"$username","password"=>"$password"));
     } else {
-        //echo 'Salt: ' . mysqli_error($dbc);
-        echo json_encode(array("success"=>"false","username"=>"$username","password"=>"$password", "salt" => "$saltValue", "encryptedPassword" => "$encryptedPassword"));;
+        echo json_encode(array("success"=>"false","username"=>"$username","password"=>"$password", "salt" => "$saltValue", "encryptedPassword" => "$encryptedPassword"));
     }
   }
    else {
