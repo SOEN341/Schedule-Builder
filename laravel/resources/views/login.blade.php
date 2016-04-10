@@ -1,4 +1,5 @@
 <?php
+require_once('../mysqli_connect.php'); // defining and connecting to the database as root
  $username=$_POST['username'];
  $password=$_POST['password'];
  $saltValue = createSaltData($username);
@@ -12,8 +13,6 @@ if (!(isset($password))) {
 }
 // $username='JASONB';
 // $password='pass1';
-
-require_once('../mysqli_connect.php'); // defining and connecting to the database as root
                          
 $query ="SELECT username,password,userType FROM users WHERE username='$username'";
 $response= mysqli_query($dbc,$query); 
@@ -35,7 +34,7 @@ if(mysqli_num_rows($response) <= 0){ //number of response is 0, so no user with 
   echo json_encode(array("success"=>"true","username"=>"$username","isAdmin"=>"$type", "storedPassword" => "$passwordDB", "providedPassword" => "$providedPassword"));
 	 }
 	else{
-		echo json_encode(array("success"=>"false","username"=>"$username","isAdmin"=>"$type", "providedPassword" => "$providedPassword"));
+		echo json_encode(array("success"=>"false","username"=>"$username","isAdmin"=>"$type","storedPassword" => "$passwordDB" "providedPassword" => "$providedPassword"));
 	}
 }
 mysqli_close($dbc);
