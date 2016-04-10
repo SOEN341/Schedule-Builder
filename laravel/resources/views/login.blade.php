@@ -34,7 +34,7 @@ if(mysqli_num_rows($response) <= 0){ //number of response is 0, so no user with 
   echo json_encode(array("success"=>"true","username"=>"$username","isAdmin"=>"$type", "storedPassword" => "$passwordDB", "providedPassword" => "$providedPassword"));
 	 }
 	else{
-		echo json_encode(array("success"=>"false","username"=>"$username","isAdmin"=>"$type","storedPassword" => "$passwordDB" "providedPassword" => "$providedPassword"));
+		echo json_encode(array("success"=>"false","username"=>"$username","isAdmin"=>"$type","storedPassword" => "$passwordDB", "providedPassword" => "$providedPassword"));
 	}
 }
 mysqli_close($dbc);

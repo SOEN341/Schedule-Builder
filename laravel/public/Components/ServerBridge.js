@@ -439,7 +439,6 @@ var realServerBridge = {
 			async: false,
 			data: { username: username },
 			success: function(data) {
-				console.log(data);
 				response(data.List);
 			},
 			error:   function(jqXHR, textStatus, errorThrown,ts) {
@@ -460,14 +459,12 @@ var realServerBridge = {
 			async: false,
 			data: { username: username },
 			success: function(data) {
-			console.log(data);
 				response(data.List);
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
 				);
-				console.log(errorThrown);
 			}
 		});
 	},
@@ -545,7 +542,7 @@ var realServerBridge = {
 			dataType: "json",
 			data: {'sectionId':sectionId},
 			success: function(data) {
-				console.log('Section removed');
+				//console.log('Section removed');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -593,7 +590,7 @@ var realServerBridge = {
 			dataType: "json",
 			data: {'username':username, 'cload':newPrefs.courseLoad, 'dayoff':newPrefs.day, 'preftime':newPrefs.time},
 			success: function(data) {
-				console.log('Preferences edited');
+				//console.log('Preferences edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -611,7 +608,7 @@ var realServerBridge = {
 			dataType: "json",
 			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
-				console.log('Needed Courses edited');
+				//console.log('Needed Courses edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -629,7 +626,7 @@ var realServerBridge = {
 			dataType: "json",
 			data: {'username':username, 'json':'{\"List\":'+newList+'}'},
 			success: function(data) {
-				console.log('Taken Courses edited');
+				//console.log('Taken Courses edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
@@ -679,7 +676,7 @@ var realServerBridge = {
 			dataType: "json",
 			data: {'old':username, 'new':newPassword},
 			success: function(data) {
-				console.log('Password edited');
+				//console.log('Password edited');
 			},
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +

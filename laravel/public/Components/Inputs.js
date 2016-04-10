@@ -91,7 +91,6 @@ var TypeaheadInput = React.createClass({
 	
 	shouldComponentUpdate: function(nextProps, nextState) {
 		if(this.props.value!=nextProps.value) {
-			console.log(this.props.id);
 			$('#' + this.props.id + ' .typeahead').typeahead('destroy');
 			$('#' + this.props.id + ' .typeahead').attr('value', nextProps.value);
 			this.constructTypeahead();

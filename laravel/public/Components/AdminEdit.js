@@ -17,25 +17,7 @@ var AdminEdit = React.createClass({
 				{this.state.editingDialogOpen? <SectionDialog close={this.closeEditDialog} method={this.editSection} mode='Edit' section={this.state.sections[this.state.editingIndex]}/>: null}
 				<CourseInfo course={this.state.course} validation={this.state.courseValidations} help={this.state.courseHelp} nameChange={this.nameChange} courseCodeChange={this.courseCodeChange} semesterChange={this.semesterChange} descriptionChange={this.descriptionChange} creditsChange={this.creditsChange} save={this.saveCourseChange}/>
 				<br/>
-				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
-					<tbody>
-						<tr>
-							<td style={{width: '12%'}}>Section</td>
-							<td style={{width: '12%'}}>Course Number</td>
-							<td style={{width: '12%'}}>Type</td>
-							<td style={{width: '12%'}}>Day</td>
-							<td style={{width: '12%'}}>BeginTime</td>
-							<td style={{width: '12%'}}>EndTime</td>
-							<td style={{width: '12%'}}>Classroom</td>
-							<td style={{width: '10%'}}></td>
-						</tr>
-						{this.state.sections.map(function(section) {
-							return (
-								<AdminSection key={section.sectionId} section={section} remove={this.removeSection.bind(this, section.sectionId)} edit={this.openEditDialog.bind(this, section.sectionId)}/>
-							)
-						}, this)}
-					</tbody>
-				</RBS.Table>
+				<SectionsList sections={this.state.sections} binder={this} removeSection={this.removeSection} openEditDialog={this.openEditDialog}/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openSectionDialog}>Add Section</RBS.Button></div>
 			</div>
 		)
@@ -46,7 +28,6 @@ var AdminEdit = React.createClass({
 		this.setState({
 			course: course
 		})
-		//this.keys=0;
 	},
 	
 	loadCookies: function() {
@@ -323,7 +304,6 @@ var AdminEdit = React.createClass({
 		else {
 			for(var i=0; i<this.state.sections.length; i++)
 			{
-				console.log(this.state.sections[i].section);
 				if(newSection.section==this.state.sections[i].section&&i!=this.state.editingIndex) {
 					error=true;
 					response(1);
@@ -349,6 +329,36 @@ var AdminEdit = React.createClass({
 		}
 	}
 });
+
+var SectionsList = React.createClass({
+	render: function() {
+		return (
+			<div>
+				{(this.props.sections.length>0)? 
+				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
+					<tbody>
+						<tr>
+							<td style={{width: '12%'}}>Section</td>
+							<td style={{width: '12%'}}>Course Number</td>
+							<td style={{width: '12%'}}>Type</td>
+							<td style={{width: '12%'}}>Day</td>
+							<td style={{width: '12%'}}>Begin Time</td>
+							<td style={{width: '12%'}}>End Time</td>
+							<td style={{width: '12%'}}>Classroom</td>
+							<td style={{width: '10%'}}></td>
+						</tr>
+						{this.props.sections.map(function(section) {
+							return (
+								<AdminSection key={section.sectionId} section={section} remove={this.props.removeSection.bind(this.props.binder, section.sectionId)} edit={this.props.openEditDialog.bind(this.props.binder, section.sectionId)}/>
+							)
+						}, this)}
+					</tbody>
+				</RBS.Table>: null}
+				{(this.props.sections.length==0)? <h3 style={{textAlign: 'center'}}>No sections for this course exist in the database</h3>: null}
+			</div>
+		)
+	}
+})
 
 var AdminSection = React.createClass({
 	render: function() {
@@ -635,9 +645,7 @@ var SectionDialog = React.createClass({
 		
 		if(!error&&this.state.dayValid!='error'&&this.state.beginValid!='error'&&this.state.endValid!='error') {
 			var self=this;
-			console.log('about to do method');
 			this.props.method(this.state, function(validation) {
-				console.log('here ' + validation);
 				if(validation==0) {
 					self.props.close();
 				}

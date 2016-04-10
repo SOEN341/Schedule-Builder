@@ -10,33 +10,15 @@ var AdminPage = React.createClass({
 			<div>
 				{this.state.courseDialogOpen? <CourseDialog close={this.closeCourseDialog} addCourse={this.addCourse}/>: null}
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openCourseDialog}>Add Course</RBS.Button></div>
-				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
-					<tbody>
-						<tr>
-							<td style={{width: '12%'}}>Class Name</td>
-							<td style={{width: '12%'}}>Course Number</td>
-							<td style={{width: '12%'}}>Semester</td>
-							<td style={{width: '30%'}}>Description</td>
-							<td style={{width: '12%'}}>Credits</td>
-							<td style={{width: '10%'}}></td>
-						</tr>
-						{this.state.courses.map(function(course) {
-							return (
-								<AdminCourse key={course.courseId} course={course} changePage={this.props.changePage} remove={this.removeCourse.bind(this, course.courseId)}/>
-							)
-						}, this)}
-					</tbody>
-				</RBS.Table>
+				<AdminCoursesList courses={this.state.courses} changePage={this.props.changePage} binder={this} removeCourse={this.removeCourse}/>
 				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openCourseDialog}>Add Course</RBS.Button></div>
 			</div>
 		)
 	},
 	
 	componentDidMount: function() {
-		//this.keys=0;
 		var self=this;
 		serverBridge.getCourses(function(data) {
-			console.log(data);
 			self.setState({
 				courses: JSON.parse(data)
 			});
@@ -84,15 +66,36 @@ var AdminPage = React.createClass({
 	}
 });
 
+var AdminCoursesList = React.createClass({
+	render: function() {
+		return (
+			<div>
+				{(this.props.courses.length>0)?
+				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'60%', marginLeft:'20%'}}>
+					<tbody>
+						{this.props.courses.map(function(course) {
+							return (
+								<AdminCourse key={course.courseId} course={course} changePage={this.props.changePage} remove={this.props.removeCourse.bind(this.props.binder, course.courseId)}/>
+							)
+						}, this)}
+					</tbody>
+				</RBS.Table>: null}
+				{(this.props.courses.length==0)?<h3 style={{textAlign: 'center'}}>No courses currently exist in the database. Try adding some</h3>: null}
+			</div>
+		)
+	}
+});
+
 var AdminCourse = React.createClass({
 	render: function() {
 		return (
-			<tr><td><a onClick={this.edit}>{this.props.course.name}</a></td>
-			<td>{this.props.course.courseCode}</td>
-			<td>{this.props.course.semester}</td>
-			<td>{this.props.course.description}</td>
-			<td>{this.props.course.credits}</td>
-			<td><img onClick={this.props.remove} src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></td></tr>
+			<tr><td>
+				<div style={{float:'right'}}><img onClick={this.props.remove} src="Images/delete.png" title="Remove Course" style={{height: '15px', width: '15px'}}/></div>
+				<a onClick={this.edit}>{this.props.course.name}</a> - {this.props.course.courseCode}<br/>
+				Offered in: {this.props.course.semester}<br/>
+				{this.props.course.credits} Credits<br/>
+				{this.props.course.description}
+			</td></tr>
 		)
 	},
 	
@@ -191,7 +194,6 @@ var CourseDialog = React.createClass({
 		if(this.state.name.length>0&&this.state.courseCode.length>0&&this.state.description.length>0&&this.state.credits.length>0&&this.state.courseCodeValid!='error'&&this.state.creditsValid!='error') {
 			var self=this;
 			serverBridge.addCourse(course, function(data) {
-				console.log(data);
 				if(data.success=='true') {
 					course = {
 						courseId: Number(data.courseID),
