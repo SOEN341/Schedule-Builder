@@ -140,8 +140,9 @@ var LoginPage = React.createClass({
 				}
 				else {
 					self.setState({
-						rUsernameHelp: 'Username already taken',
-						rUsernameValid: 'error'
+						rUsernameHelp: 'Username or e-mail already taken',
+						rUsernameValid: 'error',
+						emailValue: 'error'
 					});
 				}
 			});

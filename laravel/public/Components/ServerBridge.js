@@ -295,8 +295,14 @@ var mockServerBridge = {
 		}
 	},
 	
-	editEmail: function(newEmail) {
-		console.log('email edited to ' + newEmail);
+	editEmail: function(newEmail, reponse) {
+		if(newEmail=='taken') {
+			response({success:'false', username:'', email:newEmail});
+		}
+		else {
+			response({success:'true', username:'', email:newEmail});
+			console.log('email edited to ' + newEmail);
+		}
 	},
 	
 	editPassword: function(newPassword) {
@@ -649,16 +655,14 @@ var realServerBridge = {
 		});
 	},
 	
-	editEmail: function(newEmail) {
+	editEmail: function(newEmail, response) {
 		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/editemail",
 			dataType: "json",
 			data: {'old':username, 'new':newEmail},
-			success: function(data) {
-				console.log('Email edited');
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
