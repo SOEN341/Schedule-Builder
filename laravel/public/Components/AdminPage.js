@@ -194,7 +194,7 @@ var CourseDialog = React.createClass({
 				console.log(data);
 				if(data.success=='true') {
 					course = {
-						courseId: Number(data.courseId),
+						courseId: Number(data.courseID),
 						name: course.name,
 						courseCode: course.courseCode,
 						semester: course.semester,

@@ -1,6 +1,6 @@
 <?php
 require_once('../mysqli_connect.php'); 
-$courseId=$_POST('courseId');
+$courseId=$_POST['courseId'];
 if (!(isset($courseId))) {
    $courseId='';
 }

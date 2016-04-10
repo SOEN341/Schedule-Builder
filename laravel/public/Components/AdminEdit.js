@@ -275,7 +275,6 @@ var AdminEdit = React.createClass({
 		var error=false;
 		for(var i=0; i<this.state.sections.length; i++)
 		{
-			console.log(this.state.sections[i].section);
 			if(newSection.section==this.state.sections[i].section) {
 				error=true;
 				response(1);
@@ -286,7 +285,7 @@ var AdminEdit = React.createClass({
 			var self=this;
 			serverBridge.addSection(newSection, function(data){
 				if(data.success=='true') {
-					newSection.sectionId=data.sectionId;
+					newSection.sectionId=Number(data.SectionID);
 					var sections = React.addons.update(self.state.sections, {});
 					sections.push(newSection);
 					self.setState({

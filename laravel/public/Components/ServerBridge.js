@@ -391,17 +391,14 @@ var realServerBridge = {
 		});
 	},
 	
-	getSectionsFromCourse: function(course) {
+	getSectionsFromCourse: function(course, response) {
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/sectioncourse",
 			dataType: "json",
 			async: false,
 			data:    {'courseId':course.courseId},
-			success: function(data) {
-				console.log(data);
-				return data.sections;
-			},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
@@ -503,8 +500,19 @@ var realServerBridge = {
 		});
 	},
 	
-	addSection: function() {
-		//TODO: decide on section format
+	addSection: function(section, response) {
+		$.ajax({
+			type:    "POST",
+			url:     linkProvider.getLink()+"/addadminsection",
+			dataType: "json",
+			data: {json: JSON.stringify(section)},
+			success: response,
+			error:   function(jqXHR, textStatus, errorThrown) {
+				alert("Error, status = " + textStatus + ", " +
+					"error thrown: " + errorThrown
+				);
+			}
+		});
 	},
 	
 	removeCourse: function(courseId) {
@@ -524,12 +532,12 @@ var realServerBridge = {
 		});
 	},
 	
-	removeSection: function(courseID, sectionID) {
+	removeSection: function(courseId, sectionId) {
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/removeadminsection",
 			dataType: "json",
-			data: {'course':courseID, 'section':sectionID},
+			data: {'sectionId':sectionId},
 			success: function(data) {
 				console.log('Section removed');
 			},
@@ -556,15 +564,13 @@ var realServerBridge = {
 		});
 	},
 	
-	editSection: function(courseID, oldSection, newSection) {
+	editSection: function(section, response) {
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/editsection",
 			dataType: "json",
-			data: {'course':courseID, 'old':oldSection, 'new':newSection},
-			success: function(data) {
-				console.log('Section edited');
-			},
+			data: {json: JSON.stringify(section)},
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
