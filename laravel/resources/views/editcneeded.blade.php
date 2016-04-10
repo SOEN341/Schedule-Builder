@@ -15,7 +15,7 @@ $contents = utf8_encode($json);
 //var_dump(json_decode($contents, true)); //testing purposes
 
 //CoursesDones 	CoursesRem 	CLoad 	dayOff 	pTime 
-$sql = "UPDATE `users` SET `CoursesDones`='$contents' WHERE username='$old'";
+$sql = "UPDATE `users` SET `CoursesRem`='$contents' WHERE username='$old'";
 
 $response= mysqli_query($dbc,$sql);
 

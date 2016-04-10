@@ -16,7 +16,7 @@ $contents = utf8_encode($json);
 require_once('../mysqli_connect.php'); // defining and connecting to the database as root
 
 //CoursesDones 	CoursesRem 	CLoad 	dayOff 	pTime 
-$sql = "UPDATE `users` SET `CoursesRem`='$contents' WHERE username='$old'";
+$sql = "UPDATE `users` SET `CoursesDones`='$contents' WHERE username='$old'";
 
 $response= mysqli_query($dbc,$sql);
 

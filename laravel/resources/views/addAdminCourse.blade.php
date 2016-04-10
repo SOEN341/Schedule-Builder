@@ -1,9 +1,9 @@
 <?php
 require_once('../mysqli_connect.php'); 
-$json=$_POST['json'];//username
-if (!(isset($json))) {
-   $json='{}';
-}
+// $json=$_POST['json'];//username
+// if (!(isset($json))) {
+//    $json='{}';
+// }
 //$json='{"courseId":"null","courseCode":"COMP 2489895","semester":"Summer","description":"Salt level critical, abort !","name":"Object-Oriented Programming I","credits":"3"}';
 
 $content = json_decode($json, true);

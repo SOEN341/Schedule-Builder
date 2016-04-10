@@ -1,10 +1,11 @@
 <?php
 require_once('../mysqli_connect.php'); 
-$courseId=$_POST('courseId');
+$courseId=$_POST['courseId'];
 if (!(isset($courseId))) {
-   $courseId='';
+$courseId='';
 }
-//$courseId='7'; //test pursposes
+//$courseId='2'; //test pursposes
+
 $query ="SELECT * FROM sections WHERE courseId='$courseId'";              
 
 $response= mysqli_query($dbc,$query); 
