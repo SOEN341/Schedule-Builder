@@ -90,9 +90,14 @@ class HomeController extends Controller {
     public function sections(){
         return view('getSections');
     }
-
+    /*
     public function sectioncourse(){
         return view('getCourseSections');
+    }
+    */
+
+    public function sectioncourse(){
+        return view('sortCourse');
     }
 
     public function editsection(){
