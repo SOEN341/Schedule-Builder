@@ -220,10 +220,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 
 CREATE TABLE IF NOT EXISTS `prerequisites` (
   `prerequisiteId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `priority` int(11) NOT NULL,
   `courseId` int(10) unsigned NOT NULL,
-  `prerequisiteCourseName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `typeOfPrerequisite` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `prerequisitesList` varchar(5000) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`prerequisiteId`),
   KEY `prerequisites_courseid_foreign` (`courseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
