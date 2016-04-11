@@ -656,6 +656,7 @@ ALTER TABLE `sections`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `prerequisites`
 --
 
 CREATE TABLE IF NOT EXISTS `prerequisites` (
