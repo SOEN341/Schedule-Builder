@@ -1,45 +1,24 @@
-<php
-class course {
-	private $code='';
-	private $name='';
-	private $description='';
-	private $semester='';
-	private $section='';
-	private $credits=0;
+<?php
+class Schedule {
+	public $courses=Array(); //courses that were added successfully
+	public $time= array("Monday"=>"", "Tuesday"=>"", "Wednesday"=>"", "Thursday"=>"","Friday"=>""); // list of times for conflict check purposes
+	public $priority =Array(); ///array of hardcoded  priority courses
+	public $semester=''; //semester
+	public $courseload='';
+	public $coursesNeeded=Array(); //list of  courses that the user has
+	public $coursesTaken=Array(); //list of courses that the user has taken
+	public $prefTime='';
+	public $dayOff='';
 
 	
-	function __construct($semester,$code,$name,$credits,$section,$description){
-		$this->code=$code;
-		$this->name=$name;
-		$this->description=$description;
-		$this->semester=$semester;
-		$this->section=$section;
-		$this->credits=$credits;
-		
-	}
+// array_intersect()	Compare arrays, and returns the matches (compare values only)
 
-	public function getCode(){
-		return $this->code;
-	}
+	function __construct($courseload,$prefTime,$dayOff,$priority){
+		$this->courseload=$courseload;
+		$this->prefTime=$prefTime;
+		$this->dayOff=$dayOff;
+		$this->priority=$priority;
 
-	public function getName(){
-		return $this->name;
-	}
-
-	public function getDescription(){
-		return $this->description;
-	}
-
-	public function getSemester(){
-		return $this->semester;
-	}
-
-	public function getSection(){
-		return $this->section;
-	}
-
-	public function getCredits(){
-		return $this->credits;
 	}
 
 
