@@ -1,6 +1,6 @@
 <?php
 require_once('../mysqli_connect.php'); 
-$json=$_POST['json'];//username
+$json=$_POST['json'];
 if (!(isset($json))) {
    $json='{}';
 }

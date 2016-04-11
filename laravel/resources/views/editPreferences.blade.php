@@ -1,10 +1,10 @@
 <?php
 require_once('../mysqli_connect.php');
 // {username:’’,cload:'',dayoff:'',preftime:''}}
-$username=$_POST['username'];//username
-$cload=$_POST['cload'];//new email
-$dayoff=$_POST['dayoff'];//new email
-$preftime=$_POST['preftime'];//new email
+$username=$_POST['username'];
+$cload=$_POST['cload'];
+$dayoff=$_POST['dayoff'];
+$preftime=$_POST['preftime'];
 
 if (!(isset($username))) {
    $username='';

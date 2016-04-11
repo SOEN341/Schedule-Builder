@@ -1,7 +1,7 @@
 <?php
 require_once('../mysqli_connect.php');
-$old=$_POST['username'];//username
-$json=$_POST['json'];//username
+$old=$_POST['username'];
+$json=$_POST['json'];
 if (!(isset($old))) {
    $old='';
 }
