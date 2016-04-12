@@ -75,10 +75,10 @@ var PreferencesPage = React.createClass({
 	
 	loadCookies: function() {
 		var username=cookieManager.getCookie('username');
-/*		if(username=='') {
+		if(username=='') {
 			this.props.changePage(0);
 		}
-*/		var self=this;
+		var self=this;
 		var takenCourses=cookieManager.getCookie('taken');
 		if(takenCourses=='') {
 			takenCourses=[];
