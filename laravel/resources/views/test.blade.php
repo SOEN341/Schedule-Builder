@@ -30,6 +30,7 @@ $priorityPrereq = array("COMP 248", "COMP 249", "COMP 352", "COMP 232", "COMP 34
 
 $decodedDone=json_decode($array['CoursesDones'],true);
 
+
 foreach ($decodedDone as $key => $key_value) {
 		foreach ($key_value as $x => $x_value) {
 		array_push($coursesDone,$x_value['number']);
@@ -132,13 +133,10 @@ foreach ($schedule->courses as $x => $x_value) {
 
 $courses=array_unique(array_diff($postCull,$anot));	//list of priotiry courses after the prereq were removed	
 
+//var_dump($courses);
 
-// 	//this returns all the sections
-// 	//create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
-// }
+$arrayofcourses=Array();
 
-//loop through $arrayofcourses
-//schedule.add($courses)
 
 foreach ($courses as $key => $value){
 	//$temp = $value['number'];
@@ -162,8 +160,23 @@ foreach ($courses as $key => $value){
 	//TODO: create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
 	$course = new Course($value, $coursesLectures, $coursesTutorials, $coursesLabs);
 	//var_dump($course->getName());
-	var_dump($course);
+	array_push($arrayofcourses,$course);
 }
+
+var_dump($schedule);
+foreach ($arrayofcourses as $key => $value) {	
+//schedule.add($value);
+}
+
+
+// 	//this returns all the sections
+// 	//create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
+// }
+
+//loop through $arrayofcourses
+//schedule.add($courses)
+
+//given
 
 /*
 //print_r(array_values($coursesInformation));

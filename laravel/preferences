@@ -1,5 +1,5 @@
 <?php
-require_once('time.php');
+require_once('Time.php');
 class Schedule {
 	public $courses=Array(); //courses that were added successfully
 	public $priority =Array(); ///array of hardcoded  priority courses
@@ -37,9 +37,19 @@ class Schedule {
 
 	}
 
-
+// tries to add a course to the sechdule, returns true if added properly or false if one of the section cannot possibly be added
 	function  addCourse($Course){
-
+	
+	$Lecture = $Course->lectures;
+	$Tutorial = $Course->tutorials;
+	$Lab = $Course->labs;
+	
+	$test = json_decode($Lecture, true);
+	
+	var_dump($Lecture);
+	
+	$time = new Time();
+	
 	// add a lecture,   $course->lectures
 	//create an object time for all the lecture sections in the array, using a loop
 	//compare with all the times object in the current schedule. using a loop

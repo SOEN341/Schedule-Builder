@@ -4,10 +4,6 @@ class Time {
     public $StartTime='';
     public $EndTime='';
 
-    public $Testday='Monday';
-    public $TestStart='13:50:00';
-    public $Testend='14:30:00';
-
     function __construct($OldDay,$OldStart,$OldEnd){
         $this->Day=$OldDay;
         $this->StartTime=$OldStart;
