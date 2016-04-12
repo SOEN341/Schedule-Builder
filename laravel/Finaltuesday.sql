@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2016 at 06:29 AM
+-- Generation Time: Apr 12, 2016 at 11:17 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -34,15 +34,15 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `credits` double NOT NULL,
   PRIMARY KEY (`courseId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=146 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=134 ;
 
 --
 -- Dumping data for table `courses`
 --
 
 INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `name`, `credits`) VALUES
-(1, 'COMP 248', 'Fall', 'Introduction to programming. Critical amount of salt atteined', 'Object-Oriented Programming I', 3),
-(2, 'COMP 247', 'Fall', ' Introduction to programming.', 'Object-Oriented Programming II', 4.5),
+(1, 'COMP 248', 'Fall', 'Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.', 'Object-Oriented Programming I', 3),
+(2, 'COMP 248', 'Winter', ' Introduction to programming. Basic data types, variables, expressions, assignments, control flow. Classes, objects, methods.', 'Object-Oriented Programming I', 3),
 (3, 'COMP 249', 'Summer', 'Design of classes. Inheritance. Polymorphism. Static and dynamic binding.', 'Object-Oriented Programming II', 3),
 (4, 'COMP 249', 'Winter', 'Design of classes. Inheritance. Polymorphism. Static and dynamic binding.', 'Object-Oriented Programming II', 3),
 (5, 'COMP 335', 'Fall', 'Finite state automata and regular languages. Push-down automata and context-free languages.', 'Introduction to Theoretical Computer Science', 3),
@@ -53,6 +53,7 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
 (10, 'COMP 348', 'Fall', 'Survey of programming paradigms: Imperative, functional, and logic programming', 'Principles of Programming Languages', 3),
 (11, 'COMP 352', 'Summer', 'Abstract data types: stacks and queues, trees, priority queues, dictionaries', 'Data Structures and Algorithms', 3),
 (12, 'COMP 352', 'Fall', 'Abstract data types: stacks and queues, trees, priority queues, dictionaries', 'Data Structures and Algorithms', 3),
+(13, 'SOEN 228', 'Winter', 'Processor structure, Data and Instructions, Instruction Set Processor', 'System Hardware', 4),
 (14, 'SOEN 287', 'Summer', 'Internet architecture and protocols. Web applications through clients and servers.', 'Web Programming', 3),
 (15, 'SOEN 287', 'Winter', 'Internet architecture and protocols. Web applications through clients and servers.', 'Web Programming', 3),
 (16, 'SOEN 321', 'Fall', 'Protocol layers and security protocols. Intranets and extranets.', 'Information Systems Security', 3),
@@ -171,9 +172,8 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
 (129, 'MARK 201', 'Summer', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
 (130, 'MARK 201', 'Fall', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
 (131, 'MARK 201', 'Winter', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
-(143, 'Comp 251', 'Winter', 'Testing is fun', 'Comp 250', 4),
-(144, 'Comp 252', 'Summer', 'Testing is fun fun fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuun', 'Comp 251', 3),
-(145, 'Comp 343', 'Fall', 'textt', 'name', 3);
+(132, 'COMP 352', 'Winter', 'Abstract data types: stacks and queues, trees, priority queues, dictionaries', 'Data Structures and Algorithms', 3),
+(133, 'COMP 232', 'Fall', 'Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction.', 'Mathematics for Computer Science', 3);
 
 -- --------------------------------------------------------
 
@@ -210,8 +210,7 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2016_03_27_012000_create_users_table', 1),
 ('2016_03_27_014334_create_courses_table', 1),
 ('2016_03_27_033906_create_prerequisites_table', 1),
-('2016_03_27_035938_create_sections_table', 1),
-('2014_10_12_100000_create_password_resets_table', 2);
+('2016_03_27_035938_create_sections_table', 1);
 
 -- --------------------------------------------------------
 
@@ -221,13 +220,150 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 
 CREATE TABLE IF NOT EXISTS `prerequisites` (
   `prerequisiteId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `priority` int(11) NOT NULL,
   `courseId` int(10) unsigned NOT NULL,
-  `prerequisiteCourseName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `typeOfPrerequisite` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `prerequisitesList` varchar(5000) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`prerequisiteId`),
   KEY `prerequisites_courseid_foreign` (`courseId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=133 ;
+
+--
+-- Dumping data for table `prerequisites`
+--
+
+INSERT INTO `prerequisites` (`prerequisiteId`, `courseId`, `prerequisitesList`) VALUES
+(1, 1, '{"List":[]}'),
+(2, 2, '{"List":[]}'),
+(3, 3, '{"List":[{"type":"1", "courseCode" : "COMP 248"}]}'),
+(4, 4, '{"List":[{"type":"1", "courseCode" : "COMP 248"}]}'),
+(5, 5, '{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}'),
+(6, 6, '{"List":[{"type":"1", "courseCode" : "COMP 352"}]}'),
+(7, 7, '{"List":[{"type":"1", "courseCode" : "COMP 352"}]}'),
+(8, 8, '{"List":[{"type":"1", "courseCode" : "SOEN 228"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(9, 9, '{"List":[{"type":"1", "courseCode" : "COMP 249"}]}'),
+(10, 10, '{"List":[{"type":"1", "courseCode" : "COMP 249"}]}'),
+(11, 11, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 249"}]}'),
+(12, 12, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 249"}]}'),
+(13, 13, '{"List":[{"type":"1", "courseCode" : "MATH 203"},{"type":"1", "courseCode" : "MATH 204"}]}'),
+(14, 14, '{"List":[{"type":"1", "courseCode" : "COMP 248"}]}'),
+(15, 15, '{"List":[{"type":"1", "courseCode" : "COMP 248"}]}'),
+(16, 16, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(17, 17, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 249"}]}'),
+(18, 18, '{"List":[{"type":"1", "courseCode" : "COMP 352"},{"type":"1", "courseCode" : "ENCS 282"}]}'),
+(19, 19, '{"List":[{"type":"1", "courseCode" : "SOEN 341"}]}'),
+(20, 20, '{"List":[{"type":"1", "courseCode" : "SOEN 341"},{"type":"1", "courseCode" : "SOEN 342"}]}'),
+(21, 21, '{"List":[{"type":"1", "courseCode" : "SOEN 343"}]}'),
+(22, 22, '{"List":[{"type":"1", "courseCode" : "SOEN 343"}]}'),
+(23, 23, '{"List":[{"type":"1", "courseCode" : "ENCS 282"},{"type":"1", "courseCode" : "SOEN 341"}]}'),
+(24, 24, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "ENGR 233"}]}'),
+(25, 25, '{"List":[{"type":"1", "courseCode" : "SOEN 344"},{"type":"1", "courseCode" : "SOEN 357"}]}'),
+(26, 26, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(27, 27, '{"List":[{"type":"1", "courseCode" : "SOEN 390"}]}'),
+(28, 28, '{"List":[]}'),
+(29, 29, '{"List":[]}'),
+(30, 30, '{"List":[]}'),
+(31, 31, '{"List":[]}'),
+(32, 32, '{"List":[]}'),
+(33, 33, '{"List":[]}'),
+(34, 34, '{"List":[]}'),
+(35, 35, '{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 205"}]}'),
+(36, 36, '{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 205"}]}'),
+(37, 37, '{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 205"}]}'),
+(38, 38, '{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 205"}]}'),
+(39, 39, '{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 205"}]}'),
+(40, 40, '{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 205"}]}'),
+(41, 41, '{"List":[]}'),
+(42, 42, '{"List":[]}'),
+(43, 43, '{"List":[]}'),
+(44, 44, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "PHYS 205"}]}'),
+(45, 45, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "PHYS 205"}]}'),
+(46, 46, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "PHYS 205"}]}'),
+(47, 47, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "ENGR 233"}]}'),
+(48, 48, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "ENGR 233"}]}'),
+(49, 49, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "ENGR 233"},{"type":"1", "courseCode" : "COMP 248"}]}'),
+(50, 50, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "PHYS 205"},{"type":"1", "courseCode" : "COMP 248"}]}'),
+(51, 51, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "PHYS 205"},{"type":"1", "courseCode" : "COMP 248"}]}'),
+(52, 52, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "PHYS 205"},{"type":"1", "courseCode" : "COMP 248"}]}'),
+(53, 53, '{"List":[]}'),
+(54, 54, '{"List":[]}'),
+(55, 55, '{"List":[]}'),
+(56, 56, '{"List":[{"type":"1", "courseCode" : "ENGR 201"},{"type":"1", "courseCode" : "ENGR 202"},{"type":"1", "courseCode" : "ENCS 282"}]}'),
+(57, 57, '{"List":[{"type":"1", "courseCode" : "ENGR 201"},{"type":"1", "courseCode" : "ENGR 202"},{"type":"1", "courseCode" : "ENCS 282"}]}'),
+(58, 58, '{"List":[{"type":"1", "courseCode" : "ENGR 201"},{"type":"1", "courseCode" : "ENGR 202"},{"type":"1", "courseCode" : "ENCS 282"}]}'),
+(59, 59, '{"List":[]}'),
+(60, 60, '{"List":[{"type":"1", "courseCode" : "BIOL 201"},{"type":"1", "courseCode" : "CHEM 205"},{"type":"1", "courseCode" : "CHEM 206"}]}'),
+(61, 61, '{"List":[{"type":"1", "courseCode" : "BIOL 201"},{"type":"1", "courseCode" : "CHEM 205"},{"type":"1", "courseCode" : "CHEM 206"}]}'),
+(62, 62, '{"List":[{"type":"1", "courseCode" : "CHEM 205"},{"type":"1", "courseCode" : "CHEM 206"},{"type":"1", "courseCode" : "PHYS 204"},{"type":"1", "courseCode" : "PHYS 206"},{"type":"1", "courseCode" : "PHYS 224"},{"type":"1", "courseCode" : "PHYS 226"},{"type":"1", "courseCode" : "MATH 203"},{"type":"1", "courseCode" : "MATH 205"}]}'),
+(63, 63, '{"List":[{"type":"1", "courseCode" : "CHEM 205"},{"type":"1", "courseCode" : "CHEM 206"}]}'),
+(64, 64, '{"List":[{"type":"1", "courseCode" : "CHEM 205"},{"type":"1", "courseCode" : "CHEM 206"}]}'),
+(65, 65, '{"List":[]}'),
+(66, 66, '{"List":[{"type":"1", "courseCode" : "CHEM 205"},{"type":"1", "courseCode" : "ENGR 213"}]}'),
+(67, 67, '{"List":[{"type":"1", "courseCode" : "PHYS 204"},{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "MATH 204"}]}'),
+(68, 68, '{"List":[{"type":"1", "courseCode" : "PHYS 204"},{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "MATH 204"}]}'),
+(69, 69, '{"List":[{"type":"1", "courseCode" : "ENGR 242"},{"type":"1", "courseCode" : "ENGR 213"}]}'),
+(70, 70, '{"List":[{"type":"1", "courseCode" : "ENGR 242"},{"type":"1", "courseCode" : "ENGR 213"}]}'),
+(71, 71, '{"List":[{"type":"1", "courseCode" : "ENGR 242"},{"type":"1", "courseCode" : "ENGR 213"}]}'),
+(72, 72, '{"List":[{"type":"1", "courseCode" : "MATH 203"}]}'),
+(73, 73, '{"List":[{"type":"1", "courseCode" : "MATH 203"}]}'),
+(74, 74, '{"List":[{"type":"1", "courseCode" : "MATH 203"}]}'),
+(75, 75, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "ENGR 233"},{"type":"1", "courseCode" : "ENGR 251"}]}'),
+(76, 76, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "ENGR 233"},{"type":"1", "courseCode" : "ENGR 251"}]}'),
+(77, 77, '{"List":[{"type":"1", "courseCode" : "ENGR 213"},{"type":"1", "courseCode" : "ENGR 233"},{"type":"1", "courseCode" : "ENGR 251"}]}'),
+(78, 78, '{"List":[{"type":"1", "courseCode" : "CHEM 205"}]}'),
+(79, 79, '{"List":[{"type":"1", "courseCode" : "CHEM 205"}]}'),
+(80, 80, '{"List":[{"type":"1", "courseCode" : "PHYS 206"}]}'),
+(81, 81, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(82, 82, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(83, 83, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(84, 84, '{"List":[{"type":"1", "courseCode" : "COMP 371"}]}'),
+(85, 85, '{"List":[{"type":"1", "courseCode" : "COMP 352"}]}'),
+(86, 86, '{"List":[{"type":"1", "courseCode" : "COMP 352"}]}'),
+(87, 87, '{"List":[{"type":"1", "courseCode" : "COMP 361"},{"type":"1", "courseCode" : "COMP 376"}]}'),
+(88, 88, '{"List":[{"type":"1", "courseCode" : "COMP 361"},{"type":"1", "courseCode" : "COMP 371"}]}'),
+(89, 89, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(90, 90, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(91, 91, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(92, 92, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(93, 93, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(94, 94, '{"List":[{"type":"1", "courseCode" : "COMP 233"},{"type":"1", "courseCode" : "COMP 352"}]}'),
+(95, 95, '{"List":[{"type":"2", "courseCode" : "COMP 353"},{"type":"1", "courseCode" : "SOEN 341"},{"type":"1", "courseCode" : "SOEN 287"}]}'),
+(96, 96, '{"List":[{"type":"2", "courseCode" : "SOEN 387"}]}'),
+(97, 97, '{"List":[{"type":"1", "courseCode" : "SOEN 385"}]}'),
+(98, 98, '{"List":[{"type":"1", "courseCode" : "SOEN 385"},{"type":"1", "courseCode" : "COMP 233"}]}'),
+(99, 99, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(100, 100, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(101, 101, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(102, 102, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(103, 103, '{"List":[{"type":"1", "courseCode" : "COMP 346"}]}'),
+(104, 104, '{"List":[{"type":"2", "courseCode" : "COMP 352"},{"type":"1", "courseCode" : "COMP 339"},{"type":"1", "courseCode" : "COMP 232"}]}'),
+(105, 105, '{"List":[{"type":"1", "courseCode" : "COMP 352"}]}'),
+(106, 106, '{"List":[{"type":"1", "courseCode" : "COMP 352"}]}'),
+(107, 107, '{"List":[{"type":"1", "courseCode" : "COMP 352"}]}'),
+(108, 108, '{"List":[{"type":"1", "courseCode" : "ENCS 282"}]}'),
+(109, 109, '{"List":[{"type":"1", "courseCode" : "ENCS 282"}]}'),
+(110, 110, '{"List":[{"type":"1", "courseCode" : "ENCS 282"}]}'),
+(111, 111, '{"List":[]}'),
+(112, 112, '{"List":[]}'),
+(113, 113, '{"List":[]}'),
+(114, 114, '{"List":[]}'),
+(115, 115, '{"List":[]}'),
+(116, 116, '{"List":[]}'),
+(117, 117, '{"List":[]}'),
+(118, 118, '{"List":[]}'),
+(119, 119, '{"List":[]}'),
+(120, 120, '{"List":[]}'),
+(121, 121, '{"List":[]}'),
+(122, 122, '{"List":[]}'),
+(123, 123, '{"List":[]}'),
+(124, 124, '{"List":[]}'),
+(125, 125, '{"List":[]}'),
+(126, 126, '{"List":[]}'),
+(127, 127, '{"List":[]}'),
+(128, 128, '{"List":[]}'),
+(129, 129, '{"List":[]}'),
+(130, 130, '{"List":[]}'),
+(131, 131, '{"List":[]}'),
+(132, 132, '{"List":[{"type":"1", "courseCode" : "COMP 232"},{"type":"1", "courseCode" : "COMP 249"}]}'),
+(133, 133, '{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 203"}]}');
 
 -- --------------------------------------------------------
 
@@ -249,16 +385,17 @@ CREATE TABLE IF NOT EXISTS `sections` (
   `sectionNum` int(10) unsigned NOT NULL,
   PRIMARY KEY (`sectionId`),
   KEY `sections_courseid_foreign` (`courseId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=357 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=355 ;
 
 --
 -- Dumping data for table `sections`
 --
 
 INSERT INTO `sections` (`section`, `sectionId`, `classroom`, `semester`, `type`, `dayOffered`, `beginTime`, `endTime`, `courseId`, `courseCode`, `sectionNum`) VALUES
-('UI-GR', 1, 'H-42000000000000', 'Winter', 'Winter', 5, '13:35:00', '14:35:00', 2, 'COMP 248', 1),
+('UI-X', 1, 'SGW-H-905', 'Winter', 'Lab', 5, '13:35:00', '14:35:00', 2, 'COMP 248', 1),
 ('UJ-X', 2, 'SGW-H-905', 'Winter', 'Lab', 3, '13:35:00', '14:35:00', 2, 'COMP 248', 1),
 ('UK-X', 3, 'SGW-H-917', 'Winter', 'Lab', 5, '13:35:00', '14:35:00', 2, 'COMP 248', 1),
+('U UA', 4, 'SGW-H-905', 'Winter', 'Tutorial', 5, '11:45:00', '13:25:00', 2, 'COMP 248', 1),
 ('U UB', 5, 'SGW-H-905', 'Winter', 'Tutorial', 3, '11:45:00', '13:25:00', 2, 'COMP 248', 1),
 ('WI-X', 6, 'SGW-H-905', 'Winter', 'Lab', 1, '12:00:00', '13:00:00', 2, 'COMP 248', 2),
 ('WJ-X', 7, 'SGW-H-831', 'Winter', 'Lab', 5, '16:35:00', '17:35:00', 2, 'COMP 248', 2),
@@ -304,6 +441,23 @@ INSERT INTO `sections` (`section`, `sectionId`, `classroom`, `semester`, `type`,
 ('WWWB', 47, 'SGW-H-967', 'Winter', 'Tutorial', 5, '13:15:00', '14:05:00', 8, 'COMP 346', 2),
 ('NN', 48, 'SGW-FG-C070', 'Winter', 'Lecture', 3, '17:45:00', '20:15:00', 8, 'COMP 346', 1),
 ('WW', 49, 'SGW-H-407', 'Winter', 'Lecture', 2, '17:45:00', '20:15:00', 8, 'COMP 346', 1),
+('DDDA', 50, 'SGW-H-849', 'Winter', 'Tutorial', 2, '20:30:00', '22:10:00', 13, 'SOEN 228', 1),
+('DDDB', 51, 'SGW-H-917', 'Winter', 'Tutorial', 2, '20:30:00', '22:10:00', 13, 'SOEN 228', 1),
+('DI-X', 52, 'N/A', 'Winter', 'Lab', 2, '10:00:00', '12:00:00', 13, 'SOEN 228', 1),
+('DJ-X', 53, 'N/A', 'Winter', 'Lab', 1, '10:00:00', '12:00:00', 13, 'SOEN 228', 1),
+('DK-X', 54, 'N/A', 'Winter', 'Lab', 3, '10:00:00', '12:00:00', 13, 'SOEN 228', 1),
+('DL-X', 55, 'N/A', 'Winter', 'Lab', 1, '10:00:00', '12:00:00', 13, 'SOEN 228', 1),
+('DM-X', 56, 'N/A', 'Winter', 'Lab', 3, '18:00:00', '20:00:00', 13, 'SOEN 228', 1),
+('H HA', 57, 'SGW-H-821', 'Winter', 'Tutorial', 3, '16:15:00', '17:55:00', 13, 'SOEN 228', 2),
+('H HB', 58, 'SGW-H-817', 'Winter', 'Tutorial', 3, '16:15:00', '17:55:00', 13, 'SOEN 228', 2),
+('H HC', 59, 'SGW-H-825', 'Winter', 'Tutorial', 3, '16:15:00', '17:55:00', 13, 'SOEN 228', 2),
+('HI-X', 60, 'N/A', 'Winter', 'Lab', 2, '10:00:00', '12:00:00', 13, 'SOEN 228', 2),
+('HJ-X', 61, 'N/A', 'Winter', 'Lab', 3, '10:00:00', '12:00:00', 13, 'SOEN 228', 2),
+('HK-X', 62, 'N/A', 'Winter', 'Lab', 3, '18:00:00', '20:00:00', 13, 'SOEN 228', 2),
+('HL-X', 63, 'N/A', 'Winter', 'Lab', 1, '16:15:00', '18:15:00', 13, 'SOEN 228', 2),
+('HM-X', 64, 'N/A', 'Winter', 'Lab', 2, '10:00:00', '12:00:00', 13, 'SOEN 228', 2),
+('DD', 65, 'SGW-MB-S2.330', 'Winter', 'Lecture', 2, '17:45:00', '20:15:00', 13, 'SOEN 228', 1),
+('H', 66, 'SGW-MB-S2.210', 'Winter', 'Lecture', 13, '14:45:00', '16:00:00', 13, 'SOEN 228', 2),
 ('S SA', 67, 'SGW-H-917', 'Winter', 'Tutorial', 2, '10:15:00', '11:55:00', 15, 'SOEN 287', 1),
 ('S SB', 68, 'SGW-H-917', 'Winter', 'Tutorial', 4, '10:15:00', '11:55:00', 15, 'SOEN 287', 1),
 ('U UA', 69, 'SGW-H-929', 'Winter', 'Tutorial', 2, '16:15:00', '17:55:00', 15, 'SOEN 287', 2),
@@ -587,9 +741,9 @@ INSERT INTO `sections` (`section`, `sectionId`, `classroom`, `semester`, `type`,
 ('D', 349, 'SGW-MB-2.270', 'Winter', 'Lecture', 1, '08:45:00', '11:30:00', 131, 'MARK 201', 3),
 ('E', 350, 'SGW-MB-2.270', 'Winter', 'Lecture', 2, '11:45:00', '14:30:00', 131, 'MARK 201', 4),
 ('F', 351, 'SGW-MB-2.270', 'Winter', 'Lecture', 5, '11:45:00', '14:30:00', 131, 'MARK 201', 5),
-('UI-GRGGGGGGG', 352, 'H-428', 'Winter', 'Winter', 3, '13:35:00', '14:35:00', 2, 'COMP 248', 1),
-('UI-SUUUUUU', 354, 'H-420blaze', 'Winter', 'Winter', 3, '11:11:11', '12:12:13', 143, 'Comp 251', 1),
-('UU-UU', 356, 'ss', 'Summer', 'Lecture', 2, '12:12:12', '13:13:13', 144, 'Comp 252', 1);
+('X', 352, 'SGW-H-820', 'Winter', 'Lecture', 13, '01:15:00', '02:30:00', 132, 'COMP 352', 1),
+('X XA', 353, 'SGW-H-429', 'Winter', 'Tutorial', 1, '04:15:00', '05:05:00', 132, 'COMP 352', 2),
+('X XB', 354, 'SGW-H-619', 'Winter', 'Tutorial', 3, '04:15:00', '05:05:00', 132, 'COMP 352', 3);
 
 -- --------------------------------------------------------
 
@@ -618,12 +772,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`username`, `email`, `userType`, `password`, `CoursesDones`, `CoursesRem`, `CLoad`, `dayOff`, `pTime`) VALUES
 ('admin', 'admin@email.com', 1, 'Ca8/08c9onmg77QVxPXQh.w/OLRqO9e', '{"List":[]}', '{"List":[]}', 0, 'None', 'Any'),
 ('jason', 'jasonbourne@email.com', 0, 'pass', '{"List":[{"name":"Introduction to Theoretical Computer Science","number":"SOEN 3335"},{"name":"Software Requirements and Specifications","number":"SOEN 342"},{"name":"Software Architecture and Design I","number":"SOEN 343"},{"name":"Management Measurement and Quality Control","number":"SOEN 384"},{"name":"Numerical Methods in Engineering","number":"ENGR 391"},{"name":"Software Architecture and Design II","number":"SOEN 344"},{"name":"Software Testing, Verification and Quality Assurance","number":"SOEN 345"},{"name":"User Interface Design","number":"SOEN 357"},{"name":"Software Engineering Team Design Project","number":"SOEN 390"},{"name":"Capstone Software Engineering Design Project","number":"SOEN 490"},{"name":"Engineering Management Principles and Economics","number":"ENGR 301"},{"name":"Information Systems Security","number":"SOEN 321"},{"name":"Impact of Technology on Society","number":"ENGR 392"}]}', '{"List":[{"name":"Mathematics for Computer Science","number":"COMP 232"},{"name":"Object-Oriented Programming I","number":"COMP 248"},{"name":"Professional Practice & Responsibility","number":"ENGR 201"},{"name":"Applied Ordinary Differential Equations","number":"ENGR 213"},{"name":"Object-Oriented Programming II","number":"COMP 249"},{"name":"Applied Advanced Calculus","number":"ENGR 233"},{"name":"System Hardware","number":"SOEN 228"},{"name":"Introduction to Web Applications","number":"SOEN 287"},{"name":"Principles of Programming Languages","number":"COMP 348"},{"name":"Data Structures and Algorithms","number":"COMP 352"},{"name":"Technical Writing and Communication","number":"ENCS 282"},{"name":"Sustainable Development and Environmental Stewardship","number":"ENGR 202"},{"name":"Operating Systems","number":"COMP 346"},{"name":"Principles of Electrical Engineering","number":"ELEC 275"},{"name":"Probability and Statistics in Engineering","number":"ENGR 371"},{"name":"Introduction to Formal Methods for Software Engineering","number":"SOEN 331"},{"name":"Software Process","number":"SOEN 341"}]}', 5, 'Monday', 'Afternoons'),
-('user1', 'email@email', 0, 'DRU7EPqh8Xm1rdisybFK9ggGz/GUenq', '{"List":[{"name":"Operating Systems","number":"COMP 346"},{"name":"Principles of Electrical Engineering","number":"ELEC 275"},{"name":"Probability and Statistics in Engineering","number":"ENGR 371"},{"name":"Introduction to Formal Methods for Software Engineering","number":"SOEN 331"},{"name":"Software Process","number":"SOEN 341"},{"name":"Introduction to Theoretical Computer Science","number":"SOEN 335"},{"name":"Software Requirements and Specifications","number":"SOEN 342"},{"name":"Software Architecture and Design I","number":"SOEN 343"},{"name":"Management Measurement and Quality Control","number":"SOEN 384"},{"name":"Numerical Methods in Engineering","number":"ENGR 391"},{"name":"Software Architecture and Design II","number":"SOEN 344"},{"name":"Software Testing, Verification and Quality Assurance","number":"SOEN 345"},{"name":"User Interface Design","number":"SOEN 357"},{"name":"Software Engineering Team Design Project","number":"SOEN 390"},{"name":"Capstone Software Engineering Design Project","number":"SOEN 490"},{"name":"Engineering Management Principles and Economics","number":"ENGR 301"},{"name":"Information Systems Security","number":"SOEN 321"},{"name":"Impact of Technology on Society","number":"ENGR 392"}]}', '{"List":[{"name":"Mathematics for Computer Science","number":"COMP 232"},{"name":"Object-Oriented Programming I","number":"COMP 248"},{"name":"Professional Practice & Responsibility","number":"ENGR 201"},{"name":"Applied Ordinary Differential Equations","number":"ENGR 213"},{"name":"Object-Oriented Programming II","number":"COMP 249"},{"name":"Applied Advanced Calculus","number":"ENGR 233"},{"name":"System Hardware","number":"SOEN 228"},{"name":"Introduction to Web Applications","number":"SOEN 287"},{"name":"Principles of Programming Languages","number":"COMP 348"},{"name":"Data Structures and Algorithms","number":"COMP 352"},{"name":"Technical Writing and Communication","number":"ENCS 282"},{"name":"Sustainable Development and Environmental Stewardship","number":"ENGR 202"}]}', 0, 'None', 'Any'),
-('user13', 'email12@email.com', 1, 't7hl2yHwm76.ux8chNFl/GgH7TLoIrm', '{"List":[{"name":"Mathematics for Computer Science","number":"COMP 232"},{"name":"Object-Oriented Programming I","number":"COMP 248"},{"name":"Professional Practice & Responsibility","number":"ENGR 201"},{"name":"Applied Ordinary Differential Equations","number":"ENGR 213"},{"name":"Object-Oriented Programming II","number":"COMP 249"},{"name":"Applied Advanced Calculus","number":"ENGR 233"},{"name":"System Hardware","number":"SOEN 228"},{"name":"Introduction to Web Applications","number":"SOEN 287"},{"name":"Principles of Programming Languages","number":"COMP 348"},{"name":"Data Structures and Algorithms","number":"COMP 352"},{"name":"Technical Writing and Communication","number":"ENCS 282"},{"name":"Sustainable Development and Environmental Stewardship","number":"ENGR 202"},{"name":"Operating Systems","number":"COMP 346"},{"name":"Principles of Electrical Engineering","number":"ELEC 275"},{"name":"Probability and Statistics in Engineering","number":"ENGR 371"},{"name":"Introduction to Formal Methods for Software Engineering","number":"SOEN 331"},{"name":"Software Process","number":"SOEN 341"},{"name":"Introduction to Theoretical Computer Science","number":"SOEN 335"},{"name":"Software Requirements and Specifications","number":"SOEN 342"},{"name":"Software Architecture and Design I","number":"SOEN 343"},{"name":"Management Measurement and Quality Control","number":"SOEN 384"},{"name":"Numerical Methods in Engineering","number":"ENGR 391"}]}', '{"List":[{"name":"Software Architecture and Design II","number":"SOEN 344"},{"name":"Software Testing, Verification and Quality Assurance","number":"SOEN 345"},{"name":"User Interface Design","number":"SOEN 357"},{"name":"Software Engineering Team Design Project","number":"SOEN 390"},{"name":"Capstone Software Engineering Design Project","number":"SOEN 490"},{"name":"Engineering Management Principles and Economics","number":"ENGR 301"},{"name":"Information Systems Security","number":"SOEN 321"},{"name":"Impact of Technology on Society","number":"ENGR 392"}]}', 5, 'Friday', 'Afternoons'),
-('user15', 'email@email.com', 1, 'gIOONO0S4JWt42yo2ZL8Ry1cWa4gyB2', '{"List":[]}', '{"List":[]}', 0, 'None', 'Any'),
-('user16', 'email1@email.com', 0, 'aXfw7nAUMHlSLPV6Bg6fqG8FF8eVNJ6', '{"List":[]}', '{"List":[]}', 0, 'None', 'Any'),
-('user22', 'email20@email.com', 0, '$2y$10$BoCEGAvIgaXCk86xegD3d.nSdJfTUYehCXnxj4JqKTT4lNGPYJzky', '{"List":[]}', '{"List":[]}', 0, 'None', 'Any'),
-('user5', 'email', 0, '8iaa3is8g21lEl97AsZkayCKfT52ri.', '{"List":[]}', '{"List":[]}', 4, 'Wednesday', 'Afternoons');
+('user17', 'email17@email.com', 0, 'JW8a8/iaCSg92WboP8foeO12Ym6t7PW', '{"List":[{"name":"Mathematics for Computer Science","number":"COMP 232"},{"name":"Object-Oriented Programming I","number":"COMP 248"},{"name":"Professional Practice & Responsibility","number":"ENGR 201"},{"name":"Applied Ordinary Differential Equations","number":"ENGR 213"}]}', '{"List":[{"name":"Object-Oriented Programming II","number":"COMP 249"},{"name":"Applied Advanced Calculus","number":"ENGR 233"},{"name":"System Hardware","number":"SOEN 228"},{"name":"Introduction to Web Applications","number":"SOEN 287"},{"name":"Principles of Programming Languages","number":"COMP 348"},{"name":"Data Structures and Algorithms","number":"COMP 352"},{"name":"Technical Writing and Communication","number":"ENCS 282"},{"name":"Sustainable Development and Environmental Stewardship","number":"ENGR 202"},{"name":"Operating Systems","number":"COMP 346"},{"name":"Principles of Electrical Engineering","number":"ELEC 275"},{"name":"Probability and Statistics in Engineering","number":"ENGR 371"},{"name":"Introduction to Formal Methods for Software Engineering","number":"SOEN 331"},{"name":"Software Process","number":"SOEN 341"},{"name":"Introduction to Theoretical Computer Science","number":"SOEN 335"},{"name":"Software Requirements and Specifications","number":"SOEN 342"},{"name":"Software Architecture and Design I","number":"SOEN 343"},{"name":"Management Measurement and Quality Control","number":"SOEN 384"},{"name":"Numerical Methods in Engineering","number":"ENGR 391"},{"name":"Software Architecture and Design II","number":"SOEN 344"},{"name":"Software Testing, Verification and Quality Assurance","number":"SOEN 345"},{"name":"User Interface Design","number":"SOEN 357"},{"name":"Software Engineering Team Design Project","number":"SOEN 390"},{"name":"Capstone Software Engineering Design Project","number":"SOEN 490"},{"name":"Engineering Management Principles and Economics","number":"ENGR 301"},{"name":"Information Systems Security","number":"SOEN 321"},{"name":"Impact of Technology on Society","number":"ENGR 392"}]}', 0, 'None', 'Any');
 
 --
 -- Constraints for dumped tables
