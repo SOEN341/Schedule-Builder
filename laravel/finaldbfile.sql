@@ -173,7 +173,9 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
 (128, 'MANA 300', 'Winter', 'This final-year course offers students the opportunity to learn how to capitalize on their domain-specific knowledge and recognize opportunities for self-employment or new venture creation.', 'Entrepreneurship: Launching Your Business', 3),
 (129, 'MARK 201', 'Summer', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
 (130, 'MARK 201', 'Fall', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
-(131, 'MARK 201', 'Winter', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3);
+(131, 'MARK 201', 'Winter', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
+(132, 'COMP 352', 'Winter', 'Abstract data types: stacks and queues, trees, priority queues, dictionaries', 'Data Structures and Algorithms', 3);
+
 
 -- --------------------------------------------------------
 
@@ -601,7 +603,10 @@ INSERT INTO `sections` (`section`, `sectionId`, `classroom`, `semester`, `type`,
 ('BB', 348, 'SGW-MB-2.270', 'Winter','Lecture', 1, '17:45:00', '20:15:00', 131,'MARK 201', 2),
 ('D', 349, 'SGW-MB-2.270', 'Winter','Lecture', 1, '08:45:00', '11:30:00', 131,'MARK 201', 3),
 ('E', 350, 'SGW-MB-2.270', 'Winter','Lecture', 2, '11:45:00', '14:30:00', 131,'MARK 201', 4),
-('F', 351, 'SGW-MB-2.270', 'Winter','Lecture', 5, '11:45:00', '14:30:00', 131,'MARK 201', 5);
+('F', 351, 'SGW-MB-2.270', 'Winter','Lecture', 5, '11:45:00', '14:30:00', 131,'MARK 201', 5),
+('X', 352, 'SGW-H-820', 'Winter', 'Lecture', 13, '1:15:00', '2:30:00', 132, 'COMP 352', 1),
+('X XA', 353, 'SGW-H-429', 'Winter', 'Tutorial', 1, '4:15:00', '5:05:00', 132, 'COMP 352', 2),
+('X XB', 354, 'SGW-H-619', 'Winter', 'Tutorial', 3, '4:15:00', '5:05:00', 132, 'COMP 352', 3);
 
 
 -- --------------------------------------------------------
