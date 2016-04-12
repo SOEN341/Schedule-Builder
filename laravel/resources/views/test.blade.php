@@ -41,7 +41,65 @@ foreach ($decodedrem as $key => $key_value) {
 
 $schedule= new Schedule($coursesRem,$coursesDone,4,'Monday','Morning',$priorityPrereq);
 
-var_dump($schedule);
+$postCull=Array();
+
+//var_dump($schedule);
+
+foreach ($schedule->courses as $x => $x_value) {
+	$query ="SELECT * FROM courses where coursecode='$x_value' ";
+	// Check if these credentials are taken
+	$response= mysqli_query($dbc,$query);
+
+	$answer= mysqli_fetch_array($response);
+
+	$cid=$answer['courseId'];
+
+	$query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid' ";
+	// Check if these credentials are taken
+	$response= mysqli_query($dbc,$query);
+
+	$answer2= mysqli_fetch_array($response);
+
+	//var_dump($answer2);
+
+	$json=json_decode($answer2['0'],true);
+
+	$temp=$json['List'];
+
+	var_dump($json);
+
+	//echo $json['List'];
+
+	foreach ($json['List'] as $key => $value) {
+		foreach ($value as $x => $x_value) {
+			//array_push($postCull,$x_value);	
+			foreach ($x_value as $y => $y_value) {
+				echo $y_value;			}
+		}
+		
+	}
+
+
+	
+	
+	//array_push($postCull,$json['courseCode']);
+		   
+	
+}
+
+var_dump($postCull);
+
+$
+
+$query ="SELECT * FROM prerequisites where username='$username' ";
+// Check if these credentials are taken
+
+$response= mysqli_query($dbc,$query);
+
+$array= mysqli_fetch_array($response);
+
+$coursesDone=Array();
+$coursesRem=Array();
 
 
 // $query ="SELECT * FROM courses where username='$username' ";
