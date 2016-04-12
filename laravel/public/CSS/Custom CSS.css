@@ -44,7 +44,8 @@ a{
 
 
 /* CSS for file "AccountPage" only */
-.account{
+.account
+{
 		margin-top: 75px;
         padding-left: 25px;
 		background-color: #34495e;
@@ -74,3 +75,26 @@ a{
 {
 	line-height: 700%;
 }
+
+/* CSSS for "PreferencePage" only */
+
+#title3
+{
+    color: #34495e;
+    font-weight: bold;
+    font-family: Lato;
+    letter-spacing: 1px;
+}
+
+.Grid
+{
+    color: #FFF;
+    font-family: Sans-serif, Open sans
+}
+
+.CPS
+{
+    margin-top: 10px;
+}
+
+
