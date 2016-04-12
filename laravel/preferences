@@ -1,17 +1,18 @@
 <?php
+require_once('time.php');
 class Schedule {
 	public $courses=Array(); //courses that were added successfully
-	public $time= array("Monday"=>"", "Tuesday"=>"", "Wednesday"=>"", "Thursday"=>"","Friday"=>""); // list of times for conflict check purposes
 	public $priority =Array(); ///array of hardcoded  priority courses
+	public $times=Array();
 	public $semester=''; //semester
 	public $courseload='';
 	public $coursesNeeded=Array(); //list of  courses that the user has
 	public $coursesTaken=Array(); //list of courses that the user has taken
 	public $prefTime='';
 	public $dayOff='';
+	public $schedule= Array();
 
 	
-// array_intersect()	Compare arrays, and returns the matches (compare values only)
 
 	function __construct($coursesNeeded,$coursesTaken,$courseload,$prefTime,$dayOff,$priority){
 		$this->coursesTaken=$coursesTaken;
@@ -33,6 +34,27 @@ class Schedule {
 
 		//$this->courses=array_udiff($priority,$coursesTaken,"myfunction"); //remove the courses that were taken by the user from the priority. 
 		$this->courses=array_intersect(array_udiff($priority,$coursesTaken,"myfunction"), $coursesNeeded);
+
+	}
+
+
+	function  addCourse($Course){
+
+	// add a lecture,   $course->lectures
+	//create an object time for all the lecture sections in the array, using a loop
+	//compare with all the times object in the current schedule. using a loop
+	//if there are no conflicts add new time to the  $times arrays and add the course to the $schedule array
+	//potential for preferences
+
+
+	// add a tutorial
+	//create an object time for all the tutorials sections in the array, using a loop
+	//repeat above procedures
+
+
+	// add a lab if needed
+
+
 
 	}
 
