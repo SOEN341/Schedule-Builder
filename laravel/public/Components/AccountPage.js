@@ -11,7 +11,7 @@ var AccountPage = React.createClass({
 	
 	render: function() {
 		return(
-		 <div id="title">
+		 <div className="account">
 		 {this.state.usernameDialogOpen? <ChangeUsernameDialog close={this.closeUsernameDialog} change={this.changeUsername}/>: null}
 		 {this.state.emailDialogOpen? <ChangeEmailDialog close={this.closeEmailDialog} change={this.changeEmail}/>: null}
 		 {this.state.passwordDialogOpen? <ChangePasswordDialog close={this.closePasswordDialog}/>: null}
@@ -19,10 +19,10 @@ var AccountPage = React.createClass({
 			 <div id="line-space">
 			  <RBS.Grid fluid={true} style={{textAlign: 'center'}}>
 				<RBS.Row>
-					Username: <strong>{this.state.username}</strong> <RBS.Button bsSize="xsmall" onClick={this.openUsernameDialog}>Change</RBS.Button>
+					<p id="labels">Username: <strong id="strong">{this.state.username}</strong> <RBS.Button bsSize="xsmall" onClick={this.openUsernameDialog}>Change</RBS.Button></p>
 				</RBS.Row>
 			    <RBS.Row>
-					E-mail: <strong>{this.state.email}</strong> <RBS.Button bsSize="xsmall" onClick={this.openEmailDialog}>Change</RBS.Button>
+					<p id="labels">E-mail:<strong id="strong">{this.state.email}</strong> <RBS.Button bsSize="xsmall" onClick={this.openEmailDialog}>Change</RBS.Button></p> 
 				</RBS.Row>
 				<RBS.Row>
 					<RBS.Button onClick={this.openPasswordDialog}>Change Password</RBS.Button>
@@ -43,9 +43,9 @@ var AccountPage = React.createClass({
 	
 	loadCookies: function() {
 		var username=cookieManager.getCookie('username');
-		if(username=='') {
-			this.props.changePage(0);
-		}
+//		if(username=='') {
+	//		this.props.changePage(0);
+//		}
 		var email=cookieManager.getCookie('email');
 		if(email=='') {
 			var self=this;
@@ -465,7 +465,7 @@ var ChangePasswordDialog = React.createClass({
 var Title = React.createClass({
 	render: function(){
 		return(
-			<h1> Account Information </h1>
+			<h2 id="title2"> Account Information </h2>
 		)
 	}
 	
