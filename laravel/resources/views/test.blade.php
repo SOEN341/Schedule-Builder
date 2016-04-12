@@ -170,6 +170,7 @@ foreach ($arrayofcourses as $key => $value) {
 	// if (count($schedule->schedule)==$courseload) {
 	// 	break;
 	// }
+	//var_dump($value);
 	$schedule->addCourse($value);
 }
 
@@ -259,9 +260,38 @@ foreach ($remaininglist as $x => $x_value) {
 //var_dump($postCull2);
 $remaininglist=array_unique(array_diff(array_unique($postCull2),array_unique($anot2)));	//list of priotiry courses after the prereq were removed
 
-var_dump($remaininglist);
+// var_dump($remaininglist)
+//---------------------------------------------------------------------------------------------------------------
+//transforming into courses objects again
+$arrayofcourses2=Array();
 
-foreach ($remaininglist as $key => $value) {
+foreach ($remaininglist as $key => $value){
+	//$temp = $value['number'];
+	//$queryForCourseLecture = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
+	//$queryForCourseTutorial = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
+	//$queryForCourseLab = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
+
+	$queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
+	$queryForCourseTutorial = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
+	$queryForCourseLab = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
+	$jsonLectures = json_encode($queryForCourseLecture);
+	$jsonTutorials = json_encode($queryForCourseTutorial);
+	$jsonLabs = json_encode($queryForCourseLab);
+	//echo '"';
+	//$query ="SELECT * FROM sections where courseCode='$value' ";
+	array_push($coursesLectures, $jsonLectures);
+	array_push($coursesTutorials,$jsonTutorials);
+	array_push($coursesLabs, $jsonLabs);
+
+	//TODO: this returns all the sections
+	//TODO: create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
+	$course = new Course($value, $coursesLectures, $coursesTutorials, $coursesLabs);
+	//var_dump($course->getName());
+	array_push($arrayofcourses2,$course);
+
+}
+
+foreach ($arrayofcourses2 as $key => $value) {
 	// if (count($schedule->schedule)==$courseload) {
 	// 	break;
 	// }
@@ -274,61 +304,9 @@ foreach ($remaininglist as $key => $value) {
 
 
 
+//generating the course sequence
 
 
-
-//var_dump($schedule);
-
-/*
-//print_r(array_values($coursesInformation));
-//var_dump($coursesInformation['0']);
-echo "<br/>";
-var_dump($coursesLectures['0']);
-echo "<br/>";
-var_dump($coursesTutorials['0']);
-echo "<br/>";
-var_dump($coursesLabs['0']);
-echo "<br/>";
-var_dump($coursesLectures['2']);
-echo "<br/>";
-var_dump($coursesTutorials['2']);
-echo "<br/>";
-var_dump($coursesLabs['2']);
-echo "<br/>";
-var_dump($coursesLectures['3']);
-echo "<br/>";
-var_dump($coursesTutorials['3']);
-echo "<br/>";
-var_dump($coursesLabs['3']);
-echo "<br/>";
-var_dump($coursesLectures['4']);
-echo "<br/>";
-var_dump($coursesTutorials['4']);
-echo "<br/>";
-var_dump($coursesLabs['4']);
-echo "<br/>";
-var_dump($coursesLectures['5']);
-echo "<br/>";
-var_dump($coursesTutorials['5']);
-echo "<br/>";
-var_dump($coursesLabs['5']);
-echo "<br/>";
-var_dump($coursesLectures['6']);
-echo "<br/>";
-var_dump($coursesTutorials['6']);
-echo "<br/>";
-var_dump($coursesLabs['6']);
-*/
-/*
-var_dump($coursesLectures);
-echo "<br/>";
-var_dump($coursesTutorials);
-echo "<br/>";
-var_dump($coursesLabs);
-*/
-
-//echo $coursesInformation['0'];
-//print_r(array_values($courses));
 
 
 mysqli_close($dbc);

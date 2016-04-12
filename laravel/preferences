@@ -1,165 +1,198 @@
 <?php
-require_once('Time.php');
-class Schedule {
-	public $courses=Array(); //courses that were added successfully
-	public $priority =Array(); ///array of hardcoded  priority courses
-	public $times=Array();
-	public $semester=''; //semester
-	public $courseload='';
-	public $coursesNeeded=Array(); //list of  courses that the user has
-	public $coursesTaken=Array(); //list of courses that the user has taken
-	public $prefTime='';
-	public $dayOff='';
-	public $schedule= Array();
+ require_once('Time.php');
+	require_once('Course.php');
+class Schedule
+    {
 
-	
+   
+    public $courses = Array(); //courses that were added successfully
+    public $priority = Array(); ///array of hardcoded  priority courses
+    public $arrayOfTimes;
+    public $semester = ''; //semester
+    public $courseload = '';
+    public $coursesNeeded = Array(); //list of  courses that the user has
+    public $coursesTaken = Array(); //list of courses that the user has taken
+    public $prefTime = '';
+    public $dayOff = '';
+    public $schedule = Array();
+    
+    
+    
+    function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $dayOff, $priority)
+        {
+        $this->coursesTaken  = $coursesTaken;
+        $this->coursesNeeded = $coursesNeeded;
+        $this->courseload    = $courseload;
+        $this->prefTime      = $prefTime;
+        $this->dayOff        = $dayOff;
+        $this->priority      = $priority;
+        $this->arrayOfTimes= Array();
+        
+        
+        function myfunction($a, $b)
+            {
+            if ($a === $b)
+                {
+                return 0;
+                }
+            return ($a > $b) ? 1 : -1;
+            }
+        
+        //$this->courses=array_udiff($priority,$coursesTaken,"myfunction"); //remove the courses that were taken by the user from the priority. 
+        $this->courses = array_intersect(array_udiff($priority, $coursesTaken, "myfunction"), $coursesNeeded);
+        
+        }
+    
+    // tries to add a course to the sechdule, returns true if added properly or false if one of the section cannot possibly be added
+    function addCourse($Course)
+        {
+        
+        $Lecture  = $Course->lectures;
+        $Tutorial = $Course->tutorials;
+        $Lab      = $Course->labs;
+        $test     = array();
+        $time     = array();
+        $addTo    = array();
+        $YesOrNo  = true;
+        
+        foreach ($Lecture as $key => $value)
+            {
+            array_push($test, $value = json_decode($value, true));
+            }
+        
+        foreach ($test as $key => $value)
+            {
+           $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime']);
+           array_push($time, $temp);
+            }
 
-	function __construct($coursesNeeded,$coursesTaken,$courseload,$prefTime,$dayOff,$priority){
-		$this->coursesTaken=$coursesTaken;
-		$this->coursesNeeded=$coursesNeeded;
-		$this->courseload=$courseload;
-		$this->prefTime=$prefTime;
-		$this->dayOff=$dayOff;
-		$this->priority=$priority;
+           // var_dump($time);
+           // var_dump($this->arrayOfTimes);
+        
+        foreach ($time as $key => $value)
+            {
+            foreach ($this->arrayOfTimes as $key => $setTimes)
+                {
+                	//var_dump($setTimes);
+                if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
+                    {
+                    $YesOrNo = false;
+                    }
+                 }
+            
+            if ($YesOrNo == true)
+                {
+                array_push($addTo, $value);
+                }
+            $YesOrNo == true;
+            }
+        
+        
+        foreach ($Lecture as $key => $value)
+            {
+            $test = json_decode($value, true);
+            //echo $test['type'];
+            //var_dump($test);
+            
+            for ($i = 0; $i < 1; $i++)
+                {
+                if ($addTo != null)
+                    {
+                    array_push($this->arrayOfTimes, $addTo);
+                    }
+                
+                }
+
+                 //-----------------------------
+
+            $test  = array();
+            $time  = array();
+            $addTo = array();
+            foreach ($Tutorial as $key => $value)
+                {
+                array_push($test, $value = json_decode($value, true));
+                }
 
 
-		function myfunction($a,$b)
-		{
-		if ($a===$b)
-	   {
-	   return 0;
-	   }
-	   return ($a>$b)?1:-1;
-		}
+                      
+            foreach ($test as $key => $value)
+                {
+               $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime']);
+                array_push($time, $temp);
+                }
+            
+            foreach ($time as $key => $value)
+                {
+                foreach ($this->arrayOfTimes as $key => $setTimes)
+                    {
+                    if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
+                        {
+                        $YesOrNo = false;
+                        }
+                    }
+                
+                if ($YesOrNo == true)
+                    {
+                    array_push($addTo, $value);
+                    }
+                $YesOrNo == true;
+                }
+            
+            for ($i = 0; $i < 1; $i++)
+                {
+                if ($addTo != null)
+                    {
+                    array_push($this->arrayOfTimes, $addTo);
+                    }
+                }
 
-		//$this->courses=array_udiff($priority,$coursesTaken,"myfunction"); //remove the courses that were taken by the user from the priority. 
-		$this->courses=array_intersect(array_udiff($priority,$coursesTaken,"myfunction"), $coursesNeeded);
+                  //-----------------------------
 
-	}
 
-// tries to add a course to the sechdule, returns true if added properly or false if one of the section cannot possibly be added
-	function  addCourse($Course){
-	
-	$Lecture = $Course->lectures;
-	$Tutorial = $Course->tutorials;
-	$Lab = $Course->labs;
-	$test = array();
-	$time = array();
-	$addTo = array();
-	$YesOrNo = true;
-	
-	foreach ($Lecture as $key => $value)
-	{
-	array_push($test, $value = json_decode($value, true));
-	}
-	
-	foreach($test as $key => $value)
-	{
-		$temp = new Time($value['dayOffered'],$value['beginTime'],$value['endTime']);
-		array_push($time, $temp);
-	}
-	
-	foreach($time as $key => $value)
-	{
-		foreach($this->times as $key => $setTimes)
-		{
-			if($value.CompareTo($setTimes['dayOffered'],$setTimes['beginTime'],$value['endTime']) == false)
-			{
-				$YesOrNo = false;
-			}
-		}
-		
-		if($YesOrNo == true)
-		{
-			array_push($addTo, $value);
-		}
-		$YesOrNo == true;
-	}
-	
+            $test  = array();
+            $time  = array();
+            $addTo = array();
+            foreach ($Lab as $key => $value)
+                {
+                array_push($test, $value = json_decode($value, true));
+                }
+            
+            foreach ($test as $key => $value)
+                {
+                $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime']);
+                array_push($time, $temp);
+                }
+            
+            foreach ($time as $key => $value)
+                {
+                foreach ($this->arrayOfTimes as $key => $setTimes)
+                    {
+                     if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
+                        {
+                        $YesOrNo = false;
+                        }
+                    }
+                
+                if ($YesOrNo == true)
+                    {
+                    array_push($addTo, $value);
+                    }
+                $YesOrNo == true;
+                }
+            
+            for ($i = 0; $i < 1; $i++)
+                {
+                if ($addTo != null)
+                    {
+                    array_push($this->arrayOfTimes, $addTo);
+                    }
+                }
+            array_push($this->schedule, $this->arrayOfTimes);
+            }
 
-	for($i = 0; $i < 1; $i++)
-	{
-		if($addTo != null)
-		{
-			array_push($this->times,$addTo);
-		}
-	}
-	$test = array();
-	$time = array();
-	$addTo = array();
-	foreach ($Tutorial as $key => $value)
-	{
-	array_push($test, $value = json_decode($value, true));
-	}
-	
-	foreach($test as $key => $value)
-	{
-		$temp = new Time($value['dayOffered'],$value['beginTime'],$value['endTime']);
-		array_push($time, $temp);
-	}
-	
-	foreach($time as $key => $value)
-	{
-		foreach($this->times as $key => $setTimes)
-		{
-			if($value->CompareTo($setTimes['dayOffered'],$setTimes['beginTime'],$value['endTime']) == false)
-			{
-				$YesOrNo = false;
-			}
-		}
-		
-		if($YesOrNo == true)
-		{
-			array_push($addTo, $value);
-		}
-		$YesOrNo == true;
-	}
-	
-	for($i = 0; $i < 1; $i++)
-	{
-		if($addTo != null)
-		{
-			array_push($this->times,$addTo);
-		}
-	}
-	$test = array();
-	$time = array();
-	$addTo = array();
-	foreach ($Lab as $key => $value)
-	{
-	array_push($test, $value = json_decode($value, true));
-	}
-	
-	foreach($test as $key => $value)
-	{
-		$temp = new Time($value['dayOffered'],$value['beginTime'],$value['endTime']);
-		array_push($time, $temp);
-	}
-	
-	foreach($time as $key => $value)
-	{
-		foreach($this->times as $key => $setTimes)
-		{
-			if($value.CompareTo($setTimes['dayOffered'],$setTimes['beginTime'],$value['endTime']) == false)
-			{
-				$YesOrNo = false;
-			}
-		}
-		
-		if($YesOrNo == true)
-		{
-			array_push($addTo, $value);
-		}
-		$YesOrNo == true;
-	}
-	
-	for($i = 0; $i < 1; $i++)
-	{
-		if($addTo != null)
-		{
-			array_push($this->times,$addTo);
-		}
-	}
-	array_push($schedule,$this->times);
-	}
-}
+            
+        
+        }
+
+                      
+    }
