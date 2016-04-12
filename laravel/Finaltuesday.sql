@@ -173,7 +173,9 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
 (130, 'MARK 201', 'Fall', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
 (131, 'MARK 201', 'Winter', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
 (132, 'COMP 352', 'Winter', 'Abstract data types: stacks and queues, trees, priority queues, dictionaries', 'Data Structures and Algorithms', 3),
-(133, 'COMP 232', 'Fall', 'Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction.', 'Mathematics for Computer Science', 3);
+(133, 'COMP 232', 'Fall', 'Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction.', 'Mathematics for Computer Science', 3),
+(134, 'COMP 232', 'Winter', 'Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction.', 'Mathematics for Computer Science', 3),
+(135, 'COMP 232', 'Summer', 'Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction.', 'Mathematics for Computer Science', 3);
 
 -- --------------------------------------------------------
 
@@ -741,10 +743,19 @@ INSERT INTO `sections` (`section`, `sectionId`, `classroom`, `semester`, `type`,
 ('D', 349, 'SGW-MB-2.270', 'Winter', 'Lecture', 1, '08:45:00', '11:30:00', 131, 'MARK 201', 3),
 ('E', 350, 'SGW-MB-2.270', 'Winter', 'Lecture', 2, '11:45:00', '14:30:00', 131, 'MARK 201', 4),
 ('F', 351, 'SGW-MB-2.270', 'Winter', 'Lecture', 5, '11:45:00', '14:30:00', 131, 'MARK 201', 5),
-('X', 352, 'SGW-H-820', 'Winter', 'Lecture', 13, '01:15:00', '02:30:00', 132, 'COMP 352', 1),
-('X XA', 353, 'SGW-H-429', 'Winter', 'Tutorial', 1, '04:15:00', '05:05:00', 132, 'COMP 352', 2),
-('X XB', 354, 'SGW-H-619', 'Winter', 'Tutorial', 3, '04:15:00', '05:05:00', 132, 'COMP 352', 3);
+('X', 352, 'SGW-H-937', 'Winter', 'Lecture', 13, '13:15:00', '14:30:00', 132, 'COMP 352', 1),
+('X XA', 353, 'SGW-H-929', 'Winter', 'Tutorial', 1, '16:15:00', '17:05:00', 132, 'COMP 352', 1),
+('X XB', 354, 'SGW-H-929', 'Winter', 'Tutorial', 3, '16:15:00', '17:05:00', 132, 'COMP 352', 1),
+('X XC', 355, 'SGW-H-917', 'Winter', 'Tutorial', 1, '16:15:00', '17:05:00', 132, 'COMP 352', 1),
+('NNNA', 356, 'SGW-H-520', 'Winter', 'Tutorial', 4, '20:30:00', '22:10:00', 134, 'COMP 232', 1),
+('S SA', 357, 'SGW-H-609', 'Winter', 'Tutorial', 2, '14:45:00', '16:25:00', 134, 'COMP 232', 2),
+('S SB', 358, 'SGW-H-441', 'Winter', 'Tutorial', 2, '14:45:00', '16:25:00', 134, 'COMP 232', 2),
+('WWWA', 359, 'SGW-H-633', 'Winter', 'Tutorial', 2, '20:30:00', '22:10:00', 134, 'COMP 232', 3),
+('NN', 360, 'SGW-H-520', 'Winter', 'Lecture', 4, '17:45:00', '20:15:00', 134, 'COMP 232', 1),
+('S', 361, 'SGW-H-620', 'Winter', 'Lecture', 24, '13:15:00', '14:30:00', 134, 'COMP 232', 2),
+('WW', 362, 'SGW-H-633', 'Winter', 'Lecture', 4, '17:45:00', '20:15:00', 134, 'COMP 232', 3);
 
+---(134, 'COMP 232',)
 -- --------------------------------------------------------
 
 --
