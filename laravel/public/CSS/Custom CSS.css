@@ -44,13 +44,33 @@ a{
 
 
 /* CSS for file "AccountPage" only */
-#title
+.account{
+		margin-top: 75px;
+        padding-left: 25px;
+		background-color: #34495e;
+        height: 400px;
+        color: #FFFFFF;
+        font-family: Lato
+}
+#title2
 {
-	margin-left: 40px;
+	font-size : 50px;
+        padding-top: 20px;
+        text-align: center;
 }
 
-/* CSS for file "AccountPage" only */
+#labels
+{
+        font-size: 20px;
+        letter-spacing: 1px;
+}
+
+#strong
+{
+        color: #7f7fbf;
+}
+
 #line-space
 {
-	line-height: 300%;
+	line-height: 700%;
 }
