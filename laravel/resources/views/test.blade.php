@@ -3,10 +3,7 @@ require_once('../mysqli_connect.php');
 require_once('../preferences');
 require_once('../Course.php');
 //$username=$_POST['username'];
-//$username='Jason123';
 $username='user17';
-
-
 
 $coursesDone=Array();
 $coursesRem=Array();
@@ -47,17 +44,93 @@ foreach ($decodedrem as $key => $key_value) {
 		   }
 }
 
-var_dump($priorityPrereq);
+array_push($coursesDone,"MATH 205","MATH 203","MATH 204"); //hardcoded because not added autamitically when the course list is generated
+
+//var_dump($priorityPrereq);
 
 var_dump($coursesDone);
 
-var_dump($coursesRem);
+// var_dump($coursesRem);
 
 
 
 $schedule= new Schedule($coursesRem,$coursesDone,4,'Monday','Morning',$priorityPrereq);
 
-$courses=$schedule->coursesRem;		
+$courses=$schedule->courses;	
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//removing the course the user does not have the prereq for
+
+$postCull=Array();
+$anot=Array();
+
+var_dump($courses);
+
+foreach ($schedule->courses as $x => $x_value) {
+	//echo "$x_value";
+	$query ="SELECT * FROM courses where coursecode='$x_value' ";
+	// Check if these credentials are taken
+	$response= mysqli_query($dbc,$query);
+
+	$answer= mysqli_fetch_array($response);
+
+	$cid=$answer['courseId'];
+
+	//echo " $cid"  ;
+
+	$query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid' ";
+	// Check if these credentials are taken
+	$response= mysqli_query($dbc,$query);
+
+	//var_dump($response);	
+
+	$answer2= mysqli_fetch_array($response);
+
+	//var_dump($answer2);
+
+	$json=json_decode($answer2['prerequisitesList'],true);
+
+	//$temp=$json['List'];
+
+	//var_dump($json);
+
+	//echo $json['List']; //array to string conversion error
+
+	$temp=$json['List'];
+
+	$fcourse=$x_value;
+
+	echo "$fcourse";
+
+	//var_dump($temp);
+
+	if(count($temp)===0)
+		array_push($postCull,$fcourse);
+
+
+	foreach ($temp as $key => $value) {		
+			//echo $value['courseCode'];
+			$val=$value['courseCode'];
+			echo " needs:" . $val;
+			if(in_array("$val", $coursesDone,true)){
+				echo " True.  ";
+				array_push($postCull,$fcourse);
+			} else {
+				echo "not.    ";
+				array_push($anot, $fcourse);
+			}				
+	
+		
+	}
+
+	}	
+	
+
+
+	// --------------------------------------------------------------------------------------------------
+
+$courses=array_unique(array_diff($postCull,$anot));	//list of priotiry courses after the prereq were removed	
 
 
 // 	//this returns all the sections
@@ -142,72 +215,6 @@ var_dump($coursesLabs);
 
 //echo $coursesInformation['0'];
 //print_r(array_values($courses));
-
-
-
-// $postCull=Array();
-
-// //var_dump($schedule);
-
-// foreach ($schedule->courses as $x => $x_value) {
-// 	echo "$x_value";
-// 	$query ="SELECT * FROM courses where coursecode='$x_value' ";
-// 	// Check if these credentials are taken
-// 	$response= mysqli_query($dbc,$query);
-
-// 	$answer= mysqli_fetch_array($response);
-
-// 	$cid=$answer['courseId'];
-
-// 	// echo "   $cid"  ;
-
-// 	// $query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid' ";
-// 	// // Check if these credentials are taken
-// 	// $response= mysqli_query($dbc,$query);
-
-// 	// echo mysqli_error($dbc);
-
-// 	// $answer2= mysqli_fetch_array($response);
-
-// 	// //var_dump($answer2);
-
-// 	// $json=json_decode($answer2['prerequisitesList'],true);
-
-// 	// //$temp=$json['List'];
-
-// 	// var_dump($json);
-
-// 	//echo $json['List'];
-
-
-
-// }
-
-// 	// foreach ($json['List'] as $key => $value) {
-// 	// 	foreach ($value as $x => $x_value) {
-// 	// 		//array_push($postCull,$x_value);	
-// 	// 		var_dump($x_value);
-// 	// 		// foreach ($x_value as $y => $y_value) {
-// 	// 		// 	echo $y_value;			}
-// 	// 	}
-		
-// 	// }	
-	
-// 	//array_push($postCull,$json['courseCode']);
-
-
-
-$sql = "SELECT * FROM `prerequisites`";
-// Check if these credentials are taken
-$result= mysqli_query($dbc,$sql);
-
-//echo mysqli_error($dbc);
-
-$result3= mysqli_fetch_array($result);
-
-var_dump($result3);
-
-
 
 
 mysqli_close($dbc);

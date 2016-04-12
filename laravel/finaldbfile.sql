@@ -174,8 +174,8 @@ INSERT INTO `courses` (`courseId`, `courseCode`, `semester`, `description`, `nam
 (129, 'MARK 201', 'Summer', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
 (130, 'MARK 201', 'Fall', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
 (131, 'MARK 201', 'Winter', 'This course introduces non-Commerce students to the managerial concepts and practices of marketing. The process of developing a marketing strategy is examined.', 'Introduction to Marketing', 3),
-(132, 'COMP 352', 'Winter', 'Abstract data types: stacks and queues, trees, priority queues, dictionaries', 'Data Structures and Algorithms', 3);
-
+(132, 'COMP 352', 'Winter', 'Abstract data types: stacks and queues, trees, priority queues, dictionaries', 'Data Structures and Algorithms', 3),
+(133, 'COMP 232', 'Fall', 'Sets. Propositional logic and predicate calculus. Functions and relations. Elements of number theory. Proof techniques: direct proof, indirect proof, proof by contradiction, proof by induction.', 'Mathematics for Computer Science', 3);
 
 -- --------------------------------------------------------
 
@@ -802,4 +802,5 @@ INSERT INTO `prerequisites` (`prerequisiteId`, `courseId`, `prerequisitesList`) 
 (128,128,'{"List":[]}'),
 (129,129,'{"List":[]}'),
 (130,130,'{"List":[]}'),
-(131,131,'{"List":[]}');
+(131,131,'{"List":[]}'),
+(133,133,'{"List":[{"type":"1", "courseCode" : "MATH 204"},{"type":"1", "courseCode" : "MATH 203"}]}');
