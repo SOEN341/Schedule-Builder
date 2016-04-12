@@ -57,11 +57,17 @@ class Schedule
         
         foreach ($Lecture as $key => $value)
             {
-            array_push($test, $value = json_decode($value, true));
+            	//var_dump($value);
+            	//echo strlen($value);
+            	if (strlen($value) ==212) //sectionts that matched the right format
+            array_push($test,json_decode($value, true));
             }
+
+          //  var_dump($test);
         
         foreach ($test as $key => $value)
             {
+          // var_dump($value);	
            $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime']);
            array_push($time, $temp);
             }
@@ -110,11 +116,13 @@ class Schedule
             $addTo = array();
             foreach ($Tutorial as $key => $value)
                 {
+                	if (strlen($value) ==212) //sectionts that matched the right format
                 array_push($test, $value = json_decode($value, true));
                 }
 
 
                       
+          
             foreach ($test as $key => $value)
                 {
                $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime']);
@@ -154,6 +162,7 @@ class Schedule
             $addTo = array();
             foreach ($Lab as $key => $value)
                 {
+                	if (strlen($value) ==212) //sectionts that matched the right format
                 array_push($test, $value = json_decode($value, true));
                 }
             
@@ -190,7 +199,8 @@ class Schedule
             array_push($this->schedule, $this->arrayOfTimes);
             }
 
-            
+
+                   
         
         }
 

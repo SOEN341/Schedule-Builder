@@ -233,7 +233,7 @@ array_push($remainingList,$value);
 //var_dump($courses);
 //var_dump(array_unique($remainingList));
 $remaininglist=array_diff($remainingList, $courses);
-var_dump(array_unique($remaininglist));
+//var_dump(array_unique($remaininglist));
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
