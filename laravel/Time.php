@@ -14,7 +14,7 @@ class Time {
         $this->EndTime=$OldEnd;
     }
 
-    function Test($NewDay,$NewStart,$NewEnd){
+    function CompareTo($NewDay,$NewStart,$NewEnd){
 
         $modifyOne = strtotime($this->StartTime);
         $modifyTwo = strtotime($this->EndTime);
@@ -23,17 +23,16 @@ class Time {
 
         if($NewDay == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) ||(($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
         {
-            echo "The test works";
-        }
-
-        if($NewDay == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
-        {
-            echo "The test works";
+            return False;
+            if($NewDay == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
+            {
+                return False;
+            }
         }
 
         else
         {
-            echo "Everything is good";
+            return True;
         }
 
     }
