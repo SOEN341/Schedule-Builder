@@ -43,9 +43,9 @@ var AccountPage = React.createClass({
 	
 	loadCookies: function() {
 		var username=cookieManager.getCookie('username');
-//		if(username=='') {
-	//		this.props.changePage(0);
-//		}
+		if(username=='') {
+			this.props.changePage(0);
+		}
 		var email=cookieManager.getCookie('email');
 		if(email=='') {
 			var self=this;
