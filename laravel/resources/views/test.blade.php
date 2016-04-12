@@ -48,7 +48,7 @@ array_push($coursesDone,"MATH 205","MATH 203","MATH 204"); //hardcoded because n
 
 //var_dump($priorityPrereq);
 
-var_dump($coursesDone);
+//var_dump($coursesDone);
 
 // var_dump($coursesRem);
 
@@ -65,7 +65,7 @@ $courses=$schedule->courses;
 $postCull=Array();
 $anot=Array();
 
-var_dump($courses);
+//var_dump($courses);
 
 foreach ($schedule->courses as $x => $x_value) {
 	//echo "$x_value";
@@ -101,7 +101,7 @@ foreach ($schedule->courses as $x => $x_value) {
 
 	$fcourse=$x_value;
 
-	echo "$fcourse";
+	//echo "$fcourse";
 
 	//var_dump($temp);
 
@@ -112,26 +112,25 @@ foreach ($schedule->courses as $x => $x_value) {
 	foreach ($temp as $key => $value) {		
 			//echo $value['courseCode'];
 			$val=$value['courseCode'];
-			echo " needs:" . $val;
+			//echo " needs:" . $val;
 			if(in_array("$val", $coursesDone,true)){
-				echo " True.  ";
+			//	echo " True.  ";
 				array_push($postCull,$fcourse);
 			} else {
-				echo "not.    ";
+				//echo "not.    ";
 				array_push($anot, $fcourse);
-			}				
-	
+			}
 		
 	}
 
 	}	
-	
-
-
 	// --------------------------------------------------------------------------------------------------
 
 $courses=array_unique(array_diff($postCull,$anot));	//list of priotiry courses after the prereq were removed	
 
+$schedule->courses=$courses;
+
+$arrayofcourses=Array();
 
 // 	//this returns all the sections
 // 	//create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
@@ -162,8 +161,18 @@ foreach ($courses as $key => $value){
 	//TODO: create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
 	$course = new Course($value, $coursesLectures, $coursesTutorials, $coursesLabs);
 	//var_dump($course->getName());
-	var_dump($course);
+	array_push($arrayofcourses, $course);
+	//var_dump($course);
 }
+
+//var_dump($arrayofcourses);
+
+foreach ($arrayofcourses as $key => $value) {
+	$schedule->addCourse($value);
+}
+
+
+var_dump($schedule);
 
 /*
 //print_r(array_values($coursesInformation));
