@@ -43,41 +43,122 @@ class Schedule {
 	$Lecture = $Course->lectures;
 	$Tutorial = $Course->tutorials;
 	$Lab = $Course->labs;
-	
-	foreach ($Lecture as $key => $value){
-	$test = json_decode($value, true);
-	//echo $test['type'];
-	var_dump($test);
-	}
+	$test = array();
 	$time = array();
-	//var_dump($Lecture);
+	$addTo = array();
+	$YesOrNo = true;
 	
-	//for($i = 1; i < count($test); $1++)
-	//{
-	//	array_push($time, )
-	//}
-	//$time = new Time();
-	
-	
-	// add a lecture,   $course->lectures
-	//create an object time for all the lecture sections in the array, using a loop
-	//compare with all the times object in the current schedule. using a loop
-	//if there are no conflicts add new time to the  $times arrays and add the course to the $schedule array
-	//potential for preferences
-
-
-	// add a tutorial
-	//create an object time for all the tutorials sections in the array, using a loop
-	//repeat above procedures
-
-
-	// add a lab if needed
-
-
-
+	foreach ($Lecture as $key => $value)
+	{
+	array_push($test, $value = json_decode($value, true));
 	}
-
-
-
+	
+	foreach($test as $key => $value)
+	{
+		$temp = new Time($value['dayOffered'],$value['beginTime'],$value['endTime']);
+		array_push($time, $temp);
+	}
+	
+	foreach($time as $key => $value)
+	{
+		foreach($this->times as $key => $setTimes)
+		{
+			if($value.CompareTo($setTimes['dayOffered'],$setTimes['beginTime'],$value['endTime']) == false)
+			{
+				$YesOrNo = false;
+			}
+		}
+		
+		if($YesOrNo == true)
+		{
+			array_push($addTo, $value);
+		}
+		$YesOrNo == true;
+	}
+	
+	for($i = 0; $i < 1; $i++)
+	{
+		if($addTo != null)
+		{
+			array_push($this->times,$addTo);
+		}
+	}
+	$test = array();
+	$time = array();
+	$addTo = array();
+	foreach ($Tutorial as $key => $value)
+	{
+	array_push($test, $value = json_decode($value, true));
+	}
+	
+	foreach($test as $key => $value)
+	{
+		$temp = new Time($value['dayOffered'],$value['beginTime'],$value['endTime']);
+		array_push($time, $temp);
+	}
+	
+	foreach($time as $key => $value)
+	{
+		foreach($this->times as $key => $setTimes)
+		{
+			if($value->CompareTo($setTimes['dayOffered'],$setTimes['beginTime'],$value['endTime']) == false)
+			{
+				$YesOrNo = false;
+			}
+		}
+		
+		if($YesOrNo == true)
+		{
+			array_push($addTo, $value);
+		}
+		$YesOrNo == true;
+	}
+	
+	for($i = 0; $i < 1; $i++)
+	{
+		if($addTo != null)
+		{
+			array_push($this->times,$addTo);
+		}
+	}
+	$test = array();
+	$time = array();
+	$addTo = array();
+	foreach ($Lab as $key => $value)
+	{
+	array_push($test, $value = json_decode($value, true));
+	}
+	
+	foreach($test as $key => $value)
+	{
+		$temp = new Time($value['dayOffered'],$value['beginTime'],$value['endTime']);
+		array_push($time, $temp);
+	}
+	
+	foreach($time as $key => $value)
+	{
+		foreach($this->times as $key => $setTimes)
+		{
+			if($value.CompareTo($setTimes['dayOffered'],$setTimes['beginTime'],$value['endTime']) == false)
+			{
+				$YesOrNo = false;
+			}
+		}
+		
+		if($YesOrNo == true)
+		{
+			array_push($addTo, $value);
+		}
+		$YesOrNo == true;
+	}
+	
+	for($i = 0; $i < 1; $i++)
+	{
+		if($addTo != null)
+		{
+			array_push($this->times,$addTo);
+		}
+	}
+	array_push($schedule,$this->times);
+	}
 }
-
