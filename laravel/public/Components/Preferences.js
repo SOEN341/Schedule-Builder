@@ -75,10 +75,10 @@ var PreferencesPage = React.createClass({
 	
 	loadCookies: function() {
 		var username=cookieManager.getCookie('username');
-		if(username=='') {
+/*		if(username=='') {
 			this.props.changePage(0);
 		}
-		var self=this;
+*/		var self=this;
 		var takenCourses=cookieManager.getCookie('taken');
 		if(takenCourses=='') {
 			takenCourses=[];
@@ -862,18 +862,22 @@ var Preferences = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<h3>Preferences</h3>
-				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5'}}>
-					<RBS.Row>
-						<InputElement label='Classes per semester' value={this.props.courseLoad} onChange={this.props.onClassesChange} help={this.props.courseLoadHelp} bsStyle={this.props.courseLoadValid}/>
-					</RBS.Row>
-					<RBS.Row>
-						<SelectElement label='Desired day off' value={this.props.day} placeholder='None' data={['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']} onChange={this.props.onDayChange}/>
-					</RBS.Row>
-					<RBS.Row>
-						<SelectElement label='Preferred time of day' value={this.props.time} placeholder='Any' data={['Any', 'Mornings', 'Afternoons', 'Evenings']} onChange={this.props.onTimeChange}/>
-					</RBS.Row>
-				</RBS.Grid>
+				<h3 id="title3">Preferences</h3>
+				 <div className="Grid">
+					<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#34495e', borderRadius: '15px'}}>
+						<RBS.Row>
+							<div className="CPS">
+								<InputElement label='Classes per semester' value={this.props.courseLoad} onChange={this.props.onClassesChange} help={this.props.courseLoadHelp} bsStyle={this.props.courseLoadValid}/>
+							</div>
+						</RBS.Row>
+						<RBS.Row>
+							<SelectElement label='Desired day off' value={this.props.day} placeholder='None' data={['None','Monday','Tuesday','Wednesday', 'Thursday', 'Friday']} onChange={this.props.onDayChange}/>
+						</RBS.Row>
+						<RBS.Row>
+							<SelectElement label='Preferred time of day' value={this.props.time} placeholder='Any' data={['Any', 'Mornings', 'Afternoons', 'Evenings']} onChange={this.props.onTimeChange}/>
+						</RBS.Row>
+					</RBS.Grid>
+				 </div>
 			</div>
 		)
 	},
@@ -910,7 +914,7 @@ var Classes = React.createClass({
 		return (
 			<div>
 				{this.state.confirmDialogOpen? <ConfirmationDialog close={this.closeConfirmDialog} confirm={this.generateClassList} reject={this.closeConfirmDialog} message='Are you sure you wish to generate the course lists? This will overwrite your current lists based on your number of semesters and the recommended course sequence'/>: null}
-				<h3>Classes</h3>
+				<h3 id="title3">Classes</h3>
 				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5', paddingTop:'10px'}}>
 					<RBS.Row>
 						<RBS.Col md={2}/>

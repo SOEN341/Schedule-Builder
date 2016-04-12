@@ -288,7 +288,7 @@ var mockServerBridge = {
 		
 	},
 	
-	editUsername: function(newUsername, response) {
+	editUsername: function(newUsername, password, response) {
 		if(newUsername=='taken')
 			response({result:'false', username: 'user'});
 		else {

@@ -21,8 +21,8 @@ body
 }
 
 #title{
-	margin: 0px;
-	padding-top: 20px;
+	margin-left: 30px;
+	padding-top: 10px;
 	font-weight: bold;
 	font-size: 40px;
 	font-family: Lato;
@@ -44,7 +44,8 @@ a{
 
 
 /* CSS for file "AccountPage" only */
-.account{
+.account
+{
 		margin-top: 75px;
         padding-left: 25px;
 		background-color: #34495e;
@@ -54,7 +55,7 @@ a{
 }
 #title2
 {
-	font-size : 50px;
+		font-size : 50px;
         padding-top: 20px;
         text-align: center;
 }
@@ -74,3 +75,26 @@ a{
 {
 	line-height: 700%;
 }
+
+/* CSSS for "PreferencePage" only */
+
+#title3
+{
+    color: #34495e;
+    font-weight: bold;
+    font-family: Lato;
+    letter-spacing: 1px;
+}
+
+.Grid
+{
+    color: #FFF;
+    font-family: Sans-serif, Open sans
+}
+
+.CPS
+{
+    margin-top: 10px;
+}
+
+
