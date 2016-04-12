@@ -17,6 +17,10 @@ $coursesRem=Array();
 $coursesInformationDone = Array();
 $coursesInformationRem = Array();
 
+$tempQueryForCourseLecture = Array();
+$tempQueryForCourseTutorial = Array();
+$tempQueryForCourseLab = Array();
+
 $courseload='';
 
 $query ="SELECT * FROM users where username='$username' ";
@@ -140,17 +144,59 @@ $schedule->courses=$courses;
 $arrayofcourses=Array();
 
 foreach ($courses as $key => $value){
-	//$temp = $value['number'];
-	//$queryForCourseLecture = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
-	//$queryForCourseTutorial = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
-	//$queryForCourseLab = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
-
 	$queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
 	$queryForCourseTutorial = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
 	$queryForCourseLab = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
-	$jsonLectures = json_encode($queryForCourseLecture);
-	$jsonTutorials = json_encode($queryForCourseTutorial);
-	$jsonLabs = json_encode($queryForCourseLab);
+	$tempArr = $queryForCourseLab;
+
+	$responseLecture = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'");
+	$responseTutorial = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'");
+	$responseLab= mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'");;
+
+
+	if(mysqli_num_rows($responseLecture) <= 0){
+		continue;
+	}
+	else{
+		foreach ($queryForCourseLecture as $key2 => $lecture){
+			array_push($tempQueryForCourseLecture, $lecture);
+		}
+	}
+	if(mysqli_num_rows($responseTutorial) <= 0){
+		continue;
+	}
+	else{
+		foreach ($queryForCourseTutorial as $key3 => $tutorial){
+			array_push($tempQueryForCourseTutorial, $tutorial);
+		}
+	}
+
+
+	if(mysqli_num_rows($responseLab) <= 0){
+		continue;
+	}
+	else{
+		foreach ($queryForCourseLab as $key4 => $labStuff){
+			array_push($tempQueryForCourseLab, $labStuff);
+		}
+	}
+
+
+	//$tempQueryForCourseLab = array_filter($tempArr,'strlen');
+	//print_r(array_values($tempQueryForCourseLecture));
+	//print_r(array_values($tempQueryForCourseTutorial));
+
+
+
+	//var_dump($queryForCourseLecture);
+
+
+
+	$jsonLectures = json_encode($tempQueryForCourseLecture);
+	$jsonTutorials = json_encode($tempQueryForCourseTutorial);
+	$jsonLabs = json_encode($tempQueryForCourseLab);
+
+
 	//echo '"';
 	//$query ="SELECT * FROM sections where courseCode='$value' ";
 	array_push($coursesLectures, $jsonLectures);
