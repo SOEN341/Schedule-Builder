@@ -44,11 +44,20 @@ class Schedule {
 	$Tutorial = $Course->tutorials;
 	$Lab = $Course->labs;
 	
-	$test = json_decode($Lecture, true);
+	foreach ($Lecture as $key => $value){
+	$test = json_decode($value, true);
+	//echo $test['type'];
+	var_dump($test);
+	}
+	$time = array();
+	//var_dump($Lecture);
 	
-	var_dump($Lecture);
+	//for($i = 1; i < count($test); $1++)
+	//{
+	//	array_push($time, )
+	//}
+	//$time = new Time();
 	
-	$time = new Time();
 	
 	// add a lecture,   $course->lectures
 	//create an object time for all the lecture sections in the array, using a loop

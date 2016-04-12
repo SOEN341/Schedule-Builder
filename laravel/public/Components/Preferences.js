@@ -915,13 +915,15 @@ var Classes = React.createClass({
 			<div>
 				{this.state.confirmDialogOpen? <ConfirmationDialog close={this.closeConfirmDialog} confirm={this.generateClassList} reject={this.closeConfirmDialog} message='Are you sure you wish to generate the course lists? This will overwrite your current lists based on your number of semesters and the recommended course sequence'/>: null}
 				<h3 id="title3">Classes</h3>
-				<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#D0C5C5', paddingTop:'10px'}}>
-					<RBS.Row>
-						<RBS.Col md={2}/>
-						<InputElement label='Semesters Taken' help={this.state.semestersHelp} bsStyle={this.state.semestersValid} value={this.state.semesters} onChange={this.onSemestersChange} label_md={2} input_md={4}/>
-						<RBS.Col md={2}><RBS.Button onClick={this.checkGenerateClassList}>Generate course list</RBS.Button></RBS.Col>
-					</RBS.Row>
-				</RBS.Grid>
+					<div className="Grid">
+						<RBS.Grid fluid={true} style={{width:'40%', backgroundColor:'#34495e', paddingTop:'10px', borderTopLeftRadius: '15px', borderTopRightRadius: '15px'}}>
+							<RBS.Row>
+								<RBS.Col md={2}/>
+								<InputElement label='Semesters Taken' help={this.state.semestersHelp} bsStyle={this.state.semestersValid} value={this.state.semesters} onChange={this.onSemestersChange} label_md={2} input_md={4}/>
+								<RBS.Col md={2}><RBS.Button onClick={this.checkGenerateClassList}>Generate course list</RBS.Button></RBS.Col>
+							</RBS.Row>
+						</RBS.Grid>
+					</div>
 				<TakenClasses openDialog={this.props.openDialog} courses={this.props.takenCourses} remove={this.props.removeTakenCourse} binder={this.props.binder} editCourse={this.props.editTakenCourse}/>
 				<NeededClasses openDialog={this.props.openDialog} courses={this.props.neededCourses} remove={this.props.removeNeededCourse} binder={this.props.binder} editCourse={this.props.editNeededCourse}/>
 			</div>
@@ -996,7 +998,7 @@ var TakenClasses = React.createClass({
 			}
 		}
 		return (
-			<div style={{width:'40%', backgroundColor:'#D0C5C5', marginLeft:'30%'}}>
+			<div style={{width:'40%', backgroundColor:'#34495e', marginLeft:'30%'}}>
 				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
 					<thead onClick={this.expand}>
 						<tr>
@@ -1053,8 +1055,8 @@ var NeededClasses = React.createClass({
 			}
 		}
 		return (
-			<div style={{width:'40%', backgroundColor:'#D0C5C5', marginLeft:'30%', paddingBottom:'10px'}}>
-				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%'}}>
+			<div style={{width:'40%', backgroundColor:'#34495e', marginLeft:'30%', paddingBottom:'10px'}}>
+				<RBS.Table striped bordered hover style={{backgroundColor:'white', width:'98%', marginLeft:'1%', borderBottomLeftRadius: '15px'}}>
 					<thead onClick={this.expand}>
 						<tr>
 							<th colSpan={3}>{header}<img src={image} style={{height: '15px', width: '15px'}}/></th>
