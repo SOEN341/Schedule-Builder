@@ -47,7 +47,7 @@ class Schedule {
 	foreach ($Lecture as $key => $value){
 	$test = json_decode($value, true);
 	//echo $test['type'];
-	var_dump($test);
+	//var_dump($test);
 	}
 	$time = array();
 	//var_dump($Lecture);
