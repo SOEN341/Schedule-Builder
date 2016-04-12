@@ -10,6 +10,11 @@ body
 	background-color: #d3d3d3 ;
 }
 
+.btn-primary{
+	background: #4F8F8F;
+    color: #FFFFFF;
+}
+
 /* CSS for file "Login" only */
 .header{
 	color: #FFFFFF;
