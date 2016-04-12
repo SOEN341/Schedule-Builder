@@ -13,11 +13,26 @@ class Schedule {
 	
 // array_intersect()	Compare arrays, and returns the matches (compare values only)
 
-	function __construct($courseload,$prefTime,$dayOff,$priority){
+	function __construct($coursesNeeded,$coursesTaken,$courseload,$prefTime,$dayOff,$priority){
+		$this->coursesTaken=$coursesTaken;
+		$this->coursesNeeded=$coursesNeeded;
 		$this->courseload=$courseload;
 		$this->prefTime=$prefTime;
 		$this->dayOff=$dayOff;
 		$this->priority=$priority;
+
+
+		function myfunction($a,$b)
+		{
+		if ($a===$b)
+	   {
+	   return 0;
+	   }
+	   return ($a>$b)?1:-1;
+		}
+
+		//$this->courses=array_udiff($priority,$coursesTaken,"myfunction"); //remove the courses that were taken by the user from the priority. 
+		$this->courses=array_intersect(array_udiff($priority,$coursesTaken,"myfunction"), $coursesNeeded);
 
 	}
 
@@ -25,4 +40,3 @@ class Schedule {
 
 }
 
-?>
