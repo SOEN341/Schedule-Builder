@@ -98,8 +98,8 @@ class Schedule
             {
             $test = json_decode($value, true);
             //echo $test['type'];
-            //var_dump($test);
-            
+            var_dump($test);
+            }
             for ($i = 0; $i < 1; $i++)
                 {
                 if ($addTo != null)
@@ -197,7 +197,7 @@ class Schedule
                     }
                 }
             array_push($this->schedule, $this->arrayOfTimes);
-            }
+            
 
 
                    
@@ -206,3 +206,4 @@ class Schedule
 
                       
     }
+?>
