@@ -14,32 +14,44 @@ class Time {
 
     function CompareTo($NewDay,$NewStart,$NewEnd){
 
+
+        echo "Start " . $this->StartTime . "<br/>";
+        echo "End  " . $this->EndTime  . "<br/>";
+
+        echo "newStart " . $NewStart . "<br/>";
+        echo "newEnd  " . $NewEnd  . "<br/>";
+
         $int = $NewDay;
         $dayOne = '';
         $dayTwo = '';
-        if($int > '5')
-        {
+        $dayThree= '';
+
+        //echo strlen($int) ;        
+        if ( strlen($int) === 1) {
+          $dayOne = intval($int);
+          }
+         elseif ( strlen($int) == 2) {
             $dayOne = $int[0];
+            echo $dayOne . "  <br/> "; 
             $dayTwo = $int[1];
-        }
-
-        else
-        {
-            $int = int($NewDay);
-        }
-
-
-        $modifyOne = strtotime($this->StartTime);
-        $modifyTwo = strtotime($this->EndTime);
-        $modifyThree = strtotime($NewStart);
-        $modifyFour = strtotime($NewEnd);
+             echo $dayTwo . "  <br/> "; 
+        } 
+               
+        $startThis = strtotime($this->StartTime);
+        echo $startThis . "<br/>" ;
+        $endThis = strtotime($this->EndTime);
+        echo $endThis . "<br/>" ;
+        $starpar = strtotime($NewStart);
+        echo $starpar . "<br/>" ;
+        $endpar = strtotime($NewEnd);
+        echo $endpar . "<br/>" ;
 
         if($dayOne == null && $dayTwo == null)
         {
-            if ($NewDay == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) || (($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
+            if ($NewDay == $this->Day && ((($starpar > $startThis) && ($starpar < $endThis)) || (($endpar > $startThis) && ($endpar < $endThis)) || (($starpar == $startThis) && ($endpar == $endThis))))
             {
                 return False;
-                if ($NewDay == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
+                if ($NewDay == $this->Day && (($startThis == $endpar) || ($starpar == $endThis)))
                 {
                     return False;
                 }
@@ -52,10 +64,10 @@ class Time {
 
         if($dayOne != null && $dayTwo != null)
         {
-            if (($dayOne || $dayTwo) == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) || (($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
+            if (($dayOne || $dayTwo) == $this->Day && ((($starpar > $startThis) && ($starpar < $endThis)) || (($endpar > $startThis) && ($endpar < $endThis)) || (($starpar == $startThis) && ($endpar == $endThis))))
             {
                 return False;
-                if (($dayOne || $dayTwo) == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
+                if (($dayOne || $dayTwo) == $this->Day && (($startThis == $endpar) || ($starpar == $endThis)))
                 {
                     return False;
                 }

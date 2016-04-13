@@ -95,11 +95,11 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
             	}
             }
             //var_dump($LecVal);
-            //echo "Array of time";
+            echo "Array of time";
             var_dump($this->arrayOfTimes);
             foreach ($this->arrayOfTimes as $key => $setTimes) {
                  //var_dump($setTimes);
-                if ($value->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
+                if ($LecVal->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
                 	var_dump($LecVal);
                 	var_dump($setTimes);
                     $conflict = true;
