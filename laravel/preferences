@@ -54,10 +54,10 @@ class Schedule
         $time     = array();
         $addTo    = array();
         $conflict  = true;
-    $conflicttuto=true;
+		$conflicttuto=true;
 
-    $timetuto=Array();
-         var_dump($Lecture);
+		$timetuto=Array();
+        //var_dump($Lecture);
 		//all lecture jason strings
         foreach ($Lecture as $key => $value)
             {
@@ -79,6 +79,7 @@ class Schedule
         //time contains an array of object times, -->lectures
         foreach ($time as $key => $value)
             {
+				$LecVal = $value;
             foreach ($this->arrayOfTimes as $key => $setTimes)
                 {
                     //var_dump($setTimes);
@@ -139,6 +140,8 @@ class Schedule
 	{
 		continue;
 	}
+		var_dump($LecVal);
+		array_push($this->arrayOfTimes,$LecVal);
 
          } //end section loop
         

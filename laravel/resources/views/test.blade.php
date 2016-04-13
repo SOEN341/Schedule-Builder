@@ -170,11 +170,11 @@ foreach ($courses as $key => $value){
 	$responseTutorial = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'");
 	$responseLab= mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'");;
 
-	var_dump($queryForCourseLecture);
+	//var_dump($queryForCourseLecture);
 	echo "<br/>";
 	echo "<br/>";
 	echo "<br/>";
-	var_dump($queryForCourseTutorial);
+	//var_dump($queryForCourseTutorial);
 	echo "<br/>";
 	echo "<br/>";
 	echo "<br/>";
