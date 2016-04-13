@@ -65,6 +65,8 @@ Route::resource('/removeadminsection', 'HomeController@removeadminsection'); //r
 
 Route::resource('/removeadmincourse', 'HomeController@removeadmincourse'); //remove an section as admin
 
+Route::resource('/coursesequence','HomeController@getcoursesequence');
+
 Route::get('/schedule', 'HomeController@getschedule');
 
 Route::get('/admin', 'HomeController@getadmin');
