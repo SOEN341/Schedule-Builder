@@ -2,10 +2,10 @@
 require_once('../mysqli_connect.php');
 require_once('../preferences');
 require_once('../Course.php');
-//$username=$_POST['username'];
-//$schedule=$_POST['schedule'];
-$username='user17';
-$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
+$username=$_POST['username'];
+$schedule=$_POST['schedule'];
+//$username='user17';
+//$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
 $schedule2 = json_decode($schedule,true);
 $arrSchedule = Array();
 $newTaken=Array();
