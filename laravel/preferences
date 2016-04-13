@@ -54,6 +54,7 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
        $addTo        = array();
        $conflict     = false;
        $conflicttuto = false;
+       $present=false;
       
       
        $timetuto = Array();     
@@ -76,9 +77,11 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
             $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime'], $value['courseCode']);
             array_push($time, $temp);
         }
-        echo "arrayOfTimes";
-        var_dump($this->arrayOfTimes);
-        echo "End array of string";
+        // echo "arrayOfTimes";
+        // var_dump($this->arrayOfTimes);
+        // echo "End array of times <br/> ";
+
+
         //time contains an array of object times, -->lectures
         foreach ($time as $key => $value) {
         	
@@ -88,14 +91,20 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
             	echo $LecVal->SectionName . "  ";
             	echo $value->SectionName;
             	if (strcmp($value->SectionName, $LecVal->SectionName)==0) {
-            		echo "Course present already <br/>";
-            		echo "___----_________________________________________________________------------------------- <br/>";
-            		continue;
+            		$present=true;
+            		echo "Course present already <br/>";            		
+            		break;
             	}
             }
-            //var_dump($LecVal);
-            // echo "Array of time";
-            // var_dump($this->arrayOfTimes);
+
+            if ($present==true) {
+            	$present=false;
+            	echo "___----_________________________________________________________------------------------- <br/>";
+            	continue;
+            }
+            echo "arrayOfTimes";
+        	var_dump($this->arrayOfTimes);
+        	echo "End array of times <br/> ";
             foreach ($this->arrayOfTimes as $key => $setTimes) {
                  //var_dump($setTimes);
                 if ($LecVal->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
