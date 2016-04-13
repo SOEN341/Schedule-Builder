@@ -475,7 +475,7 @@ var realServerBridge = {
 		//var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
-			url:     linkProvider.getLink()+"/scheduler",
+			url:     linkProvider.getLink()+"/schedulescript",
 			dataType: "json",
 			async: false,
 			data: { username: username },
