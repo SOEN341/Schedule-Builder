@@ -9,10 +9,10 @@ var SchedulePage = React.createClass({
 	
 	componentDidMount: function() {
 		var username=cookieManager.getCookie('username');
-/*		if(username=='') {
+		if(username=='') {
 			this.props.changePage(0);
 		}
-*/	}
+	}
 });
 	
 	
