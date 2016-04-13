@@ -53,37 +53,40 @@ var Schedule = React.createClass({
 		var username=cookieManager.getCookie('username');
 		var self = this;
 		serverBridge.generateSchedule(username, function(data) {
-			if(data.length>0) {
+			console.log(data);
+			//if(data.length>0) {
+			if(data.schedule.length>0) {
 				var year = 2016;
 				var month = 4;
 				var day = 16;
 				var events=[];
-				var schedule=data[0].schedule;
+				//var schedule=data[0].schedule;
+				var schedule=data.schedule;
 				var eventDay;
 				var beginTime;
 				var endTime;
 				var description;
 				var id=0;
 				var allSchedules = [];
-				for(var k=0; k<data.length; k++) {
-					schedule=data[k].schedule;
+				//for(var k=0; k<data.length; k++) {
+					schedule=data.schedule;
 					events=[];
 					for(var i=0; i<schedule.length; i++) {
-						for(var j=0; j<schedule[i].day.length; j++) {
+						for(var j=0; j<schedule[i].dayOffered.length; j++) {
 							//Handle the day
-							if(schedule[i].day.charAt(j)=='1') {
+							if(schedule[i].dayOffered.charAt(j)=='1') {
 								eventDay=day;
 							}
-							else if(schedule[i].day.charAt(j)=='2') {
+							else if(schedule[i].dayOffered.charAt(j)=='2') {
 								eventDay=day+1;
 							}
-							else if(schedule[i].day.charAt(j)=='3') {
+							else if(schedule[i].dayOffered.charAt(j)=='3') {
 								eventDay=day+2;
 							}
-							else if(schedule[i].day.charAt(j)=='4') {
+							else if(schedule[i].dayOffered.charAt(j)=='4') {
 								eventDay=day+3;
 							}
-							else if(schedule[i].day.charAt(j)=='5') {
+							else if(schedule[i].dayOffered.charAt(j)=='5') {
 								eventDay=day+4;
 							}
 							
@@ -92,13 +95,13 @@ var Schedule = React.createClass({
 							endTime=schedule[i].endTime.split(':');
 							
 							//Handle the description (course name, code, section, classroom, and type)
-							description = ''+schedule[i].course+'<br/>'+schedule[i].type+' '+schedule[i].section+'<br/>'+schedule[i].classroom;
+							description = ''+schedule[i].courseCode+'<br/>'+schedule[i].type+' '+schedule[i].section+'<br/>'+schedule[i].classroom;
 							
 							events.push({'id':id++, 'start': new Date(year, month, eventDay, beginTime[0], beginTime[1]), 'end': new Date(year, month, eventDay, endTime[0], endTime[1]),'title':description, readOnly: true});
 						}
 					}
 					allSchedules.push(events);
-				}
+				//}
 				
 				self.setState({
 					max: allSchedules.length-1,
