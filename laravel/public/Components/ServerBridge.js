@@ -471,17 +471,32 @@ var realServerBridge = {
 		});
 	},
 	
-	generateSchedule: function() {
-		var username = cookieManager.getCookie('username');
+	generateSchedule: function(username, response) {
+		//var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/scheduler",
 			dataType: "json",
 			async: false,
 			data: { username: username },
-			success: function(data) {
-				return data
-			},
+			success: response,
+			error:   function(jqXHR, textStatus, errorThrown) {
+				alert("Error, status = " + textStatus + ", " +
+					"error thrown: " + errorThrown
+				);
+			}
+		});
+	},
+	
+	generateCourseSequence: function(username, schedule, response) {
+		//var username = cookieManager.getCookie('username');
+		$.ajax({
+			type:    "POST",
+			url:     linkProvider.getLink()+"/coursesequence",
+			dataType: "json",
+			async: false,
+			data: { username: username, schedule: schedule },
+			success: response,
 			error:   function(jqXHR, textStatus, errorThrown) {
 				alert("Error, status = " + textStatus + ", " +
 					"error thrown: " + errorThrown
