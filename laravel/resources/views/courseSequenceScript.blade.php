@@ -2,10 +2,10 @@
 require_once('../mysqli_connect.php');
 require_once('../preferences');
 require_once('../Course.php');
-$username=$_POST['username'];
-$schedule=$_POST['schedule'];
-//$username='user17';
-//$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
+//$username=$_POST['username'];
+//$schedule=$_POST['schedule'];
+$username='user17';
+$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
 $schedule2 = json_decode($schedule,true);
 $arrSchedule = Array();
 $newTaken=Array();
@@ -76,7 +76,10 @@ $result=array_diff($newRem, $newTaken);
 
 $counter2=0;
 
-echo '{"response" : [';
+		
+$output='{"response" : [';
+
+
 
 while (count($result)!=0 && $counter2<10) {
 
@@ -171,6 +174,8 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 
 	//$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
 
+
+
 	foreach ($remaininglist as $key => $value) {
 		$counter++;	
 		if ($counter<=$courseload) {
@@ -178,8 +183,14 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 			$response= mysqli_query($dbc,$sql);
 			$answer= mysqli_fetch_array($response);
 
-			echo json_encode(array("courseID"=>"$answer['courseId']","semester"=>"$answer['semester']","year"=>"$counter2","name"=>"$answer['name']","courseCode"=>"$answer['courseCode']"));
-			 echo json_encode(array("success"=>"true","username"=>"$username","courseload"=>"$CLoad","dayoff"=>"$dayOff","preferredTime"=>"$pTime"));  
+			$courseID= $answer['courseId'] ;
+			$semester=$answer['semester'] ;
+			$year=$counter2 ;
+			$name=$answer['name'] ;
+			$courseCode=$answer['courseCode'] ;
+
+			$output = $output . json_encode(array("courseID"=>"$courseID","semester"=>"$semester","year"=>"$year","name"=>"$name","courseCode"=>"$courseCode")) . ",";
+			// echo json_encode(array("success"=>"true","username"=>"$username","courseload"=>"$CLoad","dayoff"=>"$dayOff","preferredTime"=>"$pTime"));  
 
 			 $cid=$answer['courseId'];
 			// echo " courseID: " . $answer['courseId'] ;
@@ -190,7 +201,7 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 			
 
 			//echo $counter2;
-			echo "<br/>";
+			//echo ",<br/>";
 			array_push($newTaken,$value);
 		}
 			
@@ -213,6 +224,15 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 
 $counter2++;
 }//end while
+$output=substr($output, 0,strlen($output)-1) . "	]}";
+echo $output;
+
+
+
+$schedule='{"response" : [{"courseID":"3","semester":"Summer","year":"0","name":"Object-Oriented Programming II","courseCode":"COMP 249"},{"courseID":"38","semester":"Summer","year":"0","name":"Applied Advanced Calculus","courseCode":"ENGR 233"},{"courseID":"13","semester":"Winter","year":"0","name":"System Hardware","courseCode":"SOEN 228"},{"courseID":"14","semester":"Summer","year":"0","name":"Web Programming","courseCode":"SOEN 287"},{"courseID":"9","semester":"Summer","year":"1","name":"Principles of Programming Languages","courseCode":"COMP 348"},{"courseID":"11","semester":"Summer","year":"1","name":"Data Structures and Algorithms","courseCode":"COMP 352"},{"courseID":"41","semester":"Summer","year":"1","name":"Technical Writing and Communication","courseCode":"ENCS 282"},{"courseID":"32","semester":"Summer","year":"1","name":"Sustainable Development and Environmental Stewardship","courseCode":"ENGR 202"},{"courseID":"8","semester":"Winter","year":"2","name":"Operating Systems","courseCode":"COMP 346"},{"courseID":"44","semester":"Summer","year":"2","name":"Principles of Electrical Engineering","courseCode":"ELEC 275"},{"courseID":"47","semester":"Summer","year":"2","name":"Probability and Statistics in Engineering","courseCode":"ENGR 371"},{"courseID":"17","semester":"Winter","year":"2","name":"Introduction to Formal Methods for Software Engineering","courseCode":"SOEN 331"},{"courseID":"5","semester":"Fall","year":"3","name":"Introduction to Theoretical Computer Science","courseCode":"SOEN 335"},{"courseID":"19","semester":"Fall","year":"3","name":"Software Requirements and Specifications","courseCode":"SOEN 342"},{"courseID":"23","semester":"Fall","year":"3","name":"Management, Measurement and Quality Control","courseCode":"SOEN 384"},{"courseID":"50","semester":"Summer","year":"3","name":"Numerical Methods in Engineering","courseCode":"ENGR 391"},{"courseID":"20","semester":"Fall","year":"4","name":"Software Architecture and Design I","courseCode":"SOEN 343"},{"courseID":"134","semester":"Winter","year":"4","name":"User Interface Design","courseCode":"SOEN 357"},{"courseID":"53","semester":"Summer","year":"4","name":"Engineering Management Principles and Economics","courseCode":"ENGR 301"},{"courseID":"16","semester":"Fall","year":"4","name":"Information Systems Security","courseCode":"SOEN 321"},{"courseID":"21","semester":"Winter","year":"5","name":"Software Architecture and Design II","courseCode":"SOEN 344"},{"courseID":"22","semester":"Winter","year":"5","name":"Software Testing, Verification and Quality Assurance","courseCode":"SOEN 345"},{"courseID":"56","semester":"Summer","year":"5","name":"Impact of Technology on Society","courseCode":"ENGR 392"},{"courseID":"25","semester":"Winter","year":"6","name":"Software Engineering Team Design Project","courseCode":"SOEN 390"},{"courseID":"27","semester":"Fall-Winter","year":"7","name":"Capstone Software Engineering Design Project","courseCode":"SOEN 490"}]}';
+
+
+var_dump(json_decode($schedule,true));
 
 
 
