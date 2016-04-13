@@ -199,8 +199,8 @@ foreach ($courses as $key => $value){
 
 	foreach ($arrayofcourses as $key => $value) {
 	if (count($schedule->scheduleCourse)==$courseload) {
-		echo "Cooooooooooooooooooooooooooooooooooooooooooooou" .count($schedule->scheduleCourse);
-		echo $courseload;
+		//echo "Cooooooooooooooooooooooooooooooooooooooooooooou" .count($schedule->scheduleCourse);
+		//echo $courseload;
 		break;
 	}
 		$schedule->addCourse($value);
