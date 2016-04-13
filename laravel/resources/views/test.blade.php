@@ -87,6 +87,12 @@ foreach ($schedule->courses as $x => $x_value) {
 
 	//echo " $cid"  ;
 
+
+		if ($cid==41) {
+			$cid=132;
+		}
+
+
 	$query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid' ";
 	// Check if these credentials are taken
 	$response= mysqli_query($dbc,$query);
@@ -104,6 +110,10 @@ foreach ($schedule->courses as $x => $x_value) {
 	//var_dump($json);
 
 	//echo $json['List']; //array to string conversion error
+
+	if ($cid==5) {
+			$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
+		}
 
 	$temp=$json['List'];
 
@@ -185,17 +195,11 @@ foreach ($courses as $key => $value){
 	//$tempQueryForCourseLab = array_filter($tempArr,'strlen');
 	//print_r(array_values($tempQueryForCourseLecture));
 	//print_r(array_values($tempQueryForCourseTutorial));
-
-
-
 	//var_dump($queryForCourseLecture);
-
-
 
 	$jsonLectures = json_encode($tempQueryForCourseLecture);
 	$jsonTutorials = json_encode($tempQueryForCourseTutorial);
 	$jsonLabs = json_encode($tempQueryForCourseLab);
-
 
 	//echo '"';
 	//$query ="SELECT * FROM sections where courseCode='$value' ";
@@ -255,13 +259,17 @@ foreach ($remaininglist as $x => $x_value) {
 
 	$cid=$answer['courseId'];
 
+
+		if ($cid==41) {
+			$cid=132;
+		}
+
+
 	//echo " $cid"  ;
 
 	$query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid' ";
 	// Check if these credentials are taken
 	$response= mysqli_query($dbc,$query);
-
-	//var_dump($response);	
 
 	$answer2= mysqli_fetch_array($response);
 
@@ -275,13 +283,13 @@ foreach ($remaininglist as $x => $x_value) {
 
 	//echo $json['List']; //array to string conversion error
 
+	if ($cid==5) {
+			$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
+		}
+
 	$temp=$json['List'];
 
 	$fcourse=$x_value;
-
-	//echo "$fcourse";
-
-	//var_dump($temp);
 
 	if(count($temp)===0)
 		array_push($postCull2,$fcourse);
@@ -312,17 +320,53 @@ $remaininglist=array_unique(array_diff(array_unique($postCull2),array_unique($an
 $arrayofcourses2=Array();
 
 foreach ($remaininglist as $key => $value){
-	//$temp = $value['number'];
-	//$queryForCourseLecture = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
-	//$queryForCourseTutorial = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
-	//$queryForCourseLab = mysqli_fetch_array(mysqli_query($dbc,"SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
-
-	$queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
+$queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
 	$queryForCourseTutorial = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
 	$queryForCourseLab = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
-	$jsonLectures = json_encode($queryForCourseLecture);
-	$jsonTutorials = json_encode($queryForCourseTutorial);
-	$jsonLabs = json_encode($queryForCourseLab);
+	$tempArr = $queryForCourseLab;
+
+	$responseLecture = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'");
+	$responseTutorial = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'");
+	$responseLab= mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'");;
+
+
+	if(mysqli_num_rows($responseLecture) <= 0){
+		continue;
+	}
+	else{
+		foreach ($queryForCourseLecture as $key2 => $lecture){
+			array_push($tempQueryForCourseLecture, $lecture);
+		}
+	}
+	if(mysqli_num_rows($responseTutorial) <= 0){
+		continue;
+	}
+	else{
+		foreach ($queryForCourseTutorial as $key3 => $tutorial){
+			array_push($tempQueryForCourseTutorial, $tutorial);
+		}
+	}
+
+
+	if(mysqli_num_rows($responseLab) <= 0){
+		continue;
+	}
+	else{
+		foreach ($queryForCourseLab as $key4 => $labStuff){
+			array_push($tempQueryForCourseLab, $labStuff);
+		}
+	}
+
+
+	//$tempQueryForCourseLab = array_filter($tempArr,'strlen');
+	//print_r(array_values($tempQueryForCourseLecture));
+	//print_r(array_values($tempQueryForCourseTutorial));
+	//var_dump($queryForCourseLecture);
+
+	$jsonLectures = json_encode($tempQueryForCourseLecture);
+	$jsonTutorials = json_encode($tempQueryForCourseTutorial);
+	$jsonLabs = json_encode($tempQueryForCourseLab);
+
 	//echo '"';
 	//$query ="SELECT * FROM sections where courseCode='$value' ";
 	array_push($coursesLectures, $jsonLectures);
@@ -333,7 +377,7 @@ foreach ($remaininglist as $key => $value){
 	//TODO: create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
 	$course = new Course($value, $coursesLectures, $coursesTutorials, $coursesLabs);
 	//var_dump($course->getName());
-	array_push($arrayofcourses2,$course);
+	array_push($arrayofcourses,$course);
 
 }
 
@@ -347,10 +391,163 @@ foreach ($arrayofcourses2 as $key => $value) {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//generating the course sequence-----------
+
+//get the courses currently in the schedule
+$newTaken=Array();
+$newTaken=$coursesDone;
+$newRem=$coursesRem;
+
+
+//add them to courses taken 
+foreach ($newTaken as $key => $value) {
+	//add the values to the array of courses taken
+}
+
+$result=array_diff($newRem, $newTaken); 
+
+//var_dump($result);
+
+$counter2=0;
+
+
+while (count($result)!=0 && $counter2<10) {
+
+//remove them from courses needed
+$result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns the list where the  new taken courses( courses that are currently in the schedule) were removed from the list coure needed
+echo "Counter". $counter2;
+//var_dump($result);
+//var_dump($newRem);
+//var_dump($newTaken);
+
+	//cull courses needed to get courses the user can take and store the prereq he does not have in the anotc array
+	$postCullc=Array();
+	$anotc=Array();
+
+		foreach ($result as $x => $x_value) {
+		//echo "$x_value";
+		$query ="SELECT * FROM courses where coursecode='$x_value' ";
+		// Check if these credentials are taken
+		$response= mysqli_query($dbc,$query);
+
+		$answer= mysqli_fetch_array($response);
+
+		$cid=$answer['courseId'];
+		
+
+		if ($cid==41) {
+			$cid=132;
+		}
+
+		
+		//echo "$cid    <br/>"	;
+
+		$query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid'  ";
+		// Check if these credentials are taken
+		$response= mysqli_query($dbc,$query);
+
+		//var_dump($response);	
+
+		$answer2= mysqli_fetch_array($response);
+
+		
+		$json=json_decode($answer2['prerequisitesList'],true);
+
+		if ($cid==5) {
+			$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
+		}
+
+		$temp=$json['List'];		
+
+
+		$fcourse=$x_value;
+
+		//echo "$fcourse <br/>   ";
+
+		//var_dump($temp);
+
+		
+		if(count($temp)===0)
+			array_push($postCullc,$fcourse);
+
+		if (!empty($temp)) {
+			
+		foreach (array_filter($temp) as $key => $value) {		
+				//echo $value['courseCode'];
+				$val=$value['courseCode'];
+				//echo "   needs:" . $val;
+				if(in_array($val, $newTaken,true)){
+				//	echo " True.  ";
+					array_push($postCullc,$fcourse);
+				} else {
+				//	echo "not.    ";
+					array_push($anotc, $fcourse);
+				}
+			
+		}
+			} else
+       { 
+       		//echo "$fcourse" . "failed <br/> <br/>";
+       }
+
+		}	
+		echo "Pre remaining";
+		var_dump(array_unique($postCullc));
+		var_dump(array_unique($anotc));
+
+	$remaininglist=array_unique(array_diff(array_unique($postCullc),array_unique($anotc)));	//list of priotiry courses after the prereq were removed
+	$counter=0;
+
+	echo "Remaining";
+
+	var_dump($remaininglist);
+	foreach ($remaininglist as $key => $value) {
+		if ($counter<=$courseload) {
+			echo "$value<br/>";
+			array_push($newTaken,$value);
+		}
+		$counter++;		
+	}		
+	
+	$newRem=array_diff(array_unique($newRem),array_unique($newTaken));
+	foreach ($anotc as $key => $value) {
+		array_push($newRem,$value);	
+	}
+	$newRem=array_unique($newRem);
+	$newTaken=array_unique($newTaken);
+
+	// var_dump($result);
+	echo "New rem after anotc";
+	var_dump($newRem);
+	echo "New taken after adding";
+	 var_dump($newTaken);
+
+	//var_dump($newRem);
+
+$counter2++;
+}//end while
 
 
 
-//generating the course sequence
+
+
+
+
+
+//add the cload number of courses to a certain year
+
+
+
+
+
+
+// Retrieve the user’s taken courses. Add the course from the chosen schedule to that array and remove them from the needed courses
+// Assume the user wants to take the same course load every semester, we’ll call this number x
+// Again remove any course that aren’t in the prereqs and create the priority array. We also need to  keep track of which semester we’re adding courses for and remove any courses that aren’t offered in that semester
+// Add the first x courses to the first semester
+// Again retrieve the needed and taken courses lists from the database and adjust them to reflect the schedule and course sequence
+// Loop this process until you have a complete course sequence with all the needed courses
+
 
 
 
