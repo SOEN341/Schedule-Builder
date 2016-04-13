@@ -15,7 +15,7 @@ class Time {
     function CompareTo($NewDay,$NewStart,$NewEnd){
 
 
-        $int = int($NewDay);
+        $int = intval($NewDay);
 
 
         echo "Start " . $this->StartTime . "<br/>";
