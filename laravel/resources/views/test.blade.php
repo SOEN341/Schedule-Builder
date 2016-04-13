@@ -40,17 +40,17 @@ $decodedDone=json_decode($array['CoursesDones'],true);
 
 
 foreach ($decodedDone as $key => $key_value) {
-		foreach ($key_value as $x => $x_value) {
+	foreach ($key_value as $x => $x_value) {
 		array_push($coursesDone,$x_value['number']);
-		   }
+	}
 }
 
 $decodedrem=json_decode($array['CoursesRem'],true);
 
 foreach ($decodedrem as $key => $key_value) {
-		foreach ($key_value as $x => $x_value) {
+	foreach ($key_value as $x => $x_value) {
 		array_push($coursesRem,$x_value['number']);
-		   }
+	}
 }
 
 array_push($coursesDone,"MATH 205","MATH 203","MATH 204","PHYS 204","PHYS 205","CHEM 203"); //hardcoded because not added autamitically when the course list is generated
@@ -64,7 +64,7 @@ array_push($coursesDone,"MATH 205","MATH 203","MATH 204","PHYS 204","PHYS 205","
 
 $schedule= new Schedule($coursesRem,$coursesDone,4,'Monday','Morning',$priorityPrereq);
 
-$courses=$schedule->courses;	
+$courses=$schedule->courses;
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -88,9 +88,9 @@ foreach ($schedule->courses as $x => $x_value) {
 	//echo " $cid"  ;
 
 
-		if ($cid==41) {
-			$cid=132;
-		}
+	if ($cid==41) {
+		$cid=132;
+	}
 
 
 	$query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid' ";
@@ -112,8 +112,8 @@ foreach ($schedule->courses as $x => $x_value) {
 	//echo $json['List']; //array to string conversion error
 
 	if ($cid==5) {
-			$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
-		}
+		$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
+	}
 
 	$temp=$json['List'];
 
@@ -127,22 +127,22 @@ foreach ($schedule->courses as $x => $x_value) {
 		array_push($postCull,$fcourse);
 
 
-	foreach ($temp as $key => $value) {		
-			//echo $value['courseCode'];
-			$val=$value['courseCode'];
-			//echo " needs:" . $val;
-			if(in_array("$val", $coursesDone,true)){
+	foreach ($temp as $key => $value) {
+		//echo $value['courseCode'];
+		$val=$value['courseCode'];
+		//echo " needs:" . $val;
+		if(in_array("$val", $coursesDone,true)){
 			//	echo " True.  ";
-				array_push($postCull,$fcourse);
-			} else {
-				//echo "not.    ";
-				array_push($anot, $fcourse);
-			}
-		
+			array_push($postCull,$fcourse);
+		} else {
+			//echo "not.    ";
+			array_push($anot, $fcourse);
+		}
+
 	}
 
-	}	
-	// --------------------------------------------------------------------------------------------------
+}
+// --------------------------------------------------------------------------------------------------
 
 $courses=array_unique(array_diff($postCull,$anot));	//list of priotiry courses after the prereq were removed	
 
@@ -154,21 +154,33 @@ $schedule->courses=$courses;
 $arrayofcourses=Array();
 
 foreach ($courses as $key => $value){
-	$queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
-	$queryForCourseTutorial = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
-	$queryForCourseLab = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
+
+	/*
+	var_dump($queryForCourseLecture);
+	echo "<br/>";
+	echo "<br/>";
+	echo "<br/>";
+	*/
+	$queryForCourseLecture =mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
+	$queryForCourseTutorial = mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
+	$queryForCourseLab = mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
 	$tempArr = $queryForCourseLab;
 
 	$responseLecture = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'");
 	$responseTutorial = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'");
 	$responseLab= mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'");;
 
-
+	//var_dump($queryForCourseLecture);
+	
+	//var_dump($queryForCourseTutorial);
+	
 	if(mysqli_num_rows($responseLecture) <= 0){
 		continue;
 	}
 	else{
 		foreach ($queryForCourseLecture as $key2 => $lecture){
+			//$jsonLecture = json_encode($lecture);
+			//var_dump($lecture);
 			array_push($tempQueryForCourseLecture, $lecture);
 		}
 	}
@@ -177,7 +189,9 @@ foreach ($courses as $key => $value){
 	}
 	else{
 		foreach ($queryForCourseTutorial as $key3 => $tutorial){
-			array_push($tempQueryForCourseTutorial, $tutorial);
+			$jsonTutorial = json_encode($tutorial);
+			//array_push($tempQueryForCourseLecture, $jsonLecture);
+			array_push($tempQueryForCourseTutorial, $jsonTutorial);
 		}
 	}
 
@@ -187,29 +201,32 @@ foreach ($courses as $key => $value){
 	}
 	else{
 		foreach ($queryForCourseLab as $key4 => $labStuff){
-			array_push($tempQueryForCourseLab, $labStuff);
+			$jsonLab= json_encode($labStuff);
+			array_push($tempQueryForCourseLab, $jsonLab);
 		}
 	}
-
+	//var_dump($queryForCourseLecture);
 
 	//$tempQueryForCourseLab = array_filter($tempArr,'strlen');
 	//print_r(array_values($tempQueryForCourseLecture));
 	//print_r(array_values($tempQueryForCourseTutorial));
 	//var_dump($queryForCourseLecture);
 
-	$jsonLectures = json_encode($tempQueryForCourseLecture);
-	$jsonTutorials = json_encode($tempQueryForCourseTutorial);
-	$jsonLabs = json_encode($tempQueryForCourseLab);
+	//$jsonLectures = json_encode($tempQueryForCourseLecture);
+	//$jsonTutorials = json_encode($tempQueryForCourseTutorial);
+	//$jsonLabs = json_encode($tempQueryForCourseLab);
 
 	//echo '"';
 	//$query ="SELECT * FROM sections where courseCode='$value' ";
-	array_push($coursesLectures, $jsonLectures);
-	array_push($coursesTutorials,$jsonTutorials);
-	array_push($coursesLabs, $jsonLabs);
+	//array_push($coursesLectures, $jsonLectures);
+	//array_push($coursesTutorials,$jsonTutorials);
+	//array_push($coursesLabs, $jsonLabs);
+
+
 
 	//TODO: this returns all the sections
 	//TODO: create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
-	$course = new Course($value, $coursesLectures, $coursesTutorials, $coursesLabs);
+	$course = new Course($value, $queryForCourseLecture, $queryForCourseTutorial, $queryForCourseLab);
 	//var_dump($course->getName());
 	array_push($arrayofcourses,$course);
 }
@@ -231,7 +248,7 @@ foreach ($anot as $key => $value) {
 }
 
 foreach ($coursesRem as $key => $value) {
-array_push($remainingList,$value);
+	array_push($remainingList,$value);
 }
 
 //var_dump($courses);
@@ -260,9 +277,9 @@ foreach ($remaininglist as $x => $x_value) {
 	$cid=$answer['courseId'];
 
 
-		if ($cid==41) {
-			$cid=132;
-		}
+	if ($cid==41) {
+		$cid=132;
+	}
 
 
 	//echo " $cid"  ;
@@ -284,8 +301,8 @@ foreach ($remaininglist as $x => $x_value) {
 	//echo $json['List']; //array to string conversion error
 
 	if ($cid==5) {
-			$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
-		}
+		$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
+	}
 
 	$temp=$json['List'];
 
@@ -294,7 +311,7 @@ foreach ($remaininglist as $x => $x_value) {
 	if(count($temp)===0)
 		array_push($postCull2,$fcourse);
 	else
-	foreach ($temp as $key => $value) {		
+		foreach ($temp as $key => $value) {
 			//echo $value['courseCode'];
 			$val=$value['courseCode'];
 			//echo " needs:" . $val;
@@ -305,10 +322,10 @@ foreach ($remaininglist as $x => $x_value) {
 				//echo "not.    ";
 				array_push($anot2, $fcourse);
 			}
-		
-	}
 
-	}	
+		}
+
+}
 
 //var_dump(array_unique($anot2));
 //var_dump($postCull2);
@@ -320,9 +337,9 @@ $remaininglist=array_unique(array_diff(array_unique($postCull2),array_unique($an
 $arrayofcourses2=Array();
 
 foreach ($remaininglist as $key => $value){
-$queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
-	$queryForCourseTutorial = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
-	$queryForCourseLab = mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
+	$queryForCourseLecture =mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
+	$queryForCourseTutorial = mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
+	$queryForCourseLab = mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
 	$tempArr = $queryForCourseLab;
 
 	$responseLecture = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'");
@@ -335,7 +352,8 @@ $queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sec
 	}
 	else{
 		foreach ($queryForCourseLecture as $key2 => $lecture){
-			array_push($tempQueryForCourseLecture, $lecture);
+			$jsonLecture = json_encode($lecture);
+			array_push($tempQueryForCourseLecture, $jsonLecture);
 		}
 	}
 	if(mysqli_num_rows($responseTutorial) <= 0){
@@ -343,7 +361,9 @@ $queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sec
 	}
 	else{
 		foreach ($queryForCourseTutorial as $key3 => $tutorial){
-			array_push($tempQueryForCourseTutorial, $tutorial);
+			$jsonTutorial = json_encode($tutorial);
+			//array_push($tempQueryForCourseLecture, $jsonLecture);
+			array_push($tempQueryForCourseTutorial, $jsonTutorial);
 		}
 	}
 
@@ -353,41 +373,40 @@ $queryForCourseLecture =mysqli_fetch_assoc(mysqli_query($dbc, "SELECT * FROM sec
 	}
 	else{
 		foreach ($queryForCourseLab as $key4 => $labStuff){
-			array_push($tempQueryForCourseLab, $labStuff);
+			$jsonLab= json_encode($labStuff);
+			array_push($tempQueryForCourseLab, $jsonLab);
 		}
 	}
-
-
 	//$tempQueryForCourseLab = array_filter($tempArr,'strlen');
 	//print_r(array_values($tempQueryForCourseLecture));
 	//print_r(array_values($tempQueryForCourseTutorial));
 	//var_dump($queryForCourseLecture);
 
-	$jsonLectures = json_encode($tempQueryForCourseLecture);
-	$jsonTutorials = json_encode($tempQueryForCourseTutorial);
-	$jsonLabs = json_encode($tempQueryForCourseLab);
+	//$jsonLectures = json_encode($tempQueryForCourseLecture);
+	//$jsonTutorials = json_encode($tempQueryForCourseTutorial);
+	//$jsonLabs = json_encode($tempQueryForCourseLab);
 
 	//echo '"';
 	//$query ="SELECT * FROM sections where courseCode='$value' ";
-	array_push($coursesLectures, $jsonLectures);
-	array_push($coursesTutorials,$jsonTutorials);
-	array_push($coursesLabs, $jsonLabs);
+	//array_push($coursesLectures, $jsonLectures);
+	//array_push($coursesTutorials,$jsonTutorials);
+	//array_push($coursesLabs, $jsonLabs);
 
 	//TODO: this returns all the sections
 	//TODO: create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
-	$course = new Course($value, $coursesLectures, $coursesTutorials, $coursesLabs);
+	$course = new Course($value, $tempQueryForCourseLecture, $tempQueryForCourseTutorial, $tempQueryForCourseLab);
 	//var_dump($course->getName());
 	array_push($arrayofcourses,$course);
 
 }
-
+/*
 foreach ($arrayofcourses2 as $key => $value) {
 	// if (count($schedule->schedule)==$courseload) {
 	// 	break;
 	// }
 	$schedule->addCourse($value);
 }
-
+*/
 
 
 
@@ -396,7 +415,7 @@ mysqli_close($dbc);
 
 
 ?>
-<!-- 
+		<!--
 
 response([
 			{
