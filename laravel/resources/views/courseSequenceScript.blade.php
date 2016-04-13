@@ -5,10 +5,18 @@ require_once('../Course.php');
 //$username=$_POST['username'];
 $username='user17';
 $schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
+$schedule2 = json_decode($schedule,true);
+$arrSchedule = Array();
+$newTaken=Array();
+$count = 0;
+foreach ($schedule2 as $key => $value){
+	foreach ($value as $key2 => $value2){
+		array_push($newTaken, $value2['course']);
+	}
+}
 
-$decodedschedule=json_decode($schedule,true);
 
-var_dump($decodedschedule);
+//var_dump($decodedschedule);
 
 
 $coursesDone=Array();
@@ -49,14 +57,16 @@ array_push($coursesDone,"MATH 205","MATH 203","MATH 204","PHYS 204","PHYS 205","
 
 
 //get the courses currently in the schedule
-$newTaken=Array();
-$newTaken=$coursesDone;
+
+//$newTaken=$coursesDone;
 $newRem=$coursesRem;
 
 
 //add them to courses taken 
 foreach ($newTaken as $key => $value) {
 	//add the values to the array of courses taken
+	array_push($coursesDone, $newTaken[$count]);
+	++$count;
 }
 
 $result=array_diff($newRem, $newTaken); 
@@ -178,7 +188,7 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 	//echo "New taken after adding";
 	 //var_dump($newTaken);
 
-	//var_dump($newRem);
+	var_dump($newRem);
 
 $counter2++;
 }//end while
