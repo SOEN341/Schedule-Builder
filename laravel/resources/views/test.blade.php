@@ -242,7 +242,7 @@ foreach ($arrayofcourses as $key => $value) {
 	// 	break;
 	// }
 	//var_dump($value);
-	//$schedule->addCourse($value);
+	$schedule->addCourse($value);
 }
 
 $remainingList=Array();
