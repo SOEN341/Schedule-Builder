@@ -9,10 +9,10 @@ var SchedulePage = React.createClass({
 	
 	componentDidMount: function() {
 		var username=cookieManager.getCookie('username');
-		if(username=='') {
+/*		if(username=='') {
 			this.props.changePage(0);
 		}
-	}
+*/	}
 });
 	
 	
@@ -42,7 +42,8 @@ var Schedule = React.createClass({
 					<RBS.Button bsStyle='primary' onClick={this.selectSchedule}>Select This Schedule</RBS.Button>
 					<img onClick={this.right} src="Images/right.png" title="Switch Schedules" style={{height: '30px', width: '30px'}}/></div>: null}
 					{(this.state.schedules.length==0)? <div><br/><br/><h3 style={{textAlign:'center'}}>Sorry, no schedules could be generated with the supplied information entered</h3>
-					<div style={{textAlign:'center'}}>You may not have entered any courses you had the prerequisites for in your <a onClick={this.changeToPreferences}>needed courses list</a></div></div>: null}
+					<div style={{textAlign:'center'}}>You may not have entered any courses you had the prerequisites for in your <a onClick={this.changeToPreferences}>needed courses list</a></div>
+					<div><img src="Images/Warning.png" style={{width:'80', height:'80', marginLeft: '45%', marginTop: '20px'}} /></div></div>: null}
 				<div id='calendar' style={{width:'50%', marginLeft:'25%'}} onClick={this.onDataSetChange}></div>
 			</div>
 		)
