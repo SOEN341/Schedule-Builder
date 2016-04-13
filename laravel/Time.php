@@ -24,6 +24,18 @@ class Time {
         echo "newStart " . $NewStart . "<br/>";
         echo "newEnd  " . $NewEnd  . "<br/>";
 
+        $this->StartTime= str_replace(":", "", $this->StartTime);
+        $this->EndTime=str_replace(":", "", $this->EndTime);
+        $NewStart=str_replace(":", "", $NewStart);
+        $NewEnd=str_replace(":", "", $NewEnd);
+
+
+        echo "Start " . $this->StartTime . "<br/>";
+        echo "End  " . $this->EndTime  . "<br/>";
+
+        echo "newStart " . $NewStart . "<br/>";
+        echo "newEnd  " . $NewEnd  . "<br/>";   
+
 
         $dayOne = '';
         $dayTwo = '';
@@ -40,46 +52,45 @@ class Time {
              echo $dayTwo . "  <br/> "; 
         } 
                
-        $startThis = strtotime($this->StartTime);
+        $startThis = $this->StartTime;
         echo $startThis . "<br/>" ;
-        $endThis = strtotime($this->EndTime);
+        $endThis = $this->EndTime;
         echo $endThis . "<br/>" ;
-        $starpar = strtotime($NewStart);
+        $starpar = $NewStart;
         echo $starpar . "<br/>" ;
-        $endpar = strtotime($NewEnd);
+        $endpar = $NewEnd;
         echo $endpar . "<br/>" ;
 
-        if($dayOne == null && $dayTwo == null)
+        if($dayOne == $this->Day || $dayTwo == $this->Day)
         {
-            if ($NewDay == $this->Day && ((($starpar > $startThis) && ($starpar < $endThis)) || (($endpar > $startThis) && ($endpar < $endThis)) || (($starpar == $startThis) && ($endpar == $endThis))))
-            {
-                return False;
+            //starttime1 == startime 2
+            if ($startThis==$starpar) {
+                return false;
             }
-            elseif ($NewDay == $this->Day && (($startThis == $endpar) || ($starpar == $endThis)))
-            {
-                return False;
+            if ($endThis==$endpar) {
+                return false;
             }
-            else
-            {
-                return True;
+             if ($endThis==$starpar) {
+                return false;
             }
+
+            if ($startThis==$endpar) {
+                return false;
+            }
+
+            if ( ($starpar > $startThis) && ($starpar > $endThis) ) {
+                return false;
+            }
+
+            if ( ($endpar > $startThis) && ($endpar < $endThis) ) {
+                return false;
+            }           
+            
         }
 
-        if($dayOne != null && $dayTwo != null)
-        {
-            if (($dayOne || $dayTwo) == $this->Day && ((($starpar > $startThis) && ($starpar < $endThis)) || (($endpar > $startThis) && ($endpar < $endThis)) || (($starpar == $startThis) && ($endpar == $endThis))))
-            {
-                return False;
-            }
-            elseif (($dayOne || $dayTwo) == $this->Day && (($startThis == $endpar) || ($starpar == $endThis)))
-            {
-                return False;
-            }
-            else
-            {
-                return True;
-            }
-        }
+        return true;
+
+       
 
     }
 

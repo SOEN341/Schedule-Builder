@@ -108,8 +108,8 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
             foreach ($this->arrayOfTimes as $key => $setTimes) {
                  //var_dump($setTimes);
                 if ($LecVal->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
-                	var_dump($LecVal);
-                	var_dump($setTimes);
+                	// var_dump($LecVal);
+                	// var_dump($setTimes);
                     $conflict = true;
                     echo "Conflict";
                 }
@@ -122,50 +122,56 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
                 
                 Continue; //switches to the next section in the time array.
             }
-            
-            //assuming here that the lecture fit.
-            //trying for tutorial
-            
-            // $tutos = Array();
-            // foreach ($Tutorial as $key => $value) {
-            //     if (!(is_array($value))) { //sectionts that matched the right format
-                    
-            //         array_push($tutos, json_decode($value, true));
-            //     }        
-            // }
-            // //tutos -> array of tutorials in json/arrayformat
-            // //we want the tutorials starting with the section name
-            
-            // foreach ($tutos as $key => $value) {
-            //     // var_dump($value);    
-            //     $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime'], $value['courseCode']);
-            //     array_push($timetuto, $temp);
-            // }
-            // //testing against the times in the schedule ------------------------
-            
-            // $tutolenght = count($timetuto);
-            // $counter    = 0;
-            // foreach ($timetuto as $key => $value) {
-            //     foreach ($this->arrayOfTimes as $key => $setTimes) {
-            //         var_dump($setTimes);
-            //          if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
-            //              {
-            //         $conflicttuto = true;                    
-            //              }
-                    
-            //         if ($conflicttuto) {
-            //             $conflicttuto = false;
-            //             echo "Leaving because conflict";
-            //             Continue; //switches to the next section in the time array.
-            //         }
-            //         $counter++;
-            //     } //end of the time schedule loop
-                
-            // } //end of the tuto loop 
-            
-            // if ($counter == $tutolenght) {
-            //     continue;
-            // }
+
+		            // assuming here that the lecture fit.
+		            // trying for tutorial
+		            
+		            $tutos = Array();
+		            foreach ($Tutorial as $key => $value) {
+		                if (!(is_array($value))) { //sectionts that matched the right format		                    
+		                    array_push($tutos, json_decode($value, true));
+		                }        
+		            }
+		            //tutos -> array of tutorials in json/arrayformat
+		            //we want the tutorials starting with the section name
+		            
+		            foreach ($tutos as $key => $value) {
+		                // var_dump($value);    
+		                $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime'], $value['courseCode']);
+		                array_push($timetuto, $temp);
+		            }
+		            //testing against the times in the schedule ------------------------
+		            
+		            $tutolenght = count($timetuto);
+		            $counter    = 0;
+		            foreach ($timetuto as $key => $value) {
+		            	$cututo=$value;
+		                foreach ($this->arrayOfTimes as $key => $setTimes) {
+		                    //var_dump($setTimes);
+		                     $counter++;
+		                   if  ($cututo->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
+		                         
+		                    $conflicttuto = true;
+		                     echo "Conflict"; 
+		                     break;                   
+		                         }
+		                         $counter++;
+		                }
+		                 
+	                   if ($conflicttuto) {
+	                        $conflicttuto = false;
+	                        echo "Leaving because conflict";
+	                         echo "___----_________________________________________________________------------------------- <br/>";
+	                        Continue; //switches to the next section in the time array.
+	                    }
+	                    $counter++;
+		                 //end of the time schedule loop
+		                
+		            } //end of the tuto loop 
+		            
+		            if ($counter == $tutolenght) {
+		                continue;
+		            }
             //var_dump($LecVal);
             array_push($this->arrayOfTimes, $LecVal);          
        } //end section loop
