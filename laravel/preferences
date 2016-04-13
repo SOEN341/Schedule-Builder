@@ -58,6 +58,41 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
         
         $timetuto = Array();       
         
+<<<<<<< HEAD
+        $Lecture  = $Course->lectures;
+        $Tutorial = $Course->tutorials;
+        $Lab      = $Course->labs;
+        $test     = array();
+        $time     = array();
+        $addTo    = array();
+        $conflict  = true;
+		$conflicttuto=true;
+		$timetuto=Array();
+		
+       var_dump($Lecture);
+		echo $Lecture['section'];
+
+		echo $Lecture['dayOffered'];
+
+		echo $Lecture['courseCode'];
+
+		//all lecture jason strings
+
+        // foreach ($Lecture as $key => $value)
+        //     {
+        //         //var_dump($value);
+        //         //echo strlen($value);
+        //         //if (strlen($value) ==212) //sectionts that matched the right format
+        //     array_push($test,json_decode($value, true));
+        //     }
+		//test -> array of courses in json/arrayformat
+                   
+        foreach ($test as $key => $value)
+            {
+          // var_dump($value);    
+           $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime'],$value['courseCode']);
+           array_push($time, $temp);
+=======
         foreach ($Lecture as $key => $value) {
             //var_dump($value);
             //echo strlen($value);
@@ -66,6 +101,7 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
                 array_push($test, json_decode($value, true));
             } else {
                 //echo "string";
+>>>>>>> origin/master
             }
             
         }
