@@ -2,10 +2,10 @@
 require_once('../mysqli_connect.php');
 require_once('../preferences');
 require_once('../Course.php');
-//$username=$_POST['username'];
-//$schedule=$_POST['schedule'];
-$username='user17';
-$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
+$username=$_POST['username'];
+$schedule=$_POST['schedule'];
+//$username='user17';
+//$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
 $schedule2 = json_decode($schedule,true);
 $arrSchedule = Array();
 $newTaken=Array();
@@ -178,16 +178,19 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 			$response= mysqli_query($dbc,$sql);
 			$answer= mysqli_fetch_array($response);
 
-			$cid=$answer['courseId'];
-			echo " courseID: " . $answer['courseId'] ;
-			echo " semester: " . $answer['semester'] ;
-			echo " year: " . $counter2 ;
-			echo " name: " . $answer['name'] ;
-			echo " courseCode: " . $answer['courseCode'] ;
+			echo json_encode(array("courseID"=>"$answer['courseId']","semester"=>"$answer['semester']","year"=>"$counter2","name"=>"$answer['name']","courseCode"=>"$answer['courseCode']"));
+			 echo json_encode(array("success"=>"true","username"=>"$username","courseload"=>"$CLoad","dayoff"=>"$dayOff","preferredTime"=>"$pTime"));  
+
+			 $cid=$answer['courseId'];
+			// echo " courseID: " . $answer['courseId'] ;
+			// echo " semester: " . $answer['semester'] ;
+			// echo " year: " . $counter2 ;
+			// echo " name: " . $answer['name'] ;
+			// echo " courseCode: " . $answer['courseCode'] ;
 			
 
 			//echo $counter2;
-			echo "$value<br/>";
+			echo "<br/>";
 			array_push($newTaken,$value);
 		}
 			

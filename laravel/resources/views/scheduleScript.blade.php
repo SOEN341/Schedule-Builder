@@ -2,8 +2,8 @@
 require_once('../mysqli_connect.php');
 require_once('../preferences');
 require_once('../Course.php');
-//$username=$_POST['username'];
-$username='user17';
+$username=$_POST['username'];
+//$username='user17';
 
 $coursesDone=Array();
 $coursesRem=Array();
