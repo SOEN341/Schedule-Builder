@@ -122,6 +122,7 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
                 
                 Continue; //switches to the next section in the time array.
             }
+            
             //assuming here that the lecture fit.
             //trying for tutorial
             
