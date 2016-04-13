@@ -172,65 +172,65 @@ var mockServerBridge = {
 			{
 				courseID: '1',
 				semester: 'Fall',
-				year: '3',
-				name: 'Object Oriented Programming 1',
-				courseCode: 'COMP 248'
+				year: '2',
+				name: 'Principles of Programming Languages',
+				courseCode: 'COMP 348'
 			},
 			{
 				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
-				semester: 'Fall',
-				year: '1'
-			},
-			{
-				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
+				name: 'Data Structures and Algorithms',
+				courseCode: 'COMP 352',
 				semester: 'Fall',
 				year: '2'
 			},
 			{
 				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
-				semester: 'Winter',
-				year: '1'
+				name: 'Technical Writing and Communication',
+				courseCode: 'ENCS 282',
+				semester: 'Fall',
+				year: '2'
 			},
 			{
 				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
+				name: 'Sustainable Development and Environmental Stewardship',
+				courseCode: 'ENGR 202',
+				semester: 'Fall',
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Operating Systems',
+				courseCode: 'COMP 346',
 				semester: 'Winter',
 				year: '2'
 			},
 			{
 				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
-				semester: 'Winter',
-				year: '3'
-			},
-			{
-				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
+				name: 'Principles of Electrical Engineering',
+				courseCode: 'ELEC 275',
 				semester: 'Winter',
 				year: '2'
 			},
 			{
 				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
+				name: 'Probability and Statistics in Engineering',
+				courseCode: 'ENGR 371',
 				semester: 'Winter',
-				year: '1'
+				year: '2'
 			},
 			{
 				courseID: '2',
-				name: 'Object Oriented Programming 2',
-				courseCode: 'COMP 249',
+				name: 'Introduction to Formal Methods for Software Engineering',
+				courseCode: 'SOEN 331',
 				semester: 'Winter',
-				year: '3'
+				year: '2'
+			},
+			{
+				courseID: '2',
+				name: 'Software Process',
+				courseCode: 'SOEN 331',
+				semester: 'Winter',
+				year: '2'
 			}
 		]);
 		//response([]);

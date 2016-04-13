@@ -137,6 +137,8 @@ var Year = React.createClass({
 
 var Semester = React.createClass({
 	render: function() {
+		if(this.props.data.length>0)
+		{
 		return (
 			<RBS.Table bordered style={{backgroundColor:'white', width:'40%', marginLeft:'30%'}}>
 				<thead>
@@ -147,6 +149,10 @@ var Semester = React.createClass({
 				<SemesterList courses={this.props.data}/>
 			</RBS.Table>
 		)
+		}
+		else {
+			return <div></div>
+		}
 	}
 });
 
