@@ -21,44 +21,42 @@ public $schedule = Array();
 function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $dayOff, $priority)
 {
 
-   $this->coursesTaken  = $coursesTaken;
-   $this->coursesNeeded = $coursesNeeded;
-   $this->courseload    = $courseload;
-   $this->prefTime      = $prefTime;
-   $this->dayOff        = $dayOff;
-   $this->priority      = $priority;
-   $this->arrayOfTimes  = Array();
-  
-  
-   function myfunction($a, $b)
-   {
-       if ($a === $b) {
-           return 0;
-       }
-       return ($a > $b) ? 1 : -1;
-   }
-  
-   //$this->courses=array_udiff($priority,$coursesTaken,"myfunction"); //remove the courses that were taken by the user from the priority.
-   $this->courses = array_intersect(array_udiff($priority, $coursesTaken, "myfunction"), $coursesNeeded);
-  
-}  
-       // tries to add a course to the sechdule, returns true if added properly or false if one of the section cannot possibly be added
-    function addCourse($Course)
-    {
-        
-        $Lecture      = $Course->lectures;
-        $Tutorial     = $Course->tutorials;
-        $Lab          = $Course->labs;
-        $test         = array();
-        $time         = array();
-        $addTo        = array();
-        $conflict     = false;
-        $conflicttuto = false;
-        
-        
-        $timetuto = Array();     
-        
+  $this->coursesTaken  = $coursesTaken;
+  $this->coursesNeeded = $coursesNeeded;
+  $this->courseload    = $courseload;
+  $this->prefTime      = $prefTime;
+  $this->dayOff        = $dayOff;
+  $this->priority      = $priority;
+  $this->arrayOfTimes  = Array();
 
+
+  function myfunction($a, $b)
+  {
+      if ($a === $b) {
+          return 0;
+      }
+      return ($a > $b) ? 1 : -1;
+  }
+
+  //$this->courses=array_udiff($priority,$coursesTaken,"myfunction"); //remove the courses that were taken by the user from the priority.
+  $this->courses = array_intersect(array_udiff($priority, $coursesTaken, "myfunction"), $coursesNeeded);
+
+} 
+      // tries to add a course to the sechdule, returns true if added properly or false if one of the section cannot possibly be added
+   function addCourse($Course)
+   {
+      
+       $Lecture      = $Course->lectures;
+       $Tutorial     = $Course->tutorials;
+       $Lab          = $Course->labs;
+       $test         = array();
+       $time         = array();
+       $addTo        = array();
+       $conflict     = false;
+       $conflicttuto = false;
+      
+      
+       $timetuto = Array();     
         foreach ($Lecture as $key => $value) {
             //var_dump($value);
             //echo strlen($value);
@@ -80,6 +78,7 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
         }
         echo "arrayOfTimes";
         var_dump($this->arrayOfTimes);
+        echo "End array of string";
         //time contains an array of object times, -->lectures
         foreach ($time as $key => $value) {
         	
@@ -95,8 +94,8 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
             	}
             }
             //var_dump($LecVal);
-            echo "Array of time";
-            var_dump($this->arrayOfTimes);
+            // echo "Array of time";
+            // var_dump($this->arrayOfTimes);
             foreach ($this->arrayOfTimes as $key => $setTimes) {
                  //var_dump($setTimes);
                 if ($LecVal->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
@@ -158,15 +157,12 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
             //     continue;
             // }
             //var_dump($LecVal);
-            array_push($this->arrayOfTimes, $LecVal);
-
-
-            
-        } //end section loop
-        
-        
-    }
-    
+            array_push($this->arrayOfTimes, $LecVal);          
+       } //end section loop
+      
+      
+   }
+  
 
 }
 ?>

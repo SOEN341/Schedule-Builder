@@ -55,6 +55,7 @@ class Time {
                 {
                     return False;
                 }
+
             }
             else
             {
@@ -67,10 +68,12 @@ class Time {
             if (($dayOne || $dayTwo) == $this->Day && ((($starpar > $startThis) && ($starpar < $endThis)) || (($endpar > $startThis) && ($endpar < $endThis)) || (($starpar == $startThis) && ($endpar == $endThis))))
             {
                 return False;
+
                 if (($dayOne || $dayTwo) == $this->Day && (($startThis == $endpar) || ($starpar == $endThis)))
                 {
                     return False;
                 }
+
             }
             else
             {
