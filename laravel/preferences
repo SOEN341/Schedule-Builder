@@ -56,7 +56,7 @@ class Schedule
         $conflict  = true;
     $conflicttuto=true;
 
-    timetuto=Array();
+    $timetuto=Array();
          
 //all lecture jason strings
         foreach ($Lecture as $key => $value)
