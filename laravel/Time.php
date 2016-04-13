@@ -18,11 +18,11 @@ class Time {
         $int = intval($NewDay);
 
 
-        echo "Start " . $this->StartTime . "<br/>";
-        echo "End  " . $this->EndTime  . "<br/>";
+        //echo "Start " . $this->StartTime . "<br/>";
+        //echo "End  " . $this->EndTime  . "<br/>";
 
-        echo "newStart " . $NewStart . "<br/>";
-        echo "newEnd  " . $NewEnd  . "<br/>";
+        //echo "newStart " . $NewStart . "<br/>";
+        //echo "newEnd  " . $NewEnd  . "<br/>";
 
         $this->StartTime= str_replace(":", "", $this->StartTime);
         $this->EndTime=str_replace(":", "", $this->EndTime);
@@ -30,36 +30,36 @@ class Time {
         $NewEnd=str_replace(":", "", $NewEnd);
 
 
-        echo "Start " . $this->StartTime . "<br/>";
-        echo "End  " . $this->EndTime  . "<br/>";
+        //echo "Start " . $this->StartTime . "<br/>";
+        //echo "End  " . $this->EndTime  . "<br/>";
 
-        echo "newStart " . $NewStart . "<br/>";
-        echo "newEnd  " . $NewEnd  . "<br/>";   
+        //echo "newStart " . $NewStart . "<br/>";
+        //echo "newEnd  " . $NewEnd  . "<br/>";   
 
 
         $dayOne = '';
         $dayTwo = '';
         $dayThree= '';
 
-        //echo strlen($int) ;        
+        ////echo strlen($int) ;        
         if ( strlen($int) === 1) {
           $dayOne = intval($int);
           }
          elseif ( strlen($int) == 2) {
             $dayOne = $int[0];
-            echo $dayOne . "  <br/> "; 
+            //echo $dayOne . "  <br/> "; 
             $dayTwo = $int[1];
-             echo $dayTwo . "  <br/> "; 
+             //echo $dayTwo . "  <br/> "; 
         } 
                
         $startThis = $this->StartTime;
-      //  echo $startThis . "<br/>" ;
+      //  //echo $startThis . "<br/>" ;
         $endThis = $this->EndTime;
-       // echo $endThis . "<br/>" ;
+       // //echo $endThis . "<br/>" ;
         $starpar = $NewStart;
-       // echo $starpar . "<br/>" ;
+       // //echo $starpar . "<br/>" ;
         $endpar = $NewEnd;
-       // echo $endpar . "<br/>" ;
+       // //echo $endpar . "<br/>" ;
 
         if($dayOne == $this->Day || $dayTwo == $this->Day)
         {

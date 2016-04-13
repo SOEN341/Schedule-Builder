@@ -67,6 +67,8 @@ Route::resource('/removeadmincourse', 'HomeController@removeadmincourse'); //rem
 
 Route::resource('/coursesequence','HomeController@getcoursesequence');
 
+Route::resource('/schedulescript','HomeController@getschedulescript');
+
 Route::get('/schedule', 'HomeController@getschedule');
 
 Route::get('/admin', 'HomeController@getadmin');

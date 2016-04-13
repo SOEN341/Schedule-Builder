@@ -16,6 +16,7 @@ public $coursesTaken = Array(); //list of courses that the user has taken
 public $prefTime = '';
 public $dayOff = '';
 public $schedule = Array();
+public $scheduleCourse = Array();
 
 
 
@@ -56,18 +57,19 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
        $conflict     = false;
        $conflicttuto = false;
        $present=false;
-        $currentload=0;
+       $presentTuto=false;
+       $currentload=0;
       
       
        $timetuto = Array();     
         foreach ($Lecture as $key => $value) {
             //var_dump($value);
-            //echo strlen($value);
+            ////echo strlen($value);
             if (!(is_array($value))) { //sectionts that matched the right format
-                //echo "String";
+                ////echo "String";
                 array_push($test, json_decode($value, true));
             } else {
-                //echo "string";
+                ////echo "string";
             }            
         }
 
@@ -86,51 +88,51 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
 
 
              $LecVal = $temp;
-            //echo "Lecval";
+            ////echo "Lecval";
             foreach ($this->arrayOfTimes as $key => $value) {
-            	//echo $LecVal->SectionName . "  ";
-            	//echo $value->SectionName;
+            	////echo $LecVal->SectionName . "  ";
+            	////echo $value->SectionName;
             	if (strcmp($value->SectionName, $LecVal->SectionName)==0) {
             		$present=true;
-            		//echo "Course present already <br/>";            		
+            		////echo "Course present already <br/>";            		
             		break;
             	}
             }
 
             if ($present==true) {
             	$present=false;
-            	//echo "___----_________________________________________________________------------------------- <br/>";
+            	////echo "___----_________________________________________________________------------------------- <br/>";
             	continue;
             }
-            echo "arrayOfTimes";
-        	var_dump($this->arrayOfTimes);
-        	echo "End array of times <br/> ";
+            //echo "arrayOfTimes";
+        	//var_dump($this->arrayOfTimes);
+        	//echo "End array of times <br/> ";
             foreach ($this->arrayOfTimes as $key => $setTimes) {
                  //var_dump($setTimes);
                 if ($LecVal->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
                 	// var_dump($LecVal);
                 	// var_dump($setTimes);
                     $conflict = true;
-                    echo "Conflict";
+                    //echo "Conflict";
                 }
             }
             
             if ($conflict) {
                 $conflict = false;
-               // echo "Leaving because conflict <br/>";
-               // echo "___----_________________________________________________________------------------------- <br/>";
+               // //echo "Leaving because conflict <br/>";
+               // //echo "___----_________________________________________________________------------------------- <br/>";
                 
                 Continue; //switches to the next section in the time array.
             }
-            		//echo $section['section'];
+            		////echo $section['section'];
 		            // assuming here that the lecture fit.
 		            // trying for tutorial
 		            
 		            $tutos = Array();
 		            foreach ($Tutorial as $key => $value) {
 		                if (!(is_array($value))) { //sectionts that matched the right format
-		               // echo $section['section']  ;	
-		                echo json_decode($value, true)['section'][0] ." <br/>";
+		               // //echo $section['section']  ;	
+		                //echo json_decode($value, true)['section'][0] ." <br/>";
 		                 if ( strcmp( json_decode($value, true)['section'][0] , $section['section'])   ==0   ) {             	                    	
 		                 	                    	                    
 		                    array_push($tutos, json_decode($value, true));
@@ -146,13 +148,31 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
 		            $counter    = 0;
 		            foreach ($tutos as $key => $value) {
 
+		            	  $tuto=$value;
+
+		            	foreach ($this->schedule as $key => $value) {
+			            	////echo $LecVal->SectionName . "  ";
+			            	////echo $value->SectionName;
+			            	if (strcmp($value['sectionId'], $tuto['sectionId'])==0) {
+			            		$present=true;
+			            		////echo "Course present already <br/>";            		
+			            		break;
+			            	}
+			            }
+
+			            if ($presentTuto==true) {
+			            	$presentTuto=false;
+			            	////echo "___----_________________________________________________________------------------------- <br/>";
+			            	continue;
+			            }
+
 
 		                //var_dump($value);    
 		                $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime'], $value['courseCode']);
 		                //array_push($timetuto, $temp);
 
 		                $tutotime=$temp;
-		                $tuto=$value;
+		              
 
 		                
 		            	$cututo=$value;
@@ -162,7 +182,7 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
 		                   if  ($temp->CompareTo($setTimes->Day, $setTimes->StartTime, $setTimes->EndTime) == false) {
 		                         
 		                    $conflicttuto = true;
-		                     echo "Conflict"; 
+		                     //echo "Conflict"; 
 		                     break;                   
 		                         }
 		                         $counter++;
@@ -170,8 +190,8 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
 		                 
 	                   if ($conflicttuto) {
 	                        $conflicttuto = false;
-	                        echo "Leaving because conflict";
-	                         echo "___----_________________________________________________________------------------------- <br/>";
+	                        //echo "Leaving because conflict";
+	                         //echo "___----_________________________________________________________------------------------- <br/>";
 	                        Continue; //switches to the next section in the time array.
 	                    }              
 
@@ -187,7 +207,9 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
 		                continue;
 		            }
 
-		            echo "Schedule";
+		            //echo "Schedule";
+		            $currentload++;
+		            //echo "$currentload";
 		            //var_dump($this->schedule);
 
             //var_dump($LecVal);
@@ -195,11 +217,12 @@ function __construct($coursesNeeded, $coursesTaken, $courseload, $prefTime, $day
 		    array_push($this->arrayOfTimes, $tutotime) ;       
             array_push($this->arrayOfTimes, $LecVal); 
             array_push($this->schedule, $section); 
-            $currentload++;
+             array_push($this->scheduleCourse, $section); 
+            
         }
-        // echo "arrayOfTimes";
+        // //echo "arrayOfTimes";
         // var_dump($this->arrayOfTimes);
-        // echo "End array of times <br/> ";
+        // //echo "End array of times <br/> ";
 
 
         //time contains an array of object times, -->lectures

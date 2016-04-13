@@ -402,57 +402,9 @@ echo ']}';
 // var_dump(json_decode($schedule,true));
 
 
-
-
 mysqli_close($dbc);
 
 
 
 ?>
-		<!--
-
-response([
-			{
-				schedule: [
-					{
-						section: 'JJ',
-						classroom: 'H555',
-						type: 'Lab',
-						day: '1',
-						beginTime: '11:30',
-						endTime: '14:00',
-						course: 'SOEN 346'
-					},
-					{
-						section: 'HH',
-						classroom: 'MB S2.051',
-						type: 'Lecture',
-						day: '24',
-						beginTime: '11:30',
-						endTime: '12:45',
-						course: 'SOEN 341'
-					}
-				]
-			},
-			{
-				schedule: [
-					{
-						section: 'JJ',
-						classroom: 'H555',
-						type: 'Tutorial',
-						day: '5',
-						beginTime: '20:00',
-						endTime: '22:00',
-						course: 'COMP 249'
-					},
-					{
-						section: 'JJ',
-						classroom: 'H555',
-						type: 'Lecture',
-						day: '13',
-						beginTime: '08:00',
-						endTime: '09:45',
-						course: 'ENGR 371'
-					}
-				]
-			} -->
+		

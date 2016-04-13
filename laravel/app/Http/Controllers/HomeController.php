@@ -97,7 +97,11 @@ class HomeController extends Controller {
 
     public function getcoursesequence(){
         return view('courseSequenceScript');
-    }    
+    }   
+
+    public function getschedulescript(){
+        return view('schedulescript');
+    } 
 
     public function editsection(){
         return view('editSection');
