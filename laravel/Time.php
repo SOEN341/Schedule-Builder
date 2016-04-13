@@ -15,7 +15,7 @@ class Time {
     function CompareTo($NewDay,$NewStart,$NewEnd){
 
         $int = int($NewDay);
-        $str = int($NewDay);
+
         $dayOne = '';
         $dayTwo = '';
         if($int > 5)
