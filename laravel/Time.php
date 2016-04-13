@@ -14,20 +14,16 @@ class Time {
 
     function CompareTo($NewDay,$NewStart,$NewEnd){
 
-        $int = $NewDay;
+        $int = int($NewDay);
+        $str = int($NewDay);
         $dayOne = '';
         $dayTwo = '';
-        if($int > '5')
+        if($int > 5)
         {
-            $dayOne = $int[0];
-            $dayTwo = $int[1];
+            $str = strval($int);
+            $dayOne = $str[0];
+            $dayTwo = $str[1];
         }
-
-        else
-        {
-            $int = int($NewDay);
-        }
-
 
         $modifyOne = strtotime($this->StartTime);
         $modifyTwo = strtotime($this->EndTime);
@@ -36,13 +32,13 @@ class Time {
 
         if($dayOne == null && $dayTwo == null)
         {
-            if ($NewDay == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) || (($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
+            if ($int == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) || (($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
+            {
+               return false;
+            }
+            elseif ($int == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
             {
                 return False;
-                if ($NewDay == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
-                {
-                    return False;
-                }
             }
             else
             {
@@ -55,10 +51,10 @@ class Time {
             if (($dayOne || $dayTwo) == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) || (($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
             {
                 return False;
-                if (($dayOne || $dayTwo) == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
-                {
-                    return False;
-                }
+            }
+            elseif (($dayOne || $dayTwo) == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
+            {
+                return False;
             }
             else
             {
