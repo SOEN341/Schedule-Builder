@@ -389,167 +389,6 @@ foreach ($arrayofcourses2 as $key => $value) {
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-//generating the course sequence-----------
-
-//get the courses currently in the schedule
-$newTaken=Array();
-$newTaken=$coursesDone;
-$newRem=$coursesRem;
-
-
-//add them to courses taken 
-foreach ($newTaken as $key => $value) {
-	//add the values to the array of courses taken
-}
-
-$result=array_diff($newRem, $newTaken); 
-
-//var_dump($result);
-
-$counter2=0;
-
-
-while (count($result)!=0 && $counter2<10) {
-
-//remove them from courses needed
-$result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns the list where the  new taken courses( courses that are currently in the schedule) were removed from the list coure needed
-echo "Counter". $counter2;
-//var_dump($result);
-//var_dump($newRem);
-//var_dump($newTaken);
-
-	//cull courses needed to get courses the user can take and store the prereq he does not have in the anotc array
-	$postCullc=Array();
-	$anotc=Array();
-
-		foreach ($result as $x => $x_value) {
-		//echo "$x_value";
-		$query ="SELECT * FROM courses where coursecode='$x_value' ";
-		// Check if these credentials are taken
-		$response= mysqli_query($dbc,$query);
-
-		$answer= mysqli_fetch_array($response);
-
-		$cid=$answer['courseId'];
-		
-
-		if ($cid==41) {
-			$cid=132;
-		}
-
-		
-		//echo "$cid    <br/>"	;
-
-		$query ="SELECT prerequisitesList FROM prerequisites where courseId='$cid'  ";
-		// Check if these credentials are taken
-		$response= mysqli_query($dbc,$query);
-
-		//var_dump($response);	
-
-		$answer2= mysqli_fetch_array($response);
-
-		
-		$json=json_decode($answer2['prerequisitesList'],true);
-
-		if ($cid==5) {
-			$json=json_decode('{"List":[{"type":"1", "courseCode" : "COMP 249"},{"type":"1", "courseCode" : "COMP 232"}]}',true);
-		}
-
-		$temp=$json['List'];		
-
-
-		$fcourse=$x_value;
-
-		//echo "$fcourse <br/>   ";
-
-		//var_dump($temp);
-
-		
-		if(count($temp)===0)
-			array_push($postCullc,$fcourse);
-
-		if (!empty($temp)) {
-			
-		foreach (array_filter($temp) as $key => $value) {		
-				//echo $value['courseCode'];
-				$val=$value['courseCode'];
-				//echo "   needs:" . $val;
-				if(in_array($val, $newTaken,true)){
-				//	echo " True.  ";
-					array_push($postCullc,$fcourse);
-				} else {
-				//	echo "not.    ";
-					array_push($anotc, $fcourse);
-				}
-			
-		}
-			} else
-       { 
-       		//echo "$fcourse" . "failed <br/> <br/>";
-       }
-
-		}	
-		echo "Pre remaining";
-		var_dump(array_unique($postCullc));
-		var_dump(array_unique($anotc));
-
-	$remaininglist=array_unique(array_diff(array_unique($postCullc),array_unique($anotc)));	//list of priotiry courses after the prereq were removed
-	$counter=0;
-
-	echo "Remaining";
-
-	var_dump($remaininglist);
-	foreach ($remaininglist as $key => $value) {
-		if ($counter<=$courseload) {
-			echo "$value<br/>";
-			array_push($newTaken,$value);
-		}
-		$counter++;		
-	}		
-	
-	$newRem=array_diff(array_unique($newRem),array_unique($newTaken));
-	foreach ($anotc as $key => $value) {
-		array_push($newRem,$value);	
-	}
-	$newRem=array_unique($newRem);
-	$newTaken=array_unique($newTaken);
-
-	// var_dump($result);
-	echo "New rem after anotc";
-	var_dump($newRem);
-	echo "New taken after adding";
-	 var_dump($newTaken);
-
-	//var_dump($newRem);
-
-$counter2++;
-}//end while
-
-
-
-
-
-
-
-
-//add the cload number of courses to a certain year
-
-
-
-
-
-
-// Retrieve the user’s taken courses. Add the course from the chosen schedule to that array and remove them from the needed courses
-// Assume the user wants to take the same course load every semester, we’ll call this number x
-// Again remove any course that aren’t in the prereqs and create the priority array. We also need to  keep track of which semester we’re adding courses for and remove any courses that aren’t offered in that semester
-// Add the first x courses to the first semester
-// Again retrieve the needed and taken courses lists from the database and adjust them to reflect the schedule and course sequence
-// Loop this process until you have a complete course sequence with all the needed courses
-
-
-
 
 
 mysqli_close($dbc);
@@ -557,3 +396,50 @@ mysqli_close($dbc);
 
 
 ?>
+<!-- 
+
+response([
+			{
+				schedule: [
+					{
+						section: 'JJ',
+						classroom: 'H555',
+						type: 'Lab',
+						day: '1',
+						beginTime: '11:30',
+						endTime: '14:00',
+						course: 'SOEN 346'
+					},
+					{
+						section: 'HH',
+						classroom: 'MB S2.051',
+						type: 'Lecture',
+						day: '24',
+						beginTime: '11:30',
+						endTime: '12:45',
+						course: 'SOEN 341'
+					}
+				]
+			},
+			{
+				schedule: [
+					{
+						section: 'JJ',
+						classroom: 'H555',
+						type: 'Tutorial',
+						day: '5',
+						beginTime: '20:00',
+						endTime: '22:00',
+						course: 'COMP 249'
+					},
+					{
+						section: 'JJ',
+						classroom: 'H555',
+						type: 'Lecture',
+						day: '13',
+						beginTime: '08:00',
+						endTime: '09:45',
+						course: 'ENGR 371'
+					}
+				]
+			} -->
