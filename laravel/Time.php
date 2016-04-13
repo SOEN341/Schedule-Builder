@@ -12,8 +12,8 @@ class Time {
         $this->SectionName=$Name;
     }
 
-    function CompareTo($NewDay,$NewStart,$NewEnd){
-
+    function CompareTo($NewDay,$NewStart,$NewEnd)
+    {
 
         $int = intval($NewDay);
 
@@ -89,8 +89,7 @@ class Time {
         }
 
         return true;
-
-       
+      
 
     }
 
