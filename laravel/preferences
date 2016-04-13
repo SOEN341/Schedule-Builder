@@ -56,17 +56,17 @@ class Schedule
         $conflict  = true;
     $conflicttuto=true;
 
-    timetuto=Array();
-         
-//all lecture jason strings
+    $timetuto=Array();
+         var_dump($Lecture);
+		//all lecture jason strings
         foreach ($Lecture as $key => $value)
             {
                 //var_dump($value);
                 //echo strlen($value);
-               // if (strlen($value) ==212) //sectionts that matched the right format
+                if (strlen($value) ==212) //sectionts that matched the right format
             array_push($test,json_decode($value, true));
             }
-//test -> array of courses in json/arrayformat
+		//test -> array of courses in json/arrayformat
                    
         foreach ($test as $key => $value)
             {
@@ -90,11 +90,11 @@ class Schedule
             
             if ($conflict)
                 {
-conflict=false;
+				$conflict=false;
                 Continue; //switches to the next section in the time array.
                 }
-//assuming here that the lecture fit.
-//trying for tutorial
+	//assuming here that the lecture fit.
+	//trying for tutorial
 
     $tutos=Array();
     foreach ($Tutorial as $key => $value)
@@ -103,8 +103,8 @@ conflict=false;
                 //echo strlen($value);
                        array_push($tutos,json_decode($value, true));
             }
-//tutos -> array of tutorials in json/arrayformat
-//we want the tutorials starting with the section name
+		//tutos -> array of tutorials in json/arrayformat
+		//we want the tutorials starting with the section name
                    
         foreach ($tutos as $key => $value)
             {
@@ -112,11 +112,12 @@ conflict=false;
            $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime'],$value[‘courseCode’]);
            array_push($timetuto, $temp);
             }
-    //testing against the times in the schedule ------------------------
+		//testing against the times in the schedule ------------------------
 
-$tutolenght=count($timetuto);
-$counter=0;
-foreach ($timetuto as $key => $value)          {
+		$tutolenght=count($timetuto);
+		$counter=0;
+		foreach ($timetuto as $key => $value)          
+		{
             foreach ($this->arrayOfTimes as $key => $setTimes)              {
                     //var_dump($setTimes);
                 if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
@@ -126,22 +127,23 @@ foreach ($timetuto as $key => $value)          {
                             
             if ($conflicttuto)
                 {
-conflicttuto=false;
+				$conflicttuto=false;
                 Continue; //switches to the next section in the time array.
                 }
-counter++;
-} //end of the time schedule loop
+			$counter++;
+	} 		//end of the time schedule loop
 
-} //end of the tuto loop 
+		} 	//end of the tuto loop 
 
-    if($counter==tutolenght){
-continue;
-}
+    if($counter==tutolenght)
+	{
+		continue;
+	}
 
-              } //end section loop
+         } //end section loop
         
   
-
+		}
 
                       
     }
