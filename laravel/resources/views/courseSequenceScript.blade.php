@@ -56,6 +56,7 @@ foreach ($decodedrem as $key => $key_value) {
 array_push($coursesDone,"MATH 205","MATH 203","MATH 204","PHYS 204","PHYS 205","CHEM 203"); //hardcoded because not added autamitically when the course list is generated
 
 
+//var_dump($coursesDone);
 
 //get the courses currently in the schedule
 
@@ -64,10 +65,9 @@ $newRem=$coursesRem;
 
 
 //add them to courses taken 
-foreach ($newTaken as $key => $value) {
+foreach ($coursesDone as $key => $value) {
 	//add the values to the array of courses taken
-	array_push($coursesDone, $newTaken[$count]);
-	++$count;
+	array_push($newTaken, $value);
 }
 
 $result=array_diff($newRem, $newTaken); 
@@ -76,6 +76,7 @@ $result=array_diff($newRem, $newTaken);
 
 $counter2=0;
 
+echo '{"response" : [';
 
 while (count($result)!=0 && $counter2<10) {
 
@@ -165,11 +166,27 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 	$counter=0;
 
 	//echo "Remaining";
-
+	
 	//var_dump($remaininglist);
+
+	//$schedule='{"schedule": [{"section": "JJ","classroom": "H555","type": "Lab","day": "1","beginTime": "11:30","endTime": "14:00","course": "SOEN 346"}, {"section": "HH","classroom": "MB S2.051","type": "Lecture","day": "24","beginTime": "11:30","endTime": "12:45","course": "SOEN 341"}]}';
+
 	foreach ($remaininglist as $key => $value) {
 		$counter++;	
 		if ($counter<=$courseload) {
+			$sql= "SELECT * FROM courses WHERE courseCode = '$value'";
+			$response= mysqli_query($dbc,$sql);
+			$answer= mysqli_fetch_array($response);
+
+			$cid=$answer['courseId'];
+			echo " courseID: " . $answer['courseId'] ;
+			echo " semester: " . $answer['semester'] ;
+			echo " year: " . $counter2 ;
+			echo " name: " . $answer['name'] ;
+			echo " courseCode: " . $answer['courseCode'] ;
+			
+
+			//echo $counter2;
 			echo "$value<br/>";
 			array_push($newTaken,$value);
 		}
@@ -189,7 +206,7 @@ $result=array_diff(array_unique($newRem), array_unique($newTaken)); //returns th
 	//echo "New taken after adding";
 	 //var_dump($newTaken);
 
-	var_dump($newRem);
+	//var_dump($newTaken);
 
 $counter2++;
 }//end while

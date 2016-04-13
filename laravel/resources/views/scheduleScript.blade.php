@@ -355,6 +355,7 @@ foreach ($arrayofcourses2 as $key => $value) {
 //var_dump($schedule->schedule);
 
 $temp=Array();
+$new_array=Array();
 
 foreach ($schedule->schedule as $key => $value) {
 
