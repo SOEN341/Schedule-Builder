@@ -102,4 +102,38 @@ a{
     margin-top: 10px;
 }
 
+/* CSSS for "AdminPage" only */
+.list
+{
+	margin-top: 20px;
+}
+
+.add
+{
+	margin-bottom: 20px;
+}
+/* CSSS for "AdminEditPage" only */
+td
+{
+	color: #34495e;
+	font-weight: bold;
+}
+
+.btn-brand
+{
+	background: #34495e;
+	color: #FFF;
+}
+
+.btn-brand:hover
+{
+	color: blue;
+}
+
+.line
+{
+	width : 550px;
+	margin-left: 29%;
+	color: #FF;
+}
 

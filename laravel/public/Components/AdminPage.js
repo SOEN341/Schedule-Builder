@@ -9,9 +9,9 @@ var AdminPage = React.createClass({
 		return(
 			<div>
 				{this.state.courseDialogOpen? <CourseDialog close={this.closeCourseDialog} addCourse={this.addCourse}/>: null}
-				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openCourseDialog}>Add Course</RBS.Button></div>
-				<AdminCoursesList courses={this.state.courses} changePage={this.props.changePage} binder={this} removeCourse={this.removeCourse}/>
-				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openCourseDialog}>Add Course</RBS.Button></div>
+				<div className="list"><div style={{textAlign:'center'}}><RBS.Button onClick={this.openCourseDialog}>Add Course</RBS.Button></div></div>
+				<div className="list"><AdminCoursesList courses={this.state.courses} changePage={this.props.changePage} binder={this} removeCourse={this.removeCourse}/></div>
+				<div className="add"><div style={{textAlign:'center'}}><RBS.Button onClick={this.openCourseDialog}>Add Course</RBS.Button></div></div>
 			</div>
 		)
 	},

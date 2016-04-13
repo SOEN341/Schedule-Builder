@@ -17,8 +17,9 @@ var AdminEdit = React.createClass({
 				{this.state.editingDialogOpen? <SectionDialog close={this.closeEditDialog} method={this.editSection} mode='Edit' section={this.state.sections[this.state.editingIndex]}/>: null}
 				<CourseInfo course={this.state.course} validation={this.state.courseValidations} help={this.state.courseHelp} nameChange={this.nameChange} courseCodeChange={this.courseCodeChange} semesterChange={this.semesterChange} descriptionChange={this.descriptionChange} creditsChange={this.creditsChange} save={this.saveCourseChange}/>
 				<br/>
-				<SectionsList sections={this.state.sections} binder={this} removeSection={this.removeSection} openEditDialog={this.openEditDialog}/>
-				<div style={{textAlign:'center'}}><RBS.Button onClick={this.openSectionDialog}>Add Section</RBS.Button></div>
+				<div className="line"><hr class="style1"></hr></div>
+				<SectionsList sections={this.state.sections} binder={this} removeSection={this.removeSection} openEditDialog={this.openEditDialog}/>			
+				<div style={{textAlign:'center', marginTop:'20px'}}><RBS.Button bsStyle="brand" onClick={this.openSectionDialog}>Add Section</RBS.Button></div>
 			</div>
 		)
 	},
@@ -382,7 +383,7 @@ var CourseInfo = React.createClass({
 	render: function() {
 		return(
 			<div>
-				<RBS.Table style={{width:'40%', marginLeft:'30%'}}>
+				<RBS.Table style={{width:'40%', marginLeft:'30%', marginTop:'25px'}}>
 						<tbody>
 							<tr>
 								<td style={{width: '30%'}}>Course Number</td>
@@ -406,7 +407,7 @@ var CourseInfo = React.createClass({
 							</tr>
 						</tbody>
 					</RBS.Table>
-					<div style={{textAlign:'center'}}><RBS.Button bsStyle='primary' onClick={this.props.save}>Save Changes to Course Information</RBS.Button></div>
+					<div style={{textAlign:'center'}}><RBS.Button bsStyle='brand' onClick={this.props.save}>Save Changes to Course Information</RBS.Button></div>
 			</div>
 		)
 	}
