@@ -197,15 +197,15 @@ foreach ($courses as $key => $value){
 
 //var_dump($arrayofcourses);
 
-foreach ($arrayofcourses as $key => $value) {
-if (count($schedule->arrayOfTimes)==$courseload) {
-		echo "Counttttttttt                               " .count($schedule->arrayOfTimes);
-		echo $courseload;
-		break;
-	}	
-	$schedule->addCourse($value);
-	
-}
+	foreach ($arrayofcourses as $key => $value) {
+	if (count($schedule->currentload)==$courseload) {
+			echo "Counttttttttt  " .count($schedule->schedule);
+			echo $courseload;
+			break;
+		}	
+		$schedule->addCourse($value);
+		
+	}
 
 $remainingList=Array();
 
@@ -343,15 +343,15 @@ foreach ($remaininglist as $key => $value){
 }
 
 foreach ($arrayofcourses2 as $key => $value) {	
-	if (count($schedule->arrayOfTimes)==$courseload) {
-		echo "Counttttttttt                               " .count($schedule->arrayOfTimes);
+	if (count($schedule->currentload)==$courseload) {
+		echo "Cou" .count($schedule->arrayOfTimes);
 		echo $courseload;
 		break;
 	}
 	$schedule->addCourse($value);
 	
 }
-//var_dump($schedule->arrayOfTimes);
+var_dump($schedule->schedule);
 
 
 

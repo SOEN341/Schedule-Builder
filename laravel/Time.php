@@ -53,13 +53,13 @@ class Time {
         } 
                
         $startThis = $this->StartTime;
-        echo $startThis . "<br/>" ;
+      //  echo $startThis . "<br/>" ;
         $endThis = $this->EndTime;
-        echo $endThis . "<br/>" ;
+       // echo $endThis . "<br/>" ;
         $starpar = $NewStart;
-        echo $starpar . "<br/>" ;
+       // echo $starpar . "<br/>" ;
         $endpar = $NewEnd;
-        echo $endpar . "<br/>" ;
+       // echo $endpar . "<br/>" ;
 
         if($dayOne == $this->Day || $dayTwo == $this->Day)
         {
