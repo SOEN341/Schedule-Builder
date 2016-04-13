@@ -161,9 +161,41 @@ foreach ($courses as $key => $value){
 	echo "<br/>";
 	echo "<br/>";
 	*/
-	$queryForCourseLecture =mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
-	$queryForCourseTutorial = mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
-	$queryForCourseLab = mysqli_fetch_array(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
+
+	$sql= "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'";
+	$response= mysqli_query($dbc,$sql);
+	//var_dump(mysqli_fetch_array($response));
+
+	$numResults = mysqli_num_rows($response);
+	$counter = 0;
+	while($current = mysqli_fetch_assoc($response)) {
+       	array_push($tempQueryForCourseLecture,json_encode($current));   
+	}
+
+	$sql= "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'";
+	$response= mysqli_query($dbc,$sql);
+	//var_dump(mysqli_fetch_array($response));
+
+	$numResults = mysqli_num_rows($response);
+	$counter = 0;
+	while($current = mysqli_fetch_assoc($response)) {
+       	array_push($tempQueryForCourseTutorial,json_encode($current));   
+	}
+
+
+	$sql= "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'";
+	$response= mysqli_query($dbc,$sql);
+	//var_dump(mysqli_fetch_array($response));
+
+	$numResults = mysqli_num_rows($response);
+	$counter = 0;
+	while($current = mysqli_fetch_assoc($response)) {
+       	array_push($tempQueryForCourseLab,json_encode($current));   
+	}
+
+	$queryForCourseLecture =mysqli_fetch_all(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'"));
+	$queryForCourseTutorial = mysqli_fetch_all(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Tutorial'"));
+	$queryForCourseLab = mysqli_fetch_all(mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lab'"));
 	$tempArr = $queryForCourseLab;
 
 	$responseLecture = mysqli_query($dbc, "SELECT * FROM sections WHERE courseCode = '$value' AND type = 'Lecture'");
@@ -226,7 +258,7 @@ foreach ($courses as $key => $value){
 
 	//TODO: this returns all the sections
 	//TODO: create an object $course containing all the sections(lecture, lab, tutorial) for all the courses in $courses
-	$course = new Course($value, $queryForCourseLecture, $queryForCourseTutorial, $queryForCourseLab);
+	$course = new Course($value, $tempQueryForCourseLecture, $queryForCourseTutorial, $queryForCourseLab);
 	//var_dump($course->getName());
 	array_push($arrayofcourses,$course);
 }
