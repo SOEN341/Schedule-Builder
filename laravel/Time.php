@@ -14,31 +14,53 @@ class Time {
 
     function CompareTo($NewDay,$NewStart,$NewEnd){
 
+<<<<<<< HEAD
         $int = int($NewDay);
 
+=======
+
+        echo "Start " . $this->StartTime . "<br/>";
+        echo "End  " . $this->EndTime  . "<br/>";
+
+        echo "newStart " . $NewStart . "<br/>";
+        echo "newEnd  " . $NewEnd  . "<br/>";
+
+        $int = $NewDay;
+>>>>>>> origin/master
         $dayOne = '';
         $dayTwo = '';
-        if($int > 5)
-        {
-            $str = strval($int);
-            $dayOne = $str[0];
-            $dayTwo = $str[1];
-        }
+        $dayThree= '';
 
-        $modifyOne = strtotime($this->StartTime);
-        $modifyTwo = strtotime($this->EndTime);
-        $modifyThree = strtotime($NewStart);
-        $modifyFour = strtotime($NewEnd);
+        //echo strlen($int) ;        
+        if ( strlen($int) === 1) {
+          $dayOne = intval($int);
+          }
+         elseif ( strlen($int) == 2) {
+            $dayOne = $int[0];
+            echo $dayOne . "  <br/> "; 
+            $dayTwo = $int[1];
+             echo $dayTwo . "  <br/> "; 
+        } 
+               
+        $startThis = strtotime($this->StartTime);
+        echo $startThis . "<br/>" ;
+        $endThis = strtotime($this->EndTime);
+        echo $endThis . "<br/>" ;
+        $starpar = strtotime($NewStart);
+        echo $starpar . "<br/>" ;
+        $endpar = strtotime($NewEnd);
+        echo $endpar . "<br/>" ;
 
         if($dayOne == null && $dayTwo == null)
         {
-            if ($int == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) || (($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
-            {
-               return false;
-            }
-            elseif ($int == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
+            if ($NewDay == $this->Day && ((($starpar > $startThis) && ($starpar < $endThis)) || (($endpar > $startThis) && ($endpar < $endThis)) || (($starpar == $startThis) && ($endpar == $endThis))))
             {
                 return False;
+                if ($NewDay == $this->Day && (($startThis == $endpar) || ($starpar == $endThis)))
+                {
+                    return False;
+                }
+
             }
             else
             {
@@ -48,13 +70,15 @@ class Time {
 
         if($dayOne != null && $dayTwo != null)
         {
-            if (($dayOne || $dayTwo) == $this->Day && ((($modifyThree > $modifyOne) && ($modifyThree < $modifyTwo)) || (($modifyFour > $modifyOne) && ($modifyFour < $modifyTwo)) || (($modifyThree == $modifyOne) && ($modifyFour == $modifyTwo))))
+            if (($dayOne || $dayTwo) == $this->Day && ((($starpar > $startThis) && ($starpar < $endThis)) || (($endpar > $startThis) && ($endpar < $endThis)) || (($starpar == $startThis) && ($endpar == $endThis))))
             {
                 return False;
-            }
-            elseif (($dayOne || $dayTwo) == $this->Day && (($modifyOne == $modifyFour) || ($modifyThree == $modifyTwo)))
-            {
-                return False;
+
+                if (($dayOne || $dayTwo) == $this->Day && (($startThis == $endpar) || ($starpar == $endThis)))
+                {
+                    return False;
+                }
+
             }
             else
             {
