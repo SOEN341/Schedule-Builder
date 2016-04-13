@@ -63,7 +63,7 @@ class Schedule
             array_push($test,json_decode($value, true));
             }
 
-          //  var_dump($test);
+           // var_dump($test);
         
         foreach ($test as $key => $value)
             {
@@ -83,6 +83,7 @@ class Schedule
                 if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
                     {
                     $YesOrNo = false;
+					var_dump("false");
                     }
                  }
             
@@ -98,7 +99,7 @@ class Schedule
             {
             $test = json_decode($value, true);
             //echo $test['type'];
-            var_dump($test);
+            //var_dump($test);
             }
             for ($i = 0; $i < 1; $i++)
                 {
@@ -109,99 +110,7 @@ class Schedule
                 
                 }
 
-                 //-----------------------------
-
-            $test  = array();
-            $time  = array();
-            $addTo = array();
-            foreach ($Tutorial as $key => $value)
-                {
-                	if (strlen($value) ==212) //sectionts that matched the right format
-                array_push($test, $value = json_decode($value, true));
-                }
-
-
-                      
-          
-            foreach ($test as $key => $value)
-                {
-               $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime']);
-                array_push($time, $temp);
-                }
-            
-            foreach ($time as $key => $value)
-                {
-                foreach ($this->arrayOfTimes as $key => $setTimes)
-                    {
-                    if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
-                        {
-                        $YesOrNo = false;
-                        }
-                    }
-                
-                if ($YesOrNo == true)
-                    {
-                    array_push($addTo, $value);
-                    }
-                $YesOrNo == true;
-                }
-            
-            for ($i = 0; $i < 1; $i++)
-                {
-                if ($addTo != null)
-                    {
-                    array_push($this->arrayOfTimes, $addTo);
-                    }
-                }
-
-                  //-----------------------------
-
-
-            $test  = array();
-            $time  = array();
-            $addTo = array();
-            foreach ($Lab as $key => $value)
-                {
-                	if (strlen($value) ==212) //sectionts that matched the right format
-                array_push($test, $value = json_decode($value, true));
-                }
-            
-            foreach ($test as $key => $value)
-                {
-                $temp = new Time($value['dayOffered'], $value['beginTime'], $value['endTime']);
-                array_push($time, $temp);
-                }
-            
-            foreach ($time as $key => $value)
-                {
-                foreach ($this->arrayOfTimes as $key => $setTimes)
-                    {
-                     if ($value->CompareTo($setTimes['0']->Day, $setTimes['0']->StartTime, $setTimes['0']->EndTime) == false)
-                        {
-                        $YesOrNo = false;
-                        }
-                    }
-                
-                if ($YesOrNo == true)
-                    {
-                    array_push($addTo, $value);
-                    }
-                $YesOrNo == true;
-                }
-            
-            for ($i = 0; $i < 1; $i++)
-                {
-                if ($addTo != null)
-                    {
-                    array_push($this->arrayOfTimes, $addTo);
-                    }
-                }
-            array_push($this->schedule, $this->arrayOfTimes);
-            
-
-
-                   
-        
+                 //-----------------------------       
         }
 
                       
