@@ -55,10 +55,9 @@ class Schedule
         $addTo    = array();
         $conflict  = true;
 		$conflicttuto=true;
-
-
 		$timetuto=Array();
-       //var_dump($Lecture);
+		
+       var_dump($Lecture);
 		echo $Lecture['section'];
 
 		echo $Lecture['dayOffered'];
