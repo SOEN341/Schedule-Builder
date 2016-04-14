@@ -472,7 +472,7 @@ var realServerBridge = {
 	},
 	
 	generateSchedule: function(username, response) {
-		//var username = cookieManager.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/schedulescript",
@@ -489,7 +489,7 @@ var realServerBridge = {
 	},
 	
 	generateCourseSequence: function(username, schedule, response) {
-		//var username = cookieManager.getCookie('username');
+		var username = cookieManager.getCookie('username');
 		$.ajax({
 			type:    "POST",
 			url:     linkProvider.getLink()+"/coursesequence",
