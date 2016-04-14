@@ -1,0 +1,139 @@
+/* Global Variables */
+
+h1, h3
+{
+	text-align:center;
+}
+
+body
+{
+	background-color: #d3d3d3 ;
+}
+
+.btn-primary{
+	background: #4F8F8F;
+    color: #FFFFFF;
+}
+
+/* CSS for file "Login" only */
+.header{
+	color: #FFFFFF;
+	height: 100px;
+	background-color: #34495e;
+	margin: 0px;
+	padding-top: 10px;
+	
+}
+
+#title{
+	margin-left: 30px;
+	padding-top: 10px;
+	font-weight: bold;
+	font-size: 40px;
+	font-family: Lato;
+	padding-left: 80px;
+	letter-spacing: 1px;
+}
+
+#input{
+	color:#34495e;
+	font-weight: bold;
+	font-family: Sans-serif;
+}
+
+a{
+	color: #34495e;
+	font-weight: bold;
+}
+
+
+
+/* CSS for file "AccountPage" only */
+.account
+{
+		margin-top: 75px;
+        padding-left: 25px;
+		background-color: #34495e;
+        height: 400px;
+        color: #FFFFFF;
+        font-family: Lato
+}
+#title2
+{
+		font-size : 50px;
+        padding-top: 20px;
+        text-align: center;
+}
+
+#labels
+{
+        font-size: 20px;
+        letter-spacing: 1px;
+}
+
+#strong
+{
+        color: #7f7fbf;
+}
+
+#line-space
+{
+	line-height: 700%;
+}
+
+/* CSSS for "PreferencePage" only */
+
+#title3
+{
+    color: #34495e;
+    font-weight: bold;
+    font-family: Lato;
+    letter-spacing: 1px;
+}
+
+.Grid
+{
+    color: #FFF;
+    font-family: Sans-serif, Open sans
+}
+
+.CPS
+{
+    margin-top: 10px;
+}
+
+/* CSSS for "AdminPage" only */
+.list
+{
+	margin-top: 20px;
+}
+
+.add
+{
+	margin-bottom: 20px;
+}
+/* CSSS for "AdminEditPage" only */
+td
+{
+	color: #34495e;
+	font-weight: bold;
+}
+
+.btn-brand
+{
+	background: #34495e;
+	color: #FFF;
+}
+
+.btn-brand:hover
+{
+	color: blue;
+}
+
+.line
+{
+	width : 550px;
+	margin-left: 29%;
+	color: #FF;
+}
+
