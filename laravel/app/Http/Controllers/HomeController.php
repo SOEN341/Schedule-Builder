@@ -127,4 +127,8 @@ class HomeController extends Controller {
         return view('removeCourse');
     }
 
+    public function unittest(){
+        return view('unittesting');
+    }
+
 }
